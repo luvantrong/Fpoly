@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "204632846316",
+    "project_id": "fpolyapp-27fed",
+    "storage_bucket": "fpolyapp-27fed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204632846316:android:5b999bf034c141af4d1ac9",
+        "android_client_info": {
+          "package_name": "tronglv.bd.fpolyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204632846316-r68etsnlpu93e5fc0e5rjoqt71cji4d2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tronglv.bd.fpolyapp",
+            "certificate_hash": "0b4be81cfc2d974ab121bc8d969c25f6ee7cdd94"
+          }
+        },
+        {
+          "client_id": "204632846316-bmi942srcsenlqno4ibuhr2ispsl1kes.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv-uZO_khDihtJ97OSt5o63k_9Zx1cheY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204632846316-bmi942srcsenlqno4ibuhr2ispsl1kes.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

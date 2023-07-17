@@ -5,10 +5,100 @@
     android:layout_height="match_parent"
     tools:context=".fragments.StudyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/primary">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_back_study"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <ImageView
+            android:id="@+id/imgBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="230dp"
+            android:src="@drawable/img_study_screen"
+            android:layout_alignParentRight="true"/>
+
+        <LinearLayout
+            android:id="@+id/lnInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/imgBack"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/txtHello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xin chào"
+                android:layout_below="@+id/imgBack"
+                android:textSize="28sp"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lê Thị Thuỷ Tiên"
+                android:layout_below="@+id/imgBack"
+                android:textSize="28sp"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:id="@+id/txtContent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Khám phá kỳ học này của bạn!"
+                android:layout_below="@+id/imgBack"
+                android:textSize="18sp"
+                android:layout_marginTop="30dp"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/lnInformation"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/background_study">
+
+            <ImageView
+                android:id="@+id/imgLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/line_home"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/txtSemester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fall 2023"
+                android:textColor="@color/text_bottom_tab"
+                android:textAllCaps="true"
+                android:layout_below="@+id/imgLine"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
 
 </FrameLayout>

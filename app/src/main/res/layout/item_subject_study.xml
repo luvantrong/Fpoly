@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    android:layout_height="135dp"
+    android:background="@drawable/background_item_subject_stydy"
+    android:layout_margin="5dp"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/txtNameSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Android Networing"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:id="@+id/txtCodeSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MOB403"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:layout_below="@+id/txtNameSubject"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/txtFormStudy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Offline"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:layout_below="@+id/txtCodeSubject"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời gian: 17 buổi"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:maxLines="1"
+        android:layout_below="@+id/txtFormStudy"
+        android:layout_marginTop="5dp"
+        />
+
+
+
+
+
+</RelativeLayout>

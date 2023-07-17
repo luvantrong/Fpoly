@@ -92,6 +92,32 @@
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flSubjectStudy"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_below="@+id/txtSemester"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/txtProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/flSubjectStudy"
+                android:text="Tiến độ"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flProgress"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:layout_below="@+id/txtProgress"
+                />
+
 
 
         </RelativeLayout>

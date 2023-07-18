@@ -1,7 +1,6 @@
 package tronglv.bd.fpolyapp.models;
 
 public class Notification {
-
     private String title;
     private String poster;
     private String time;
@@ -39,3 +38,4 @@ public class Notification {
         this.time = time;
     }
 }
+

@@ -27,9 +27,11 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.fragments.NotificationFragment;
 import tronglv.bd.fpolyapp.fragments.ProfileFragment;
 import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
+import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
 import tronglv.bd.fpolyapp.models.User;
@@ -138,6 +140,22 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    private void loadNotification() {
+        Notification notification = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHOÁ 19.3 \n" +
+                "HỌC KỲ SUMMER 2023 (BLOCK 2)", "nhapnh", "15/07/2023 11:08");
+
+        ArrayList<Notification> listNotification = new ArrayList<>();
+        listNotification.add(notification);
+        listNotification.add(notification);
+        listNotification.add(notification);
+
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flMain, NotificationFragment.newInstance(listNotification))
+                .commit();
+    }
+
     //Thay đổi tab menu bottom
     public void onCLickList(View view) {
         int id = view.getId();
@@ -201,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 case "notification": {
+                    loadNotification();
                     if (selectedTab != 2) {
                         
                         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));

@@ -13,6 +13,7 @@
         android:text="Android Networing"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:fontFamily="@font/roboto_medium"
         />
 
     <TextView
@@ -25,6 +26,8 @@
         android:maxLines="1"
         android:layout_below="@+id/txtNameSubject"
         android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_medium"
+
         />
 
         <TextView
@@ -37,6 +40,7 @@
             android:maxLines="1"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/txtCodeSubject"
+            android:fontFamily="@font/roboto_medium"
             />
 
         <TextView
@@ -50,6 +54,8 @@
             android:layout_marginTop="5dp"
             android:layout_below="@+id/txtCodeSubject"
             android:layout_alignParentRight="true"
+            android:fontFamily="@font/roboto_medium"
+
             />
 
 

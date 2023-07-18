@@ -39,9 +39,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationViewHo
         String name = notification.getTitle();
         holder.txtTitle.setText(name);
         String poster = notification.getPoster();
-        holder.txtPoster.setText(poster);
+        holder.txtPoster.setText("Người đăng: "+ poster);
         String time = notification.getTime();
-        holder.txtTime.setText(time);
+        holder.txtTime.setText("Thời gian: "+ time);
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override

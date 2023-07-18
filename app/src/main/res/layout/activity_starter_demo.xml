@@ -5,7 +5,86 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_weight="1"
     tools:context=".views.StarterDemoActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="325dp"
+            android:orientation="vertical"
+            android:src="@drawable/logo_fpoly_app"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center|top"
+        android:background="@drawable/bg_footer_stater_demo">
+        <View
+            android:layout_width="74dp"
+            android:layout_height="4dp"
+            android:background="#FFFF"
+            android:layout_marginTop="17dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cao đẳng FPT Polytechnic"
+            android:textSize="24dp"
+            android:textColor="#ffff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="28dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đào tạo đa ngành nghề, đa lĩnh vực"
+            android:textSize="20dp"
+            android:textColor="#ffff"
+            android:gravity="center"
+            android:layout_marginTop="28dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hệ đào tạo liên kế quốc tế"
+            android:textSize="20dp"
+            android:textColor="#ffff"
+            android:gravity="center"
+            android:layout_marginTop="28dp"/>
+        <ImageView
+            android:layout_width="69dp"
+            android:layout_height="10dp"
+            android:src="@drawable/ic_stater_demo"
+            android:layout_marginTop="43dp"
+            />
+        <LinearLayout
+            android:id="@+id/btnLoginStarter"
+            android:layout_width="160dp"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_icon_starter_login"
+            android:gravity="center"
+            android:layout_marginTop="28dp"
+            >
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="17dp"
+                android:textColor="#F56903"/>
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_baseline_arrow_forward"
+                />
+        </LinearLayout>
 
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:gravity="center"
+    android:background="@drawable/my_border"
+    android:paddingLeft="30dp"
+    >
+
+    <TextView
+        android:fontFamily="@font/roboto_medium"
+        android:id="@+id/txtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ngày: 10/7/2023"
+        android:textColor="#F56903"
+        android:paddingBottom="8dp"
+        />
+  <LinearLayout
+      android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+      android:id="@+id/one"
+      android:layout_below="@id/txtDate">
+    <TextView
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_medium"
+        android:id="@+id/txtRoom"
+        android:textColor="#F56903"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phòng 308(nhà T) - "
+        android:layout_below="@+id/txtTitle"
+        android:paddingBottom="8dp"
+        />
+
+    <TextView
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_medium"
+        android:id="@+id/txtSession"
+        android:textColor="#F56903"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ca 5"
+        android:layout_below="@+id/txtPoster"
+        />
+  </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/two"
+        android:layout_below="@id/one">
+        <TextView
+            android:fontFamily="@font/roboto_bold"
+            android:id="@+id/txtSubject"
+            android:textSize="16sp"
+            android:textColor="#F56903"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android Networking - "
+            android:paddingBottom="8dp"
+            />
+
+        <TextView
+            android:fontFamily="@font/roboto_bold"
+            android:id="@+id/txtCode"
+            android:textSize="16sp"
+            android:textColor="#F56903"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MOB403"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:textSize="15sp"
+    android:fontFamily="@font/roboto_medium"
+    android:id="@+id/txtTime"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Thời gian: 17:30 - 19:30"
+        android:textColor="#F56903"
+    android:layout_below="@+id/two"
+        android:paddingBottom="8dp"
+    />
+    <TextView
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_medium"
+        android:id="@+id/txtTeacher"
+        android:textColor="#F56903"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Giảng viên: chann"
+        android:layout_below="@+id/txtTime"
+        />
+
+
+
+</RelativeLayout>
+

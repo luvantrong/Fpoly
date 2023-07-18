@@ -15,4 +15,5 @@
     <color name="text_hint">#898A8D</color>
     <color name="blue">#3E5FAF</color>
     <color name="black_seconds">#090A0A</color>
+    <color name="black_gray">#5D5D63</color>
 </resources>

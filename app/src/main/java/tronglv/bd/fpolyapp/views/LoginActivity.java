@@ -4,14 +4,27 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,20 +37,30 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.adapters.BasisAdapter;
+import tronglv.bd.fpolyapp.adapters.ProgressStudyAdapter;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputLayout lEdtEmail, lEdtPassword;
-    private TextInputEditText edtEmail, edtPassword;
+    private Button btnLoginGoogle;
 
-    private Button btnLogin, btnLoginGoogle;
+    private TextView txtBasis;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private String basisSelected = "";
 
     //Đăng nhập google
     GoogleSignInClient gsc;
     GoogleSignInAccount account;
+
+    List<String> basis = new ArrayList<>();
+
+    AlertDialog alertDialog;
 
 
     @Override
@@ -47,7 +70,31 @@ public class LoginActivity extends AppCompatActivity {
 
         mapping();
 
-        showHintEdtLayout();
+        basis.add("FPT Polytechnic Hồ Chí Minh");
+        basis.add("FPT Polytechnic Cần Thơ");
+        basis.add("FPT Polytechnic Đà Nẵng");
+        basis.add("FPT Polytechnic Tây Nguyên");
+        basis.add("FPT Polytechnic Hà Nội");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View customLayout = getLayoutInflater().inflate(R.layout.dialog_select_basis, null);
+        builder.setView(customLayout);
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.background_dialog_basis);
+
+        RecyclerView rvBasis = customLayout.findViewById(R.id.rvBasis);
+        RecyclerView.LayoutManager layoutManagerProgress = new LinearLayoutManager(this);
+        rvBasis.setLayoutManager(layoutManagerProgress);
+        BasisAdapter basisAdapter = new BasisAdapter(this, basis);
+        rvBasis.setAdapter(basisAdapter);
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(drawable);
+        txtBasis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.show();
+                alertDialog.getWindow().setLayout(710, 650);
+            }
+        });
 
         //Đăng nhập google
 
@@ -68,46 +115,28 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent googleIntent = gsc.getSignInIntent();
-                googleLauncher.launch(googleIntent);
+                
+                if(basisSelected.length() == 0){
+                    Toast.makeText(LoginActivity.this, "Bạn chưa chọn cơ sở", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent googleIntent = gsc.getSignInIntent();
+                    googleLauncher.launch(googleIntent);
+                }
+
             }
         });
 
     }
 
     private void mapping() {
-        lEdtEmail = findViewById(R.id.lEdtEmail);
-        edtEmail = findViewById(R.id.edtEmail);
-
-        lEdtPassword = findViewById(R.id.lEdtPassword);
-        edtPassword = findViewById(R.id.edtPassword);
-
-        btnLogin = findViewById(R.id.btnLogin);
         btnLoginGoogle = findViewById(R.id.btnLoginGoolge);
+        txtBasis = findViewById(R.id.txtBasis);
     }
 
-    private void showHintEdtLayout() {
-        edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus && edtEmail.getText().toString().isEmpty()) {
-                    lEdtEmail.setHint("Jonedoe@gmail.com");
-                } else {
-                    lEdtEmail.setHint("");
-                }
-            }
-        });
-
-        edtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus && edtEmail.getText().toString().isEmpty()) {
-                    lEdtPassword.setHint("*******");
-                } else {
-                    lEdtPassword.setHint("");
-                }
-            }
-        });
+    public void setTextBasis(String text) {
+        txtBasis.setText(text);
+        basisSelected = text;
+        alertDialog.dismiss();
     }
 
     ActivityResultLauncher<Intent> googleLauncher = registerForActivityResult(

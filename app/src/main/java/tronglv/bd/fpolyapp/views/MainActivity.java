@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         loadSubjectStudy();
     }
 
-    private void signOut() {
+    public void signOut() {
         if (account != null) {
             gsc.signOut().addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
                 @Override

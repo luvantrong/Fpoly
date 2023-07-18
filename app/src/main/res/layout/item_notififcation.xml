@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="120dp"
+    android:gravity="center"
+    android:background="@drawable/my_border"
+    >
 
     <TextView
+        android:fontFamily="@font/roboto_bold"
         android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="330dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:text="THÔNG BÁO LỊCH HỌC MÔN PDP102 KHOÁ 19.3
-HỌC KỲ SUMMER 2023 (BLOCK 2)"
+                     HỌC KỲ SUMMER 2023 (BLOCK 2)"
+        android:paddingBottom="5dp"
+        android:textColor="@color/black"
+
         />
 
     <TextView
+        android:fontFamily="@font/roboto_medium"
         android:id="@+id/txtPoster"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Người đăng : abc"
+        android:text="Người đăng : chann"
         android:layout_below="@+id/txtTitle"
+        android:paddingBottom="5dp"
         />
 
     <TextView
+        android:fontFamily="@font/roboto_medium"
         android:id="@+id/txtTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,3 +39,4 @@ HỌC KỲ SUMMER 2023 (BLOCK 2)"
         />
 
 </RelativeLayout>
+

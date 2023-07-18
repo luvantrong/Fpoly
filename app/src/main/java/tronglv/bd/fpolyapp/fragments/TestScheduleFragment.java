@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,12 +15,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.adapters.TestScheduleAdapter;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.TestSchedule;
 
 public class TestScheduleFragment extends Fragment {
 
-    private RecyclerView rvTestSchedules;
+    private RecyclerView rvTestSchedule;
     ArrayList<TestSchedule> listTestSchedule;
 
     public TestScheduleFragment() {
@@ -54,10 +56,10 @@ public class TestScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        rvListProducts = view.findViewById(R.id.rvListProducts);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        rvListProducts.setLayoutManager(layoutManager);
-//        AdapterProdutcs adapter = new AdapterProdutcs(getContext(), listProducts);
-//        rvListProducts.setAdapter(adapter);
+        rvTestSchedule = view.findViewById(R.id.rvTestschedule);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvTestSchedule.setLayoutManager(layoutManager);
+        TestScheduleAdapter adapter = new TestScheduleAdapter(getContext(), listTestSchedule);
+        rvTestSchedule.setAdapter(adapter);
     }
 }

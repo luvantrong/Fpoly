@@ -15,11 +15,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.adapters.NotificationAdapter;
 import tronglv.bd.fpolyapp.models.Notification;
 
 public class NotificationFragment extends Fragment {
 
-    private RecyclerView rvNotifications;
+    private RecyclerView rvNotification;
     ArrayList<Notification> listNotification;
 
     public NotificationFragment() {
@@ -54,11 +55,11 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        rvListProducts = view.findViewById(R.id.rvListProducts);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        rvListProducts.setLayoutManager(layoutManager);
-//        AdapterProdutcs adapter = new AdapterProdutcs(getContext(), listProducts);
-//        rvListProducts.setAdapter(adapter);
+        rvNotification = view.findViewById(R.id.rvNotification);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvNotification.setLayoutManager(layoutManager);
+        NotificationAdapter adapter = new NotificationAdapter(getContext(), listNotification);
+        rvNotification.setAdapter(adapter);
     }
 
 

@@ -2,65 +2,76 @@ package tronglv.bd.fpolyapp.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import tronglv.bd.fpolyapp.R;
+import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.adapters.ProgressStudyAdapter;
+import tronglv.bd.fpolyapp.adapters.SubjectStudyAdapter;
+import tronglv.bd.fpolyapp.models.Notification;
+import tronglv.bd.fpolyapp.models.ProgressStudy;
+import tronglv.bd.fpolyapp.models.SubjectStudy;
+
 public class StudyFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView rvSubjectStudy, rvProgress;
+    ArrayList<SubjectStudy> listSubjectStudy;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ArrayList<ProgressStudy> listProgressStudy;
 
     public StudyFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudyFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudyFragment newInstance(String param1, String param2) {
+    //Truyền data vào fragment khi khởi tạo
+    public static StudyFragment newInstance(ArrayList<SubjectStudy> listSubjectStudy, ArrayList<ProgressStudy> listProgressStudy) {
         StudyFragment fragment = new StudyFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable("subjectstudys", listSubjectStudy);
+        args.putSerializable("progressstudys", listProgressStudy);
         fragment.setArguments(args);
         return fragment;
     }
 
+    //Đọc data
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            listSubjectStudy = (ArrayList<SubjectStudy>) getArguments().getSerializable("subjectstudys");
+            listProgressStudy = (ArrayList<ProgressStudy>) getArguments().getSerializable("progressstudys");
         }
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_study, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_study, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rvSubjectStudy = view.findViewById(R.id.rvSubjectStudy);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+        rvSubjectStudy.setLayoutManager(layoutManager);
+        SubjectStudyAdapter adapter = new SubjectStudyAdapter(getContext(), listSubjectStudy);
+        rvSubjectStudy.setAdapter(adapter);
+
+        rvProgress = view.findViewById(R.id.rvProgress);
+        RecyclerView.LayoutManager layoutManagerProgress = new LinearLayoutManager(getContext());
+        rvProgress.setLayoutManager(layoutManagerProgress);
+        ProgressStudyAdapter adapterProgress = new ProgressStudyAdapter(getContext(), listProgressStudy);
+        rvProgress.setAdapter(adapterProgress);
     }
 }

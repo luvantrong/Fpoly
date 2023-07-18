@@ -16,4 +16,5 @@
     <color name="blue">#3E5FAF</color>
     <color name="black_seconds">#090A0A</color>
     <color name="black_gray">#5D5D63</color>
+    <color name="text_bottom_tab">#1C1C1E</color>
 </resources>

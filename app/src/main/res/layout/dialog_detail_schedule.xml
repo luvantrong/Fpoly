@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity= "center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingHorizontal="21dp"
+            android:background="@drawable/bg_dialog_detail_schedule">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="23dp"
+                android:textSize="20dp"
+                android:text="[Chi tiết]"
+                android:textColor="#F0000000"
+                android:gravity="center"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Lớp: MD17306"
+                android:textColor="#F0000000"
+                android:paddingTop="3dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Giảng viên: channn3"
+                android:textColor="#F0000000"
+                android:paddingTop="4dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Thời gian: 17:30 - 19:30"
+                android:textColor="#F0000000"
+                android:gravity="center"
+                android:paddingTop="3dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Giảng đường: Phần mền Quang Trung"
+                android:textColor="#F0000000"
+                android:paddingTop="3dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Link meet: https://meet.google.com/top-ynme-hka?authuser=0&amp;pli=1"
+                android:textColor="#F0000000"
+                android:paddingTop="3dp"
+                android:layout_marginBottom="30dp"
+                />
+        </LinearLayout>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:text="Đóng"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:textColor="#FFFF"
+            android:background="@drawable/bg_btn_dialog_schedule"
+            android:layout_marginTop="-28dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>

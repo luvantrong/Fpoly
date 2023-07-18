@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:padding="7dp"
+        android:gravity="center"
+        android:background="@drawable/bg_item_schedule">
+        <LinearLayout
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/imgItemSchedule"
+                android:layout_width="64dp"
+                android:layout_height="75dp"
+                android:background = "@drawable/image_item_schedule"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="176dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center|left"
+            android:layout_marginStart="12dp">
+            <TextView
+                android:id="@+id/txtDay"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="15/07/2023"
+                android:textSize="14dp"
+                android:textColor="#F56903"/>
+            <LinearLayout
+                android:layout_width="176dp"
+                android:layout_height="16dp"
+                android:gravity="center|left"
+                android:layout_marginVertical="7">
+                <TextView
+                    android:id="@+id/txtRoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="Phòng 308 (Nhà T) - Ca 5"
+                    android:textStyle="bold"
+                    android:textSize="14dp"
+                    android:textColor="#F56903"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="176dp"
+                android:layout_height="16dp"
+                android:gravity="center|left">
+                <TextView
+                    android:id="@+id/txtNameCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="Android Networking -Mob403"
+                    android:textColor="#F56903"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:paddingTop="7dp"
+            android:orientation="horizontal"
+            android:gravity="center|top">
+            <ImageButton
+                android:id="@+id/btnMoreSchedule"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_btn_item_schedule"
+                android:src="@drawable/ic_baseline_more_vert"
+                android:elevation="5dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

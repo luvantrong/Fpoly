@@ -38,7 +38,12 @@ public class SubjectStudyAdapter extends RecyclerView.Adapter<SubjectStudyViewHo
     public void onBindViewHolder(@NonNull SubjectStudyViewHolder holder, int position) {
         SubjectStudy subjectStudy = listSubjectStudy.get(holder.getAdapterPosition());
         String nameSubject = subjectStudy.getNameSubject();
-        holder.txtNameSubject.setText(nameSubject);
+        if (nameSubject.length() > 15) {
+            String newStr = nameSubject.substring(0, 15);
+            holder.txtNameSubject.setText(newStr + "...");
+        } else {
+            holder.txtNameSubject.setText(nameSubject);
+        }
         String codeSubject = subjectStudy.getCodeSubject();
         holder.txtCodeSubject.setText(codeSubject);
         String formStudy = subjectStudy.getFormStudy();

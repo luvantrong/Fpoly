@@ -28,6 +28,9 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.fragments.ProfileFragment;
+import tronglv.bd.fpolyapp.fragments.StudyFragment;
+import tronglv.bd.fpolyapp.models.ProgressStudy;
+import tronglv.bd.fpolyapp.models.SubjectStudy;
 import tronglv.bd.fpolyapp.models.User;
 import tronglv.bd.fpolyapp.services.BottomService;
 
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
         txtNotification = findViewById(R.id.txtNotification);
         txtSchedule = findViewById(R.id.txtSchedule);
         txtProfile = findViewById(R.id.txtProfile);
+
+        loadSubjectStudy();
     }
 
     private void signOut() {
@@ -94,6 +99,35 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void loadSubjectStudy (){
+        SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
+        SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
+        SubjectStudy subjectStudy2 = new SubjectStudy(3, "Android Networking", "MOB403", "Offline", "17 buổi");
+        SubjectStudy subjectStudy3 = new SubjectStudy(4, "Khởi sự doanh nghiệp", "SYB3012", "Online", "6 buổi");
+
+        ArrayList<SubjectStudy> listSubjectStudy = new ArrayList<SubjectStudy>();
+        listSubjectStudy.add(subjectStudy);
+        listSubjectStudy.add(subjectStudy1);
+        listSubjectStudy.add(subjectStudy2);
+        listSubjectStudy.add(subjectStudy3);
+
+        ProgressStudy progressStudy = new ProgressStudy(1, "Phát triển cá nhân 2", 17, 1, 17);
+        ProgressStudy progressStudy1 = new ProgressStudy(1, "Quản lý dự án với phần mềm Agile", 6, 5, 17);
+        ProgressStudy progressStudy2 = new ProgressStudy(1, "Android Networking", 7, 0, 17);
+        ProgressStudy progressStudy3 = new ProgressStudy(1, "Khởi sự doanh nghiệp", 2, 0, 6);
+
+        ArrayList<ProgressStudy> listProgressStudy = new ArrayList<>();
+        listProgressStudy.add(progressStudy);
+        listProgressStudy.add(progressStudy1);
+        listProgressStudy.add(progressStudy2);
+        listProgressStudy.add(progressStudy3);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy))
+                .commit();
     }
 
     //Thay đổi tab menu bottom
@@ -130,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             String result = intent.getStringExtra("data");
             switch (result) {
                 case "home": {
+                    loadSubjectStudy();
                     if (selectedTab != 1) {
                         
                         viewHome.setBackgroundResource(R.drawable.background_item_bottomtab);
@@ -217,7 +252,6 @@ public class MainActivity extends AppCompatActivity {
                             .beginTransaction()
                             .replace(R.id.flMain, ProfileFragment.newInstance())
                             .commit();
-
                     if (selectedTab != 4) {
                         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));

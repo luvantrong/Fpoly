@@ -42,11 +42,11 @@ public class TestScheduleAdapter extends RecyclerView.Adapter<TestScheduleViewHo
         String room = testSchedule.getRoom();
         holder.txtRoom.setText(room);
         String session = testSchedule.getSession();
-        holder.txtSession.setText(session);
+        holder.txtSession.setText(" - " +session);
         String subject = testSchedule.getSubject();
         holder.txtSubject.setText(subject);
         String code = testSchedule.getCode();
-        holder.txtCode.setText(code);
+        holder.txtCode.setText(" (" + code + ")");
         String time = testSchedule.getTime();
         holder.txtTime.setText("Thời gian: "+time);
         String teacher = testSchedule.getTeacher();

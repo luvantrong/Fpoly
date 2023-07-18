@@ -4,71 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment">
+    tools:context=".fragments.ProfileFragment"
+    android:background="@color/white">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/primary" />
+
 
     <ImageView
         android:layout_width="700dp"
         android:layout_height="400dp"
         android:layout_marginLeft="-100dp"
-        android:layout_marginTop="-50dp"
+        android:layout_marginTop="-120dp"
         android:src="@drawable/background_profile" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="24dp">
-
-        <LinearLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:background="@drawable/custom_brback"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/back_icon" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="110dp"
-            android:layout_marginTop="14dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Hồ sơ cá nhân"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
-
-        <LinearLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/custom_brback"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/imgChoice"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/choice_icon" />
-        </LinearLayout>
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp">
+        android:layout_marginTop="65dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
@@ -79,7 +31,8 @@
             <ImageView
                 android:id="@+id/imgAvatar"
                 android:layout_width="100dp"
-                android:layout_height="100dp" />
+                android:layout_height="100dp"
+                android:src="@drawable/img"/>
 
         </androidx.cardview.widget.CardView>
 
@@ -95,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
-                android:text="FPT Polytechnic"
+                android:text="Lê Thị Thuỷ Tiên"
                 android:textColor="@color/text_primary"
                 android:textSize="20sp" />
 
@@ -117,13 +70,14 @@
         android:layout_width="320dp"
         android:layout_height="2dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="200dp"
         android:background="@color/text_hint" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp">
+        android:layout_marginTop="180dp"
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -167,14 +121,14 @@
         android:layout_width="1dp"
         android:layout_height="30dp"
         android:layout_marginLeft="130dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="220dp"
         android:background="@color/text_hint" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="240dp">
+        android:layout_marginTop="180dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -217,13 +171,13 @@
         android:layout_width="1dp"
         android:layout_height="30dp"
         android:layout_marginLeft="260dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="220dp"
         android:background="@color/text_hint" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp">
+        android:layout_marginTop="180dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -266,7 +220,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="300dp"
         android:background="@drawable/custom_profile"
         android:orientation="vertical">
 
@@ -343,7 +297,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="540dp"
+        android:layout_marginTop="510dp"
         android:background="@drawable/custom_profile"
         android:orientation="vertical"
         android:padding="16dp">

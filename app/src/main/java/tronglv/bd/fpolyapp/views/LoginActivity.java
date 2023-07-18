@@ -122,10 +122,8 @@ public class LoginActivity extends AppCompatActivity {
                     Intent googleIntent = gsc.getSignInIntent();
                     googleLauncher.launch(googleIntent);
                 }
-
             }
         });
-
     }
 
     private void mapping() {

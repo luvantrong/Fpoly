@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,8 +15,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
-import tronglv.bd.fpolyapp.models.Notification;
+import tronglv.bd.fpolyapp.adapters.ScheduleAdapter;
 import tronglv.bd.fpolyapp.models.Schedule;
+
 
 public class ScheduleFragment extends Fragment {
     private RecyclerView rvSchedules;
@@ -47,17 +49,18 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        rvListProducts = view.findViewById(R.id.rvListProducts);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        rvListProducts.setLayoutManager(layoutManager);
-//        AdapterProdutcs adapter = new AdapterProdutcs(getContext(), listProducts);
-//        rvListProducts.setAdapter(adapter);
+        rvSchedules = view.findViewById(R.id.rvSchedule);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvSchedules.setLayoutManager(layoutManager);
+        ScheduleAdapter adapter = new ScheduleAdapter(getContext(), listSchedule);
+        rvSchedules.setAdapter(adapter);
     }
 
 }

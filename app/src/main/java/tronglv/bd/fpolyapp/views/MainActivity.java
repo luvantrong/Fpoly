@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.fragments.ProfileFragment;
+import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
@@ -130,6 +131,13 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    private void loadSchedulePlus() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flMain, SchedulePlusFragment.newInstance())
+                .commit();
+    }
+
     //Thay đổi tab menu bottom
     public void onCLickList(View view) {
         int id = view.getId();
@@ -220,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 case "schedule": {
+                    loadSchedulePlus();
                     if (selectedTab != 3) {
 
                         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));

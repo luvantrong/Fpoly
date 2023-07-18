@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         if (account != null) {
             Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(homeIntent);
+            overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
             finish();
         }
 
@@ -152,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (account != null) {
                             Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(homeIntent);
+                            overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                             finish();
                         }
                     } catch (Exception e) {

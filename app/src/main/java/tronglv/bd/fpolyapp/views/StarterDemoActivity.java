@@ -26,6 +26,8 @@ public class StarterDemoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent loginIntent = new Intent(StarterDemoActivity.this, LoginActivity.class);
                 startActivity(loginIntent);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+                finish();
             }
         });
     }

@@ -10,16 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.User;
+import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ProfileFragment extends Fragment {
 
     private RecyclerView rvProfile;
+    private TextView txtLogOut;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -53,10 +56,13 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        rvListProducts = view.findViewById(R.id.rvListProducts);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        rvListProducts.setLayoutManager(layoutManager);
-//        AdapterProdutcs adapter = new AdapterProdutcs(getContext(), listProducts);
-//        rvListProducts.setAdapter(adapter);
+        txtLogOut = view.findViewById(R.id.txtLogOut);
+
+        txtLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)view.getContext()).signOut();
+            }
+        });
     }
 }

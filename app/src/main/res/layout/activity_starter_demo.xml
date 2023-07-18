@@ -64,6 +64,7 @@
             android:layout_marginTop="43dp"
             />
         <LinearLayout
+            android:id="@+id/btnLoginStarter"
             android:layout_width="160dp"
             android:layout_height="56dp"
             android:orientation="horizontal"
@@ -73,7 +74,7 @@
             >
             <TextView
                 android:layout_width="50dp"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:text="Login"
                 android:textSize="17dp"
                 android:textColor="#F56903"/>

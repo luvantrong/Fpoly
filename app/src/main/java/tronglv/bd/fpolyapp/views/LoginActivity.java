@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         View customLayout = getLayoutInflater().inflate(R.layout.dialog_select_basis, null);
         builder.setView(customLayout);
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.background_dialog_basis);
-
         RecyclerView rvBasis = customLayout.findViewById(R.id.rvBasis);
         RecyclerView.LayoutManager layoutManagerProgress = new LinearLayoutManager(this);
         rvBasis.setLayoutManager(layoutManagerProgress);
@@ -88,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         rvBasis.setAdapter(basisAdapter);
         alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(drawable);
+        alertDialog.setCanceledOnTouchOutside(false);
         txtBasis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

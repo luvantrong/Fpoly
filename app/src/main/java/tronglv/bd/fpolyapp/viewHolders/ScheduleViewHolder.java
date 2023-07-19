@@ -1,6 +1,8 @@
 package tronglv.bd.fpolyapp.viewHolders;
 
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 public class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener  {
 
     public TextView txtDay, txtRoom, txtNameCourse;
+    public ImageView btnMoreSchedule;
     private ItemClickListener itemClickListener;
 
     public ScheduleViewHolder(@NonNull View itemView) {
@@ -22,6 +25,7 @@ public class ScheduleViewHolder extends RecyclerView.ViewHolder implements View.
         txtDay = itemView.findViewById(R.id.txtDay);
         txtRoom = itemView.findViewById(R.id.txtRoom);
         txtNameCourse = itemView.findViewById(R.id.txtNameCourse);
+        btnMoreSchedule = itemView.findViewById(R.id.btnMoreSchedule);
     }
 
 

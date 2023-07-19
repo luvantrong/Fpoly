@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment {
         txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)view.getContext()).signOut();
+                ((MainActivity)view.getContext()).showSignOut();
             }
         });
     }

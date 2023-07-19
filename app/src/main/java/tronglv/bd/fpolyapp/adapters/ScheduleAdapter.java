@@ -15,6 +15,7 @@ import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.viewHolders.ScheduleViewHolder;
+import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleViewHolder> {
 
@@ -51,13 +52,20 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleViewHolder> {
         holder.txtRoom.setText(room + " - " + slot);
         holder.txtNameCourse.setText(nameCourse + " - " +codeCourse);
 
+        holder.btnMoreSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)context).showDetaiSchedule(schedule);
+            }
+        });
+
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-//                    ((MainActivity)context).handleToDetailProduct(product);
+                    ((MainActivity)context).showDetaiSchedule(schedule);
                 }
             }
         });

@@ -27,6 +27,7 @@
         android:elevation="10dp"
         android:layout_alignParentBottom="true"
         tools:targetApi="lollipop"
+        android:visibility="visible"
         android:background="@drawable/background_bottomtab">
 
         <LinearLayout
@@ -160,4 +161,72 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlSignOut"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#090909"
+        android:visibility="gone"
+        >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlViewSignOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="30dp"
+        android:background="@drawable/background_study"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/txtTitleSignOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ĐĂNG XUẤT"
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/roboto_bold"/>
+
+        <TextView
+            android:id="@+id/txtContentSignOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bạn có chắc chắn muốn đăng xuất không?"
+            android:layout_below="@id/txtTitleSignOut"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/btnSignOutMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_below="@+id/txtContentSignOut"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="30dp"
+            android:textSize="20sp"
+            android:background="@drawable/background_btn_login"/>
+
+        <TextView
+            android:id="@+id/txtCancelSignOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Huỷ"
+            android:layout_below="@id/btnSignOutMain"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginTop="20dp"/>
+    </RelativeLayout>
+    
+
 </RelativeLayout>

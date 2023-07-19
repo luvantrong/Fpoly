@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragments.SchedulePlusFragment">
 
@@ -10,7 +11,15 @@
        android:id="@+id/tlSchedulePlus"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:background="@color/primary"/>
+       app:tabIndicator="@drawable/background_item_tablayout_left"
+       app:tabIndicatorColor="@null"
+       app:tabSelectedTextColor="@color/white"
+       app:tabIndicatorAnimationMode="elastic"
+       app:tabMode="fixed"
+       app:tabIndicatorGravity="stretch"
+       android:background="#EEEEEE"
+       app:tabRippleColor="@android:color/transparent"
+       />
 
    <androidx.viewpager.widget.ViewPager
        android:id="@+id/vpSchedulesPlus"

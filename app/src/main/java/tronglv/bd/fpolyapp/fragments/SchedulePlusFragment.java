@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,6 +75,11 @@ public class SchedulePlusFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 vpSchedulesPlus.setCurrentItem(tab.getPosition());
+                if(tab.getPosition()==0){
+                    tlSchedulePlus.setSelectedTabIndicator(R.drawable.background_item_tablayout_left);
+                }else{
+                    tlSchedulePlus.setSelectedTabIndicator(R.drawable.background_item_tablayout_right);
+                }
             }
 
             @Override

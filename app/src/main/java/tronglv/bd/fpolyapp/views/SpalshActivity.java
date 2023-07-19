@@ -22,6 +22,6 @@ public class SpalshActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 finish();
             }
-        }, 3000);
+        }, 2000);
     }
 }

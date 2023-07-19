@@ -2,20 +2,35 @@ package tronglv.bd.fpolyapp.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -33,6 +48,7 @@ import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
+import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
 import tronglv.bd.fpolyapp.models.User;
 import tronglv.bd.fpolyapp.services.BottomService;
@@ -40,9 +56,13 @@ import tronglv.bd.fpolyapp.services.BottomService;
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout flMain;
-    private LinearLayout viewHome, viewNotification, viewSchedule, viewProfile;
+    private LinearLayout viewHome, viewNotification, viewSchedule, viewProfile, bottomBar;
     private ImageView imgHome, imgNotification, imgSchedule, imgProfile;
-    private TextView txtHome, txtNotification, txtSchedule, txtProfile;
+    private TextView txtHome, txtNotification, txtSchedule, txtProfile, txtCancelSignOut;
+
+    private RelativeLayout rlSignOut, rlViewSignOut;
+
+    private Button btnSignOutMain;
 
     private int selectedTab = 1;
 
@@ -76,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         viewNotification = findViewById(R.id.viewNotification);
         viewSchedule = findViewById(R.id.viewSchedule);
         viewProfile = findViewById(R.id.viewProfile);
+        bottomBar = findViewById(R.id.bottomBar);
 
 
         imgHome = findViewById(R.id.imgHome);
@@ -87,8 +108,28 @@ public class MainActivity extends AppCompatActivity {
         txtNotification = findViewById(R.id.txtNotification);
         txtSchedule = findViewById(R.id.txtSchedule);
         txtProfile = findViewById(R.id.txtProfile);
+        txtCancelSignOut = findViewById(R.id.txtCancelSignOut);
+
+        btnSignOutMain = findViewById(R.id.btnSignOutMain);
+        rlSignOut = findViewById(R.id.rlSignOut);
+        rlViewSignOut = findViewById(R.id.rlViewSignOut);
+
 
         loadSubjectStudy();
+
+        txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideSignOut();
+            }
+        });
+
+        btnSignOutMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
     }
 
     public void signOut() {
@@ -98,12 +139,29 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     Intent homeIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(homeIntent);
+                    overridePendingTransition(R.anim.anim_enter1, R.anim.anim_exit1);
                     finish();
                 }
             });
+            rlSignOut.setVisibility(View.GONE);
+            bottomBar.setVisibility(View.VISIBLE);
         }
     }
 
+
+    public void showSignOut() {
+        bottomBar.setVisibility(View.GONE);
+        rlSignOut.setVisibility(View.VISIBLE);
+        rlViewSignOut.setVisibility(View.VISIBLE);
+        rlViewSignOut.setAlpha(1);
+        rlSignOut.setAlpha(0.7f);
+    }
+
+    private void hideSignOut() {
+        bottomBar.setVisibility(View.VISIBLE);
+        rlSignOut.setVisibility(View.GONE);
+        rlViewSignOut.setVisibility(View.GONE);
+    }
     private void loadSubjectStudy (){
         SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
         SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
@@ -183,6 +241,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void showDetaiSchedule(Schedule schedule){
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.dialog_detail_schedule, null);
+
+        TextView txtCodeNameClass = viewDialog.findViewById(R.id.txtCodeNameClass);
+        TextView txtNameTeacher = viewDialog.findViewById(R.id.txtNameTeacher);
+        TextView txtSlot = viewDialog.findViewById(R.id.txtSlot);
+        TextView txtBasis = viewDialog.findViewById(R.id.txtBasis);
+        TextView txtLinkMeet = viewDialog.findViewById(R.id.txtLinkMeet);
+        Button btnClose = viewDialog.findViewById(R.id.btnClose);
+
+        String t1 = "<b>Lớp: </b>" + schedule.getClassName();
+        txtCodeNameClass.setText(android.text.Html.fromHtml(t1));
+
+        String t2 = "<b>Giảng viên: </b>" + schedule.getTeacherName();
+        txtNameTeacher.setText(android.text.Html.fromHtml(t2));
+
+        String t3 = "<b>Thời gian: </b>" + schedule.getSlot();
+        txtSlot.setText(android.text.Html.fromHtml(t3));
+
+        String t4 = "<b>Giảng đường: </b>" + schedule.getAddress();
+        txtBasis.setText(android.text.Html.fromHtml(t4));
+
+        String t5 = "<b>Link meet: </b>" + "https://meet.google.com/top-ynme-hka?authuser=0&pli=1";
+        txtLinkMeet.setText(android.text.Html.fromHtml(t5));
+        builder.setView(viewDialog);
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.background_dialog_schedule_show);
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(drawable);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+    }
+
     //Tín hiệu Bottom Service
     private BroadcastReceiver bottomReceiver = new BroadcastReceiver() {
         @Override
@@ -209,10 +308,16 @@ public class MainActivity extends AppCompatActivity {
                         txtProfile.setVisibility(View.GONE);
                         
 
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                        scaleAnimation.setDuration(200);
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//
+                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        scaleAnimation.setDuration(500);
                         scaleAnimation.setFillAfter(true);
+                        viewHome.setPivotX(viewHome.getWidth() / 2f);
+                        viewHome.setPivotY(viewHome.getHeight() / 2f);
                         viewHome.startAnimation(scaleAnimation);
+                        viewHome.setVisibility(View.VISIBLE);
                         selectedTab = 1;
                         break;
                     }
@@ -237,10 +342,16 @@ public class MainActivity extends AppCompatActivity {
                         txtSchedule.setVisibility(View.GONE);
                         txtProfile.setVisibility(View.GONE);
 
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                        scaleAnimation.setDuration(200);
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        scaleAnimation.setDuration(500);
                         scaleAnimation.setFillAfter(true);
+                        viewNotification.setPivotX(viewNotification.getWidth() / 2f);
+                        viewNotification.setPivotY(viewNotification.getHeight() / 2f);
                         viewNotification.startAnimation(scaleAnimation);
+                        viewNotification.setVisibility(View.VISIBLE);
                         selectedTab = 2;
                         break;
                     }
@@ -265,10 +376,16 @@ public class MainActivity extends AppCompatActivity {
                         txtSchedule.setVisibility(View.VISIBLE);
                         txtProfile.setVisibility(View.GONE);
 
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                        scaleAnimation.setDuration(200);
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        scaleAnimation.setDuration(500);
                         scaleAnimation.setFillAfter(true);
+                        viewSchedule.setPivotX(viewSchedule.getWidth() / 2f);
+                        viewSchedule.setPivotY(viewSchedule.getHeight() / 2f);
                         viewSchedule.startAnimation(scaleAnimation);
+                        viewSchedule.setVisibility(View.VISIBLE);
                         selectedTab = 3;
                         break;
                     }
@@ -297,10 +414,16 @@ public class MainActivity extends AppCompatActivity {
                         txtProfile.setVisibility(View.VISIBLE);
 
 
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                        scaleAnimation.setDuration(200);
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        scaleAnimation.setDuration(500);
                         scaleAnimation.setFillAfter(true);
+                        viewProfile.setPivotX(viewProfile.getWidth() / 2f);
+                        viewProfile.setPivotY(viewProfile.getHeight() / 2f);
                         viewProfile.startAnimation(scaleAnimation);
+                        viewProfile.setVisibility(View.VISIBLE);
                         selectedTab = 4;
                         break;
                     }

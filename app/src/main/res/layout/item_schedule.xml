@@ -73,7 +73,7 @@
             android:orientation="horizontal"
             android:gravity="center|top"
             android:layout_marginStart="20dp">
-            <ImageButton
+            <ImageView
                 android:id="@+id/btnMoreSchedule"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

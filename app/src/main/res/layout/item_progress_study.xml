@@ -32,7 +32,7 @@
 
     <ProgressBar
         android:id="@+id/ppProgress"
-        android:layout_width="230dp"
+        android:layout_width="225dp"
         android:layout_height="10dp"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:max="100"
@@ -55,6 +55,7 @@
         android:layout_marginTop="72dp"
         android:textSize="10sp"
         android:textStyle="bold"
+        android:gravity="right"
         android:fontFamily="@font/roboto_bold"/>
 
     <ImageView

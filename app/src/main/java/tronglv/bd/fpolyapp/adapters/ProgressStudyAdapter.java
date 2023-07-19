@@ -1,11 +1,15 @@
 package tronglv.bd.fpolyapp.adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -41,7 +45,7 @@ public class ProgressStudyAdapter extends RecyclerView.Adapter<ProgressStudyView
         holder.txtNameSubjectProgress.setText(nameSubject);
         int numberProgressBar = Math.round(progressStudy.getLearn() * 100 / progressStudy.getSumLearn());
         holder.ppProgress.setProgress(numberProgressBar);
-        holder.txtPercent.setText(String.valueOf(numberProgressBar));
+        holder.txtPercent.setText(String.valueOf(numberProgressBar) + "%");
         String learn = String.valueOf(progressStudy.getLearn());
         holder.txtStudyPlus.setText("Đã học: " + learn + "/" + progressStudy.getSumLearn() + " buổi");
         String absent = String.valueOf("Vắng: " + progressStudy.getAbsent() + "/" + progressStudy.getSumLearn() + " buổi");
@@ -52,6 +56,11 @@ public class ProgressStudyAdapter extends RecyclerView.Adapter<ProgressStudyView
 
         if (numberStatus > 20) {
             status = "Failed";
+            int color = Color.parseColor("#F62C2A");
+            ColorStateList progressColor = ColorStateList.valueOf(color);
+            holder.ppProgress.setProgressTintList(progressColor);
+            holder.ppProgress.setProgress(100);
+            holder.txtPercent.setText("0%");
         } else {
             status = "Studying";
         }

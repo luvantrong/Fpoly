@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class ProfileFragment extends Fragment {
 
     private RecyclerView rvProfile;
     private TextView txtLogOut;
+
+    private ImageView imgEdit;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -57,6 +60,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         txtLogOut = view.findViewById(R.id.txtLogOut);
+        imgEdit = view.findViewById(R.id.imgEdit);
 
         txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,5 +68,7 @@ public class ProfileFragment extends Fragment {
                 ((MainActivity)view.getContext()).showSignOut();
             }
         });
+
+     
     }
 }

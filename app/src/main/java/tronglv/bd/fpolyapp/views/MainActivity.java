@@ -55,6 +55,7 @@ import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
+import tronglv.bd.fpolyapp.models.TestSchedule;
 import tronglv.bd.fpolyapp.models.Tution;
 import tronglv.bd.fpolyapp.models.User;
 import tronglv.bd.fpolyapp.services.BottomService;
@@ -344,6 +345,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public ArrayList<Schedule> getDataSchedule () {
+        Schedule schedule = new Schedule("MOB403","Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)","17h30 - 19h30", "MD17306", "channn3", "Ca 5" );
+        ArrayList<Schedule> listSchedule = new ArrayList<>();
+        listSchedule.add(schedule);
+        listSchedule.add(schedule);
+        listSchedule.add(schedule);
+        listSchedule.add(schedule);
+        return listSchedule;
+    }
+
+    public ArrayList<TestSchedule> getDataTestSchedule () {
+        TestSchedule testSchedule = new TestSchedule("11/08/2023", "Phòng 308 (Toà T)", "Ca 5", "Android Networking", "MOB403", "17h30 - 19h30", "chann3");
+        ArrayList<TestSchedule> listTestSchedule = new ArrayList<>();
+        listTestSchedule.add(testSchedule);
+        listTestSchedule.add(testSchedule);
+        listTestSchedule.add(testSchedule);
+        return listTestSchedule;
+    }
+
 
     //Tín hiệu Bottom Service
     private BroadcastReceiver bottomReceiver = new BroadcastReceiver() {

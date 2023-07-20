@@ -3,6 +3,7 @@ package tronglv.bd.fpolyapp.views;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.BroadcastReceiver;
@@ -42,14 +43,19 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.fragments.NewsFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationFragment;
+import tronglv.bd.fpolyapp.fragments.NotificationPlusFragment;
 import tronglv.bd.fpolyapp.fragments.ProfileFragment;
 import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
+import tronglv.bd.fpolyapp.fragments.TutionFragment;
+import tronglv.bd.fpolyapp.models.News;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
+import tronglv.bd.fpolyapp.models.Tution;
 import tronglv.bd.fpolyapp.models.User;
 import tronglv.bd.fpolyapp.services.BottomService;
 
@@ -66,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int selectedTab = 1;
 
+
     //Google
     GoogleSignInClient gsc;
     GoogleSignInAccount account;
@@ -76,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mapping();
+
+
 
         account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
@@ -155,12 +164,30 @@ public class MainActivity extends AppCompatActivity {
         rlViewSignOut.setVisibility(View.VISIBLE);
         rlViewSignOut.setAlpha(1);
         rlSignOut.setAlpha(0.7f);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                1.0f, 1.0f,
+                0.0f, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 1.0f
+        );
+        scaleAnimation.setDuration(500);
+        rlViewSignOut.setPivotX(viewHome.getWidth() / 2f);
+        rlViewSignOut.setPivotY(viewHome.getHeight() / 2f);
+        rlViewSignOut.startAnimation(scaleAnimation);
     }
 
     private void hideSignOut() {
-        bottomBar.setVisibility(View.VISIBLE);
         rlSignOut.setVisibility(View.GONE);
         rlViewSignOut.setVisibility(View.GONE);
+        bottomBar.setVisibility(View.VISIBLE);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                1.0f, 0.0f,
+                1.0f, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        scaleAnimation.setDuration(300);
+        rlViewSignOut.startAnimation(scaleAnimation);
     }
     private void loadSubjectStudy (){
         SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
@@ -198,7 +225,15 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void loadNotification() {
+    public void loadNotification() {
+
+                getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flMain, NotificationPlusFragment.newInstance())
+                .commit();
+    }
+
+    public void loadNotifyFragment(FrameLayout frameLayout) {
         Notification notification = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHOÁ 19.3 \n" +
                 "HỌC KỲ SUMMER 2023 (BLOCK 2)", "nhapnh", "15/07/2023 11:08");
 
@@ -207,10 +242,38 @@ public class MainActivity extends AppCompatActivity {
         listNotification.add(notification);
         listNotification.add(notification);
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(frameLayout.getId(), NotificationFragment.newInstance(listNotification))
+                .commit();
+    }
+
+    public void loadNewsFragment(FrameLayout frameLayout) {
+        News news = new News("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
+                "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43");
+
+        ArrayList<News> listNews = new ArrayList<>();
+        listNews.add(news);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, NotificationFragment.newInstance(listNotification))
+                .replace(frameLayout.getId(), NewsFragment.newInstance(listNews))
+                .commit();
+    }
+
+    public void loadTutionsFragment(FrameLayout frameLayout) {
+        Tution tution = new Tution("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
+                "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32");
+        Tution tution1 = new Tution("DANH SÁCH SINH VIÊN HOÀN THÀNH \n" +
+                "HỌC PHÍ KỲ SUMMER 2023", "lientt", "05/05/2023 10:26");
+
+        ArrayList<Tution> listTution = new ArrayList<>();
+        listTution.add(tution);
+        listTution.add(tution1);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
                 .commit();
     }
 

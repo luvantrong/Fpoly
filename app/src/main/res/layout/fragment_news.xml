@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:layout_margin="10dp"
-   >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvNotification"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+    >
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>

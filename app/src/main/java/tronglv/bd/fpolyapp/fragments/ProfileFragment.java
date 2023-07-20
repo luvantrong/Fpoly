@@ -1,5 +1,6 @@
 package tronglv.bd.fpolyapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,19 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
-import tronglv.bd.fpolyapp.models.Notification;
-import tronglv.bd.fpolyapp.models.User;
+
+import tronglv.bd.fpolyapp.views.EditProfile;
 import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ProfileFragment extends Fragment {
 
     private RecyclerView rvProfile;
     private TextView txtLogOut;
+
+    private ImageView imgEdit;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -57,11 +61,20 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         txtLogOut = view.findViewById(R.id.txtLogOut);
+        imgEdit = view.findViewById(R.id.imgEdit);
 
         txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((MainActivity)view.getContext()).showSignOut();
+            }
+        });
+
+        imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditProfile.class);
+                startActivity(intent);
             }
         });
     }

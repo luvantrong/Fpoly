@@ -12,7 +12,7 @@
         android:theme="@style/Theme.FpolyApp"
         tools:targetApi="31">
         <activity
-            android:name=".views.DetailActivity"
+            android:name=".views.EditProfile"
             android:exported="false" />
 
         <service

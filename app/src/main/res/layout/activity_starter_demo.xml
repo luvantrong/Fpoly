@@ -70,19 +70,20 @@
             android:orientation="horizontal"
             android:background="@drawable/bg_icon_starter_login"
             android:gravity="center"
-            android:layout_marginTop="28dp"
-            >
+            android:layout_marginTop="28dp">
+
             <TextView
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
-                android:textSize="17dp"
-                android:textColor="#F56903"/>
+                android:textSize="20dp"
+                android:textColor="#F56903"
+                android:fontFamily="@font/roboto_bold"/>
             <ImageView
-                android:layout_width="8dp"
-                android:layout_height="14dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/ic_baseline_arrow_forward"
-                />
+                android:layout_marginLeft="8dp"/>
         </LinearLayout>
 
     </LinearLayout>

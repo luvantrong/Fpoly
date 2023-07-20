@@ -1,5 +1,6 @@
 package tronglv.bd.fpolyapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
-import tronglv.bd.fpolyapp.models.Notification;
-import tronglv.bd.fpolyapp.models.User;
+
+import tronglv.bd.fpolyapp.views.EditProfile;
 import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ProfileFragment extends Fragment {
@@ -69,6 +70,12 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-     
+        imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditProfile.class);
+                startActivity(intent);
+            }
+        });
     }
 }

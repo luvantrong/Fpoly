@@ -1,5 +1,6 @@
 package tronglv.bd.fpolyapp.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -15,36 +16,30 @@ import tronglv.bd.fpolyapp.fragments.ScheduleFragment;
 import tronglv.bd.fpolyapp.fragments.TestScheduleFragment;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.TestSchedule;
+import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ViewPagerScheduleAdapter extends FragmentStatePagerAdapter {
+
+    private MainActivity mActivity;
+
     int anInt;
-    public ViewPagerScheduleAdapter(@NonNull FragmentManager fm, int anInt) {
+    public ViewPagerScheduleAdapter(@NonNull FragmentManager fm, int anInt, MainActivity activity) {
         super(fm);
         this.anInt = anInt;
+        mActivity = activity;
     }
 
     @NonNull
     @Override
     public Fragment getItem(int position) {
         if(position==0){
-            Schedule schedule = new Schedule("MOB403","Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)","17h30 - 19h30", "MD17306", "channn3", "Ca 5" );
-            ArrayList<Schedule> listSchedule = new ArrayList<>();
-            listSchedule.add(schedule);
-            listSchedule.add(schedule);
-            listSchedule.add(schedule);
-            listSchedule.add(schedule);
-
+            ArrayList<Schedule> listSchedule = mActivity.getDataSchedule();
             ScheduleFragment scheduleFragment = ScheduleFragment.newInstance(listSchedule);
             return scheduleFragment;
         }
 
         else{
-            TestSchedule testSchedule = new TestSchedule("11/08/2023", "Phòng 308 (Toà T)", "Ca 5", "Android Networking", "MOB403", "17h30 - 19h30", "chann3");
-            ArrayList<TestSchedule> listTestSchedule = new ArrayList<>();
-            listTestSchedule.add(testSchedule);
-            listTestSchedule.add(testSchedule);
-            listTestSchedule.add(testSchedule);
-
+            ArrayList<TestSchedule> listTestSchedule = mActivity.getDataTestSchedule();
             TestScheduleFragment testScheduleFragment = TestScheduleFragment.newInstance(listTestSchedule);
             return testScheduleFragment;
         }

@@ -1,5 +1,6 @@
 package tronglv.bd.fpolyapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,11 +23,18 @@ import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.ScheduleAdapter;
 import tronglv.bd.fpolyapp.adapters.ViewPagerScheduleAdapter;
 import tronglv.bd.fpolyapp.models.Schedule;
+import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class SchedulePlusFragment extends Fragment {
-
+    private MainActivity mActivity;
     TabLayout tlSchedulePlus;
     ViewPager vpSchedulesPlus;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mActivity = (MainActivity) context;
+    }
 
     public SchedulePlusFragment() {
         // Required empty public constructor
@@ -67,7 +75,7 @@ public class SchedulePlusFragment extends Fragment {
         tlSchedulePlus.addTab(tlSchedulePlus.newTab().setText("Lịch thi"));
         tlSchedulePlus.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        ViewPagerScheduleAdapter adapter = new ViewPagerScheduleAdapter(getActivity().getSupportFragmentManager(), 2);
+        ViewPagerScheduleAdapter adapter = new ViewPagerScheduleAdapter(getActivity().getSupportFragmentManager(), 2, (MainActivity) getActivity());
         vpSchedulesPlus.setAdapter(adapter);
 
         vpSchedulesPlus.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlSchedulePlus));

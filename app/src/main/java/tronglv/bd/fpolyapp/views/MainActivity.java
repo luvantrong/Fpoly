@@ -85,6 +85,39 @@ public class MainActivity extends AppCompatActivity {
 
         mapping();
 
+        Integer index = getIntent().getIntExtra("index", 1);
+        selectedTab = index;
+
+        if(selectedTab == 2){
+            viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            viewNotification.setBackgroundResource(R.drawable.background_item_bottomtab);
+            viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+            imgHome.setImageResource(R.drawable.logo_home);
+            imgNotification.setImageResource(R.drawable.logo_notification_focus);
+            imgSchedule.setImageResource(R.drawable.logo_schedule);
+            imgProfile.setImageResource(R.drawable.logo_profile);
+
+            txtHome.setVisibility(View.GONE);
+            txtNotification.setVisibility(View.VISIBLE);
+            txtSchedule.setVisibility(View.GONE);
+            txtProfile.setVisibility(View.GONE);
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setFillAfter(true);
+            viewNotification.setPivotX(viewNotification.getWidth() / 2f);
+            viewNotification.setPivotY(viewNotification.getHeight() / 2f);
+            viewNotification.startAnimation(scaleAnimation);
+            viewNotification.setVisibility(View.VISIBLE);
+
+            loadNotification();
+        }
+
 
 
         account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
@@ -141,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     public void signOut() {
         if (account != null) {
             gsc.signOut().addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
@@ -149,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     Intent homeIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(homeIntent);
-                    overridePendingTransition(R.anim.anim_enter1, R.anim.anim_exit1);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                     finish();
                 }
             });
@@ -157,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
             bottomBar.setVisibility(View.VISIBLE);
         }
     }
-
-
     public void showSignOut() {
         bottomBar.setVisibility(View.GONE);
         rlSignOut.setVisibility(View.VISIBLE);
@@ -176,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
         rlViewSignOut.setPivotY(viewHome.getHeight() / 2f);
         rlViewSignOut.startAnimation(scaleAnimation);
     }
-
     private void hideSignOut() {
         rlSignOut.setVisibility(View.GONE);
         rlViewSignOut.setVisibility(View.GONE);
@@ -209,8 +238,8 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<ProgressStudy> listProgressStudy = new ArrayList<>();
         listProgressStudy.add(progressStudy);
-        listProgressStudy.add(progressStudy1);
         listProgressStudy.add(progressStudy2);
+        listProgressStudy.add(progressStudy1);
         listProgressStudy.add(progressStudy3);
 
         getSupportFragmentManager()
@@ -218,14 +247,12 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy))
                 .commit();
     }
-
     private void loadSchedulePlus() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flMain, SchedulePlusFragment.newInstance())
                 .commit();
     }
-
     public void loadNotification() {
 
                 getSupportFragmentManager()
@@ -233,7 +260,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.flMain, NotificationPlusFragment.newInstance())
                 .commit();
     }
-
     public void loadNotifyFragment(FrameLayout frameLayout) {
         Notification notification = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHOÁ 19.3 \n" +
                 "HỌC KỲ SUMMER 2023 (BLOCK 2)", "nhapnh", "15/07/2023 11:08");
@@ -248,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), NotificationFragment.newInstance(listNotification))
                 .commit();
     }
-
     public void loadNewsFragment(FrameLayout frameLayout) {
         News news = new News("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
                 "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43");
@@ -261,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), NewsFragment.newInstance(listNews))
                 .commit();
     }
-
     public void loadTutionsFragment(FrameLayout frameLayout) {
         Tution tution = new Tution("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
                 "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32");
@@ -277,8 +301,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
                 .commit();
     }
-
-    //Thay đổi tab menu bottom
     public void onCLickList(View view) {
         int id = view.getId();
         switch (id) {
@@ -304,7 +326,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
     public void showDetaiSchedule(Schedule schedule){
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -345,7 +366,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     public ArrayList<Schedule> getDataSchedule () {
         Schedule schedule = new Schedule("MOB403","Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)","17h30 - 19h30", "MD17306", "channn3", "Ca 5" );
         ArrayList<Schedule> listSchedule = new ArrayList<>();
@@ -355,7 +375,6 @@ public class MainActivity extends AppCompatActivity {
         listSchedule.add(schedule);
         return listSchedule;
     }
-
     public ArrayList<TestSchedule> getDataTestSchedule () {
         TestSchedule testSchedule = new TestSchedule("11/08/2023", "Phòng 308 (Toà T)", "Ca 5", "Android Networking", "MOB403", "17h30 - 19h30", "chann3");
         ArrayList<TestSchedule> listTestSchedule = new ArrayList<>();
@@ -364,8 +383,6 @@ public class MainActivity extends AppCompatActivity {
         listTestSchedule.add(testSchedule);
         return listTestSchedule;
     }
-
-
     //Tín hiệu Bottom Service
     private BroadcastReceiver bottomReceiver = new BroadcastReceiver() {
         @Override
@@ -515,6 +532,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+    
+    public void testOnClick() {
+        Toast.makeText(this, "Bạn vừa click", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+    } 
 
     @Override
     protected void onResume() {

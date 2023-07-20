@@ -49,7 +49,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationViewHo
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-//                    ((MainActivity)context).handleToDetailProduct(product);
+                    ((MainActivity)context).testOnClick();
                 }
             }
         });

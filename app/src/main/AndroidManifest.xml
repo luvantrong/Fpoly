@@ -25,6 +25,10 @@
         <activity
             android:name=".views.StarterDemoActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".views.DetailActivity"
+            android:exported="false" />
         <activity
             android:name=".views.SpalshActivity"
             android:exported="true">

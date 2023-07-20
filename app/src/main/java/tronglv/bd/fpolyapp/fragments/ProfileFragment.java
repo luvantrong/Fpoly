@@ -73,8 +73,7 @@ public class ProfileFragment extends Fragment {
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EditProfile.class);
-                startActivity(intent);
+                ((MainActivity)getContext()).handleToEditProfile();
             }
         });
     }

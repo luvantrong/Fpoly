@@ -118,6 +118,37 @@ public class MainActivity extends AppCompatActivity {
             loadNotification();
         }
 
+        if(selectedTab == 4){
+            viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
+            viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
+
+            imgHome.setImageResource(R.drawable.logo_home);
+            imgNotification.setImageResource(R.drawable.logo_notification);
+            imgSchedule.setImageResource(R.drawable.logo_schedule);
+            imgProfile.setImageResource(R.drawable.logo_profile_focus);
+
+            txtHome.setVisibility(View.GONE);
+            txtNotification.setVisibility(View.GONE);
+            txtSchedule.setVisibility(View.GONE);
+            txtProfile.setVisibility(View.VISIBLE);
+
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            scaleAnimation.setDuration(500);
+            scaleAnimation.setFillAfter(true);
+            viewProfile.setPivotX(viewProfile.getWidth() / 2f);
+            viewProfile.setPivotY(viewProfile.getHeight() / 2f);
+            viewProfile.startAnimation(scaleAnimation);
+            viewProfile.setVisibility(View.VISIBLE);
+
+            loadProfile();
+        }
+
 
 
         account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
@@ -299,6 +330,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
+                .commit();
+    }
+
+    public void loadProfile() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flMain, ProfileFragment.newInstance())
                 .commit();
     }
     public void onCLickList(View view) {
@@ -492,12 +530,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 case "profile": {
-
-                    User user = new User();
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.flMain, ProfileFragment.newInstance())
-                            .commit();
+                    loadProfile();
                     if (selectedTab != 4) {
                         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -539,7 +572,14 @@ public class MainActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
-    } 
+    }
+
+    public void handleToEditProfile(){
+        Intent intent = new Intent(MainActivity.this, EditProfile.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+    }
 
     @Override
     protected void onResume() {

@@ -3,29 +3,19 @@ package tronglv.bd.fpolyapp.views;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,6 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
@@ -50,14 +41,11 @@ import tronglv.bd.fpolyapp.fragments.ProfileFragment;
 import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
 import tronglv.bd.fpolyapp.fragments.TutionFragment;
-import tronglv.bd.fpolyapp.models.News;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
 import tronglv.bd.fpolyapp.models.TestSchedule;
-import tronglv.bd.fpolyapp.models.Tution;
-import tronglv.bd.fpolyapp.models.User;
 import tronglv.bd.fpolyapp.services.BottomService;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int selectedTab = 1;
 
-
+    private Integer indexNotify;
     //Google
     GoogleSignInClient gsc;
     GoogleSignInAccount account;
@@ -85,72 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
         mapping();
 
-        Integer index = getIntent().getIntExtra("index", 1);
-        selectedTab = index;
-
-        if(selectedTab == 2){
-            viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            viewNotification.setBackgroundResource(R.drawable.background_item_bottomtab);
-            viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-            imgHome.setImageResource(R.drawable.logo_home);
-            imgNotification.setImageResource(R.drawable.logo_notification_focus);
-            imgSchedule.setImageResource(R.drawable.logo_schedule);
-            imgProfile.setImageResource(R.drawable.logo_profile);
-
-            txtHome.setVisibility(View.GONE);
-            txtNotification.setVisibility(View.VISIBLE);
-            txtSchedule.setVisibility(View.GONE);
-            txtProfile.setVisibility(View.GONE);
-
-//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//                        scaleAnimation.setDuration(200);
-            ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setFillAfter(true);
-            viewNotification.setPivotX(viewNotification.getWidth() / 2f);
-            viewNotification.setPivotY(viewNotification.getHeight() / 2f);
-            viewNotification.startAnimation(scaleAnimation);
-            viewNotification.setVisibility(View.VISIBLE);
-
-            loadNotification();
-        }
-
-        if(selectedTab == 4){
-            viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
-            viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
-
-            imgHome.setImageResource(R.drawable.logo_home);
-            imgNotification.setImageResource(R.drawable.logo_notification);
-            imgSchedule.setImageResource(R.drawable.logo_schedule);
-            imgProfile.setImageResource(R.drawable.logo_profile_focus);
-
-            txtHome.setVisibility(View.GONE);
-            txtNotification.setVisibility(View.GONE);
-            txtSchedule.setVisibility(View.GONE);
-            txtProfile.setVisibility(View.VISIBLE);
-
-
-//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//                        scaleAnimation.setDuration(200);
-            ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            scaleAnimation.setDuration(500);
-            scaleAnimation.setFillAfter(true);
-            viewProfile.setPivotX(viewProfile.getWidth() / 2f);
-            viewProfile.setPivotY(viewProfile.getHeight() / 2f);
-            viewProfile.startAnimation(scaleAnimation);
-            viewProfile.setVisibility(View.VISIBLE);
-
-            loadProfile();
-        }
-
-
-
         account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions
@@ -160,8 +82,26 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         gsc = GoogleSignIn.getClient(MainActivity.this, gso);
 
+        Integer index = getIntent().getIntExtra("index", 1);
+        selectedTab = index;
+
+        indexNotify = getIntent().getIntExtra("indexNotify", 1);
+
+        if(selectedTab == 2){
+            setSelectedTab2();
+            loadNotification();
+        }
+
+        if(selectedTab == 4){
+            setSelectedTab4();
+            loadProfile();
+        }
+
     }
 
+    public Integer indexNotify(){
+        return indexNotify;
+    }
     private void mapping() {
 
         flMain = findViewById(R.id.flMain);
@@ -204,6 +144,116 @@ public class MainActivity extends AppCompatActivity {
                 signOut();
             }
         });
+    }
+    private void setSelectedTab1() {
+        viewHome.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        imgHome.setImageResource(R.drawable.logo_home_focus);
+        imgNotification.setImageResource(R.drawable.logo_notification);
+        imgSchedule.setImageResource(R.drawable.logo_schedule);
+        imgProfile.setImageResource(R.drawable.logo_profile);
+
+        txtHome.setVisibility(View.VISIBLE);
+        txtNotification.setVisibility(View.GONE);
+        txtSchedule.setVisibility(View.GONE);
+        txtProfile.setVisibility(View.GONE);
+
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
+        viewHome.setPivotX(viewHome.getWidth() / 2f);
+        viewHome.setPivotY(viewHome.getHeight() / 2f);
+        viewHome.startAnimation(scaleAnimation);
+        viewHome.setVisibility(View.VISIBLE);
+    }
+    private void setSelectedTab2() {
+        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewNotification.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        imgHome.setImageResource(R.drawable.logo_home);
+        imgNotification.setImageResource(R.drawable.logo_notification_focus);
+        imgSchedule.setImageResource(R.drawable.logo_schedule);
+        imgProfile.setImageResource(R.drawable.logo_profile);
+
+        txtHome.setVisibility(View.GONE);
+        txtNotification.setVisibility(View.VISIBLE);
+        txtSchedule.setVisibility(View.GONE);
+        txtProfile.setVisibility(View.GONE);
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
+        viewNotification.setPivotX(viewNotification.getWidth() / 2f);
+        viewNotification.setPivotY(viewNotification.getHeight() / 2f);
+        viewNotification.startAnimation(scaleAnimation);
+        viewNotification.setVisibility(View.VISIBLE);
+    }
+    private void setSelectedTab3() {
+        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewSchedule.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+        imgHome.setImageResource(R.drawable.logo_home);
+        imgNotification.setImageResource(R.drawable.logo_notification);
+        imgSchedule.setImageResource(R.drawable.logo_schedule_focus);
+        imgProfile.setImageResource(R.drawable.logo_profile);
+
+        txtHome.setVisibility(View.GONE);
+        txtNotification.setVisibility(View.GONE);
+        txtSchedule.setVisibility(View.VISIBLE);
+        txtProfile.setVisibility(View.GONE);
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
+        viewSchedule.setPivotX(viewSchedule.getWidth() / 2f);
+        viewSchedule.setPivotY(viewSchedule.getHeight() / 2f);
+        viewSchedule.startAnimation(scaleAnimation);
+        viewSchedule.setVisibility(View.VISIBLE);
+    }
+    private void setSelectedTab4() {
+        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
+
+        imgHome.setImageResource(R.drawable.logo_home);
+        imgNotification.setImageResource(R.drawable.logo_notification);
+        imgSchedule.setImageResource(R.drawable.logo_schedule);
+        imgProfile.setImageResource(R.drawable.logo_profile_focus);
+
+        txtHome.setVisibility(View.GONE);
+        txtNotification.setVisibility(View.GONE);
+        txtSchedule.setVisibility(View.GONE);
+        txtProfile.setVisibility(View.VISIBLE);
+
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
+        viewProfile.setPivotX(viewProfile.getWidth() / 2f);
+        viewProfile.setPivotY(viewProfile.getHeight() / 2f);
+        viewProfile.startAnimation(scaleAnimation);
+        viewProfile.setVisibility(View.VISIBLE);
     }
     public void signOut() {
         if (account != null) {
@@ -292,13 +342,49 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     public void loadNotifyFragment(FrameLayout frameLayout) {
-        Notification notification = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHOÁ 19.3 \n" +
-                "HỌC KỲ SUMMER 2023 (BLOCK 2)", "nhapnh", "15/07/2023 11:08");
+        Notification notification = new Notification("THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP \n" +
+                "(ĐỢT TỐT NGHIỆP THÁNG 06/2023)", "nhapnh", "15/07/2023 11:08", "Địa điểm: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12.\n" +
+                "Thời gian: Bắt đầu ngày 24/07/2023\n" +
+                "Thứ 2 đến thứ 6: Sáng : 08h30 – 11h30 và Chiều : 13:30 – 16:30\n" +
+                "Thứ 7: Sáng : 08h30 – 11h30\n" +
+                "Danh sách sinh viên nhận bằng: DANH SÁCH SINH VIÊN TỐT NGHIỆP ĐỢT THÁNG 06 NĂM 2023\n" +
+                "Lưu ý:\n" +
+                "Khi nhận bằng : Sinh viên là người trực tiếp đến nhận, mang theo 1 CMND/CCCD bản chính và 1 bản sao có công chứng trong vòng 6 tháng\n" +
+                "Bản gốc bằng Tốt nghiệp chỉ được cấp 1 lần, sinh viên mất bản gốc chỉ được cấp lại bản sao\n" +
+                "Trường hợp nhận thay phải có ủy quyền bằng văn bản có chứng thực theo quy định của Pháp luật, CMND/CCCD photo công chứng của người ủy quyền và người được ủy quyền (trong 6 tháng)\n" +
+                "Bằng Tốt nghiệp sẽ giữ lại trong vòng 1 năm tại trường cơ sở HCM, sau thời gian trên nếu chưa nhận sẽ chuyển về Hà Nội.");
 
+        Notification notification1 = new Notification("[QUAN TRỌNG] YÊU CẦU BỔ SUNG BẰNG TỐT NGHIỆP THPT","huynh43", "19/07/2023 14:40", "Phòng Đào Tạo thông báo yêu cầu các bạn sinh viên đang thiếu bằng tốt nghiệp THPT vui lòng bổ sung đầy đủ hồ sơ. Nộp bản sao/photo công chứng bằng THPT là yêu cầu bắt buộc để lưu trữ hồ sơ sinh viên trong suốt quá trình học tập đến khi được xét tốt nghiệp. Sau thời hạn bổ sung bên dưới, sinh viên chưa bổ sung bằng THPT sẽ bị đình chỉ học tập mức cao nhất: BUỘC THÔI HỌC\n" +
+                "\n" +
+                "Hồ sơ nộp: 1 bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng THPT. Trường hợp sinh viên học trung cấp thì có thể nộp bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng tốt nghiệp trung cấp.\n" +
+                "\n" +
+                "Địa điểm nộp:\n" +
+                "\n" +
+                "- Cơ sở Nguyễn Kiệm: Phòng Đào Tạo - Tầng 1 - 778/B1 Nguyễn Kiệm, Phường 4, Quận Phú Nhuận, TP.HCM.\n" +
+                "\n" +
+                "- Cơ sở Quang Trung: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12, TP.HCM.\n" +
+                "\n" +
+                "Hạn nộp:31/07/2023\n" +
+                "\n" +
+                "Sinh viên có thể truy cập TẠI ĐÂY để kiểm tra thông tin cá nhân cũng như thông tin nộp bằng THPT (sinh viên chưa bổ sung bằng THPT sẽ được ghi chú \"Chưa nộp bằng THPT\")");
+
+        Notification notification2 = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHÓA 19.3 HỌC KỲ SUMMER 2023 (BLOCK 2)", "kieuntt", "5/07/2023 10:10", "Sinh viên vui lòng check lịch học của mình trên hệ thống Ap.poly.edu.vn trước khi đến lớp.\n" +
+                "\n" +
+                "(Tại đây)\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Mọi thông tin, vui lòng liên hệ phòng Tổ chức và Quản lý Đào tạo –Email:\n" +
+                "\n" +
+                "daotaofpoly.hcm@fe.edu.vn\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Chúc các bạn học tốt !");
         ArrayList<Notification> listNotification = new ArrayList<>();
         listNotification.add(notification);
-        listNotification.add(notification);
-        listNotification.add(notification);
+        listNotification.add(notification1);
+        listNotification.add(notification2);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -306,10 +392,40 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     public void loadNewsFragment(FrameLayout frameLayout) {
-        News news = new News("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
-                "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43");
+        Notification news = new Notification("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
+                "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43", "Hiện tại BHYT đợt 2 – học kỳ Summer năm 2023 đã đăng ký thành công và có thể sử dụng trên ứng dụng VssID các bạn sinh viên có thể vào app VssID hoặc trang baohiemxahoi.gov.vn để tra cứu thông tin. \n" +
+                "\n" +
+                "  \n" +
+                "\n" +
+                "Từ năm 2020 BHYT sẽ sử dụng thẻ BHYT điện tử VssID và KHÔNG CẤP thẻ BHYT giấy.\n" +
+                "\n" +
+                "  \n" +
+                "\n" +
+                "Bảo hiểm xã hội số (VssID) là ứng dụng trên nền tảng thiết bị di động của BHXH Việt Nam thuộc quyền quản lý của cơ quan BHXH. Với phần mềm này, người tham gia BHXH có thể tra cứu quá trình tham gia bảo hiểm và tiếp cận thông tin dễ dàng, thuận tiện nhất. \n" +
+                "\n" +
+                "  \n" +
+                "\n" +
+                "- Lợi ích của việc sử dụng Ứng dụng VssID\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "+ Tra cứu mã số BHXH\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "+ Tra cứu quá trình tham gia BHXH, BHYT, BHTN\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "+ Tra cứu thời gian sử dụng, sử dụng thẻ\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Hướng dẫn sử dụng VssID tại đây\n" +
+                "Clip hướng dẫn tại đây \n" +
+                "Lưu ý: Ứng dụng VssID thuộc quyền quản lý của Cơ quan BHXH Việt Nam. Trong quá trình sử dụng nếu có bất kì lỗi hay thắc mắc nào, vui lòng liên hệ tổng đài hỗ trợ 24/7 Số hotline: 19009068 để được hỗ trợ. ");
 
-        ArrayList<News> listNews = new ArrayList<>();
+        ArrayList<Notification> listNews = new ArrayList<>();
         listNews.add(news);
 
         getSupportFragmentManager()
@@ -318,12 +434,74 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     public void loadTutionsFragment(FrameLayout frameLayout) {
-        Tution tution = new Tution("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
-                "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32");
-        Tution tution1 = new Tution("DANH SÁCH SINH VIÊN HOÀN THÀNH \n" +
-                "HỌC PHÍ KỲ SUMMER 2023", "lientt", "05/05/2023 10:26");
+        Notification tution = new Notification("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
+                "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32", "Phòng Dịch Vụ Sinh Viên thông báo danh sách sinh viên THÔI HỌC TỰ NGUYỆN học kỳ SUMMER 2023 cập nhật ngày 26/05/2023.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Sinh viên sẽ không được xếp lớp học từ tháng 05/2023.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Sinh viên xem danh sách Tại đây\n" +
+                "\n" +
+                ".\n" +
+                "\n" +
+                "Mọi thắc mắc, Sinh viên có thể liên hệ với phòng Dịch vụ sinh viên qua các kênh như sau:\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "- Email: dvsvpoly.hcm@poly.edu.vn\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "- Link google meet: https://meet.google.com/frw-xyyf-afk \n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "- Hotline: 028.7308.8800\n" +
+                "\n" +
+                "  (Khung giờ từ 7h00 - 20h30, Từ thứ 2 đến thứ 7)\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Cảm ơn vì Bạn đã luôn đồng hành cùng FPT Polytechnic HCM,\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Chúc các bạn thật nhiều sức khỏe!");
+        Notification tution1 = new Notification("DANH SÁCH SINH VIÊN HOÀN THÀNH \n" +
+                "HỌC PHÍ KỲ SUMMER 2023", "lientt", "05/05/2023 10:26", "Bạn đang muốn đổi nhà mới nhân dịp học kỳ mới?\n" +
+                "\n" +
+                "Bạn đang muốn tìm kiếm nhà trọ thuận tiện với kế hoạch di chuyển của bản thân mình?\n" +
+                "\n" +
+                "Hay bất kì mong muốn về chổ ở nào của bạn cũng đã có P.CTSV lo rồi đây!!!\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Link điền thông tin cần hỗ trợ nhà trọ: https://docs.google.com/forms/d/e/1FAIpQLSd5uqxACL-RazXFD0D13BwdGyiOwTR4-4FqZQoxppOJyhT23A/viewform\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Với mong muốn giúp các bạn có thể chọn lựa cho mình được căn phòng ưng ý và phù hợp, Sinh viên chỉ cần điền thông tin vào link, bộ phận phụ trách sẽ cung cấp thông tin hỗ trợ tham khảo tìm phòng trọ đầy đủ tiện nghi, với nhiều mức giá hợp lý.\n" +
+                "\n" +
+                "Việc lựa chọn loại hình phòng trọ sẽ dựa vào nhu cầu ở ghép hay ở một mình của các bạn và khả năng tài chính nữa. Vì thế, chất lượng nhà trọ sẽ được đánh giá dựa trên các tiêu chí sau:\n" +
+                "\n" +
+                "- An ninh\n" +
+                "\n" +
+                "- Giá cả phù hợp với chất lượng\n" +
+                "\n" +
+                "- Tiện nghi đảm bảo\n" +
+                "\n" +
+                "- Vị trí thuận tiện cho việc đi lại\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "Hy vọng đây sẽ là những thông tin hữu ích cho các bạn.\n" +
+                "\n" +
+                "Chúc tất cả các bạn sinh viên tìm được một chỗ trọ ưng ý để có thể tập trung tốt cho việc học tập nhé!");
 
-        ArrayList<Tution> listTution = new ArrayList<>();
+        ArrayList<Notification> listTution = new ArrayList<>();
         listTution.add(tution);
         listTution.add(tution1);
 
@@ -332,7 +510,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
                 .commit();
     }
-
     public void loadProfile() {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -430,101 +607,23 @@ public class MainActivity extends AppCompatActivity {
                 case "home": {
                     loadSubjectStudy();
                     if (selectedTab != 1) {
-                        
-                        viewHome.setBackgroundResource(R.drawable.background_item_bottomtab);
-                        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                        imgHome.setImageResource(R.drawable.logo_home_focus);
-                        imgNotification.setImageResource(R.drawable.logo_notification);
-                        imgSchedule.setImageResource(R.drawable.logo_schedule);
-                        imgProfile.setImageResource(R.drawable.logo_profile);
-
-                        txtHome.setVisibility(View.VISIBLE);
-                        txtNotification.setVisibility(View.GONE);
-                        txtSchedule.setVisibility(View.GONE);
-                        txtProfile.setVisibility(View.GONE);
-                        
-
-//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
-                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        scaleAnimation.setDuration(500);
-                        scaleAnimation.setFillAfter(true);
-                        viewHome.setPivotX(viewHome.getWidth() / 2f);
-                        viewHome.setPivotY(viewHome.getHeight() / 2f);
-                        viewHome.startAnimation(scaleAnimation);
-                        viewHome.setVisibility(View.VISIBLE);
+                        setSelectedTab1();
                         selectedTab = 1;
                         break;
                     }
-
                 }
                 case "notification": {
                     loadNotification();
                     if (selectedTab != 2) {
-                        
-                        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewNotification.setBackgroundResource(R.drawable.background_item_bottomtab);
-                        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                        imgHome.setImageResource(R.drawable.logo_home);
-                        imgNotification.setImageResource(R.drawable.logo_notification_focus);
-                        imgSchedule.setImageResource(R.drawable.logo_schedule);
-                        imgProfile.setImageResource(R.drawable.logo_profile);
-
-                        txtHome.setVisibility(View.GONE);
-                        txtNotification.setVisibility(View.VISIBLE);
-                        txtSchedule.setVisibility(View.GONE);
-                        txtProfile.setVisibility(View.GONE);
-
-//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//                        scaleAnimation.setDuration(200);
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
-                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        scaleAnimation.setDuration(500);
-                        scaleAnimation.setFillAfter(true);
-                        viewNotification.setPivotX(viewNotification.getWidth() / 2f);
-                        viewNotification.setPivotY(viewNotification.getHeight() / 2f);
-                        viewNotification.startAnimation(scaleAnimation);
-                        viewNotification.setVisibility(View.VISIBLE);
+                        setSelectedTab2();
                         selectedTab = 2;
                         break;
                     }
-
                 }
                 case "schedule": {
                     loadSchedulePlus();
                     if (selectedTab != 3) {
-
-                        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewSchedule.setBackgroundResource(R.drawable.background_item_bottomtab);
-                        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                        imgHome.setImageResource(R.drawable.logo_home);
-                        imgNotification.setImageResource(R.drawable.logo_notification);
-                        imgSchedule.setImageResource(R.drawable.logo_schedule_focus);
-                        imgProfile.setImageResource(R.drawable.logo_profile);
-
-                        txtHome.setVisibility(View.GONE);
-                        txtNotification.setVisibility(View.GONE);
-                        txtSchedule.setVisibility(View.VISIBLE);
-                        txtProfile.setVisibility(View.GONE);
-
-//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//                        scaleAnimation.setDuration(200);
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
-                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        scaleAnimation.setDuration(500);
-                        scaleAnimation.setFillAfter(true);
-                        viewSchedule.setPivotX(viewSchedule.getWidth() / 2f);
-                        viewSchedule.setPivotY(viewSchedule.getHeight() / 2f);
-                        viewSchedule.startAnimation(scaleAnimation);
-                        viewSchedule.setVisibility(View.VISIBLE);
+                        setSelectedTab3();
                         selectedTab = 3;
                         break;
                     }
@@ -532,32 +631,7 @@ public class MainActivity extends AppCompatActivity {
                 case "profile": {
                     loadProfile();
                     if (selectedTab != 4) {
-                        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
-                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
-
-                        imgHome.setImageResource(R.drawable.logo_home);
-                        imgNotification.setImageResource(R.drawable.logo_notification);
-                        imgSchedule.setImageResource(R.drawable.logo_schedule);
-                        imgProfile.setImageResource(R.drawable.logo_profile_focus);
-
-                        txtHome.setVisibility(View.GONE);
-                        txtNotification.setVisibility(View.GONE);
-                        txtSchedule.setVisibility(View.GONE);
-                        txtProfile.setVisibility(View.VISIBLE);
-
-
-//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-//                        scaleAnimation.setDuration(200);
-                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
-                                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                        scaleAnimation.setDuration(500);
-                        scaleAnimation.setFillAfter(true);
-                        viewProfile.setPivotX(viewProfile.getWidth() / 2f);
-                        viewProfile.setPivotY(viewProfile.getHeight() / 2f);
-                        viewProfile.startAnimation(scaleAnimation);
-                        viewProfile.setVisibility(View.VISIBLE);
+                        setSelectedTab4();
                         selectedTab = 4;
                         break;
                     }
@@ -566,14 +640,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     
-    public void testOnClick() {
-        Toast.makeText(this, "Bạn vừa click", Toast.LENGTH_SHORT).show();
+    public void handleToDetaiNotify(Notification notification, Integer index) {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("notification",(Serializable) notification);
+        intent.putExtra("indexNotify", index);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
     }
-
     public void handleToEditProfile(){
         Intent intent = new Intent(MainActivity.this, EditProfile.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

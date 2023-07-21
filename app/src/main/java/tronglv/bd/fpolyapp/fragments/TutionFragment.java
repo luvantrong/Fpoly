@@ -15,22 +15,20 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
-import tronglv.bd.fpolyapp.adapters.NewsAdapter;
 import tronglv.bd.fpolyapp.adapters.TutionAdapter;
-import tronglv.bd.fpolyapp.models.News;
-import tronglv.bd.fpolyapp.models.Tution;
+import tronglv.bd.fpolyapp.models.Notification;
 
 public class TutionFragment extends Fragment {
 
     private RecyclerView rvTution;
-    ArrayList<Tution> listTution;
+    ArrayList<Notification> listTution;
 
     public TutionFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static TutionFragment newInstance(ArrayList<Tution> listTution) {
+    public static TutionFragment newInstance(ArrayList<Notification> listTution) {
         TutionFragment fragment = new TutionFragment();
         Bundle args = new Bundle();
         args.putSerializable("tutions", listTution);
@@ -43,7 +41,7 @@ public class TutionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listTution = (ArrayList<Tution>) getArguments().getSerializable("tutions");
+            listTution = (ArrayList<Notification>) getArguments().getSerializable("tutions");
         }
     }
 

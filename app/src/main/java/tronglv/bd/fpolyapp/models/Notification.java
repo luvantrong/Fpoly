@@ -1,17 +1,21 @@
 package tronglv.bd.fpolyapp.models;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
     private String title;
     private String poster;
     private String time;
+    private String content;
 
     public Notification() {
     }
 
-    public Notification(String title, String poster, String time) {
+    public Notification(String title, String poster, String time, String content) {
         this.title = title;
         this.poster = poster;
         this.time = time;
+        this.content = content;
     }
 
     public String getTitle() {
@@ -36,6 +40,14 @@ public class Notification {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
 

@@ -8,20 +8,21 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
-import tronglv.bd.fpolyapp.models.News;
-import tronglv.bd.fpolyapp.models.Tution;
+import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.viewHolders.NotificationViewHolder;
+import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class TutionAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     Context context;
-    List<Tution> listTution;
+    ArrayList<Notification> listTution;
 
-    public TutionAdapter(Context context, List<Tution> listTution) {
+    public TutionAdapter(Context context, ArrayList<Notification> listTution) {
         this.context = context;
         this.listTution = listTution;
     }
@@ -35,7 +36,7 @@ public class TutionAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        Tution tution = listTution.get(holder.getAdapterPosition());
+        Notification tution = listTution.get(holder.getAdapterPosition());
         String name = tution.getTitle();
         holder.txtTitle.setText(name);
         String poster = tution.getPoster();
@@ -49,7 +50,7 @@ public class TutionAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-//                    ((MainActivity)context).handleToDetailProduct(product);
+                    ((MainActivity)context).handleToDetaiNotify(tution, 3);
                 }
             }
         });

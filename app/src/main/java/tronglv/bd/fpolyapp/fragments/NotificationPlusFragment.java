@@ -75,43 +75,38 @@ public class NotificationPlusFragment extends Fragment {
         rlTution = view.findViewById(R.id.rlTution);
         flNotifyPlus = view.findViewById(R.id.flNotifyPlus);
 
-        if(index == 1){
-            ((MainActivity)view.getContext()).loadNotifyFragment(flNotifyPlus);
+        index = ((MainActivity) view.getContext()).indexNotify();
+
+        if (index == 1) {
+            indexNotify1();
+            ((MainActivity) view.getContext()).loadNotifyFragment(flNotifyPlus);
         }
+
+        if (index == 2) {
+            indexNotify2();
+            ((MainActivity) view.getContext()).loadNewsFragment(flNotifyPlus);
+        }
+
+        if (index == 3) {
+            indexNotify3();
+            ((MainActivity) view.getContext()).loadTutionsFragment(flNotifyPlus);
+        }
+
 
         rlNotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rlNotify.setBackgroundResource(R.drawable.background_item_notify_select);
-                txtNotify.setTextColor(getResources().getColor(R.color.white));
-
-                rlNews.setBackgroundResource(R.drawable.background_item_notification);
-                txtNews.setTextColor(getResources().getColor(R.color.text_bottom_tab));
-
-                rlTution.setBackgroundResource(R.drawable.background_item_tution);
-                txtTution.setTextColor(getResources().getColor(R.color.text_bottom_tab));
-
-                ((MainActivity)view.getContext()).loadNotifyFragment(flNotifyPlus);
-
+                indexNotify1();
+                ((MainActivity) view.getContext()).loadNotifyFragment(flNotifyPlus);
                 index = 1;
-
             }
         });
 
         rlNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rlNotify.setBackgroundResource(R.drawable.background_item_notify);
-                txtNotify.setTextColor(getResources().getColor(R.color.text_bottom_tab));
-
-                rlNews.setBackgroundResource(R.drawable.background_item_notification_select);
-                txtNews.setTextColor(getResources().getColor(R.color.white));
-
-                rlTution.setBackgroundResource(R.drawable.background_item_tution);
-                txtTution.setTextColor(getResources().getColor(R.color.text_bottom_tab));
-
-                ((MainActivity)view.getContext()).loadNewsFragment(flNotifyPlus);
-
+                indexNotify2();
+                ((MainActivity) view.getContext()).loadNewsFragment(flNotifyPlus);
                 index = 2;
             }
         });
@@ -119,21 +114,45 @@ public class NotificationPlusFragment extends Fragment {
         rlTution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rlNotify.setBackgroundResource(R.drawable.background_item_notify);
-                txtNotify.setTextColor(getResources().getColor(R.color.text_bottom_tab));
-
-                rlNews.setBackgroundResource(R.drawable.background_item_notification);
-                txtNews.setTextColor(getResources().getColor(R.color.text_bottom_tab));
-
-                rlTution.setBackgroundResource(R.drawable.background_item_tution_select);
-                txtTution.setTextColor(getResources().getColor(R.color.white));
-
-                ((MainActivity)view.getContext()).loadTutionsFragment(flNotifyPlus);
-
+                indexNotify3();
+                ((MainActivity) view.getContext()).loadTutionsFragment(flNotifyPlus);
                 index = 3;
             }
         });
 
+    }
+
+    private void indexNotify1() {
+        rlNotify.setBackgroundResource(R.drawable.background_item_notify_select);
+        txtNotify.setTextColor(getResources().getColor(R.color.white));
+
+        rlNews.setBackgroundResource(R.drawable.background_item_notification);
+        txtNews.setTextColor(getResources().getColor(R.color.text_bottom_tab));
+
+        rlTution.setBackgroundResource(R.drawable.background_item_tution);
+        txtTution.setTextColor(getResources().getColor(R.color.text_bottom_tab));
+    }
+
+    private void indexNotify2() {
+        rlNotify.setBackgroundResource(R.drawable.background_item_notify);
+        txtNotify.setTextColor(getResources().getColor(R.color.text_bottom_tab));
+
+        rlNews.setBackgroundResource(R.drawable.background_item_notification_select);
+        txtNews.setTextColor(getResources().getColor(R.color.white));
+
+        rlTution.setBackgroundResource(R.drawable.background_item_tution);
+        txtTution.setTextColor(getResources().getColor(R.color.text_bottom_tab));
+    }
+
+    private void indexNotify3() {
+        rlNotify.setBackgroundResource(R.drawable.background_item_notify);
+        txtNotify.setTextColor(getResources().getColor(R.color.text_bottom_tab));
+
+        rlNews.setBackgroundResource(R.drawable.background_item_notification);
+        txtNews.setTextColor(getResources().getColor(R.color.text_bottom_tab));
+
+        rlTution.setBackgroundResource(R.drawable.background_item_tution_select);
+        txtTution.setTextColor(getResources().getColor(R.color.white));
     }
 
 }

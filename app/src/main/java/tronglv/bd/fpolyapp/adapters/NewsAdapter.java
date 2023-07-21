@@ -12,16 +12,16 @@ import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
-import tronglv.bd.fpolyapp.models.News;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.viewHolders.NotificationViewHolder;
+import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class NewsAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     Context context;
-    List<News> listNews;
+    List<Notification> listNews;
 
-    public NewsAdapter(Context context, List<News> listNews) {
+    public NewsAdapter(Context context, List<Notification> listNews) {
         this.context = context;
         this.listNews = listNews;
     }
@@ -35,7 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        News news = listNews.get(holder.getAdapterPosition());
+        Notification news = listNews.get(holder.getAdapterPosition());
         String name = news.getTitle();
         holder.txtTitle.setText(name);
         String poster = news.getPoster();
@@ -49,7 +49,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-//                    ((MainActivity)context).handleToDetailProduct(product);
+                    ((MainActivity)context).handleToDetaiNotify(news, 2);
                 }
             }
         });

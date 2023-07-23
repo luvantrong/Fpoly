@@ -610,6 +610,26 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void onCLickListService(int index) {
+        switch (index) {
+            case 1:
+                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                break;
+            case 4:
+                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
+                break;
+            case 5:
+                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
     public void showDetaiSchedule(Schedule schedule){
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();

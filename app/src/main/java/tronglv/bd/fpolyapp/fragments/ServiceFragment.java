@@ -18,6 +18,7 @@ import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ServiceFragment extends Fragment {
 
+    private TextView txtServiceOne, txtServiceTwo, txtServiceThree, txtServiceFour, txtServiceFive;
     public ServiceFragment() {
         // Required empty public constructor
     }
@@ -50,6 +51,46 @@ public class ServiceFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        txtServiceOne = view.findViewById(R.id.txtServiceOne);
+        txtServiceTwo = view.findViewById(R.id.txtServiceTwo);
+        txtServiceThree = view.findViewById(R.id.txtServiceThree);
+        txtServiceFour = view.findViewById(R.id.txtServiceFour);
+        txtServiceFive = view.findViewById(R.id.txtServiceFive);
+
+        txtServiceOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)view.getContext()).onCLickListService(1);
+            }
+        });
+
+        txtServiceTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)view.getContext()).onCLickListService(2);
+            }
+        });
+
+        txtServiceThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)view.getContext()).onCLickListService(3);
+            }
+        });
+
+        txtServiceFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)view.getContext()).onCLickListService(4);
+            }
+        });
+
+        txtServiceFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)view.getContext()).onCLickListService(5);
+            }
+        });
 
     }
 }

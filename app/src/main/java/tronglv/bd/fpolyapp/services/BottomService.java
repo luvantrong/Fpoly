@@ -12,6 +12,9 @@ public class BottomService extends IntentService {
     public static final String BOTTOM_SERVICE_HOME = "BOTTOM_SERVICE_HOME";
     public static final String BOTTOM_SERVICE_NOTIFICATION = "BOTTOM_SERVICE_NOTIFICATION";
     public static final String BOTTOM_SERVICE_SCHEDULE = "BOTTOM_SERVICE_SCHEDULE";
+
+    public static final String BOTTOM_SERVICE_SERVICE = "BOTTOM_SERVICE_SERVICE";
+
     public static final String BOTTOM_SERVICE_PROFILE = "BOTTOM_SERVICE_PROFILE";
 
     public BottomService() {
@@ -40,6 +43,12 @@ public class BottomService extends IntentService {
                     Intent intentSchedule = new Intent(BOTTOM_SERVICE_EVENT);
                     intentSchedule.putExtra("data", schedule);
                     LocalBroadcastManager.getInstance(this).sendBroadcast(intentSchedule);
+                    break;
+                case BOTTOM_SERVICE_SERVICE:
+                    String service = "service";
+                    Intent intentService = new Intent(BOTTOM_SERVICE_EVENT);
+                    intentService.putExtra("data", service);
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(intentService);
                     break;
                 case BOTTOM_SERVICE_PROFILE:
                     String profile = "profile";

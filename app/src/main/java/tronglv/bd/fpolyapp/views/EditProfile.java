@@ -43,7 +43,7 @@ public class EditProfile extends AppCompatActivity {
     public void backToProfile() {
         // Quay lại MainActivity khi người dùng bấm nút "Back" trên điện thoại
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("index", 4);
+        intent.putExtra("index", 5);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }

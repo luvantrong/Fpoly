@@ -36,7 +36,7 @@
         android:textSize="20sp"
         android:fontFamily="@font/roboto_medium"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="#161E49"
         android:layout_centerHorizontal="true"/>
 
     <ScrollView
@@ -55,7 +55,7 @@
             android:gravity="fill_horizontal"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/black"
+            android:textColor="#161E49"
             android:paddingBottom="25dp"/>
     </ScrollView>
 

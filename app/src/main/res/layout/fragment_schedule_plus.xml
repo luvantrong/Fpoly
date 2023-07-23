@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".fragments.SchedulePlusFragment">
+    tools:context=".fragments.SchedulePlusFragment"
+    android:background="#F08E47">
+
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_alignParentBottom="true"
+       android:src="@drawable/background_notify_plus"
+       android:layout_marginTop="40dp"
+       android:layout_marginRight="-96dp"/>
 
    <com.google.android.material.tabs.TabLayout
        android:id="@+id/tlSchedulePlus"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       app:tabIndicator="@drawable/background_item_tablayout_left"
-       app:tabIndicatorColor="@null"
-       app:tabSelectedTextColor="@color/white"
-       app:tabIndicatorAnimationMode="elastic"
-       app:tabMode="fixed"
-       app:tabIndicatorGravity="stretch"
        android:background="#EEEEEE"
+       app:tabIndicator="@drawable/background_item_tablayout_left"
+       app:tabIndicatorAnimationMode="elastic"
+       app:tabIndicatorColor="@null"
+       app:tabIndicatorGravity="stretch"
+       app:tabMode="fixed"
        app:tabRippleColor="@android:color/transparent"
-       />
+       app:tabSelectedTextColor="@color/white"
+       android:layout_alignParentTop="true"/>
 
    <androidx.viewpager.widget.ViewPager
+       android:layout_below="@id/tlSchedulePlus"
        android:id="@+id/vpSchedulesPlus"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       >
+       android:background="@android:color/transparent"
+     >
+
    </androidx.viewpager.widget.ViewPager>
 
 
-</LinearLayout>
+
+
+</RelativeLayout>

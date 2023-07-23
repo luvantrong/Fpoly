@@ -104,21 +104,22 @@ public class MainActivity extends AppCompatActivity {
 
         indexNotify = getIntent().getIntExtra("indexNotify", 1);
 
-        if(selectedTab == 2){
+        if (selectedTab == 2) {
             setSelectedTab2();
             loadNotification();
         }
 
-        if(selectedTab == 5){
+        if (selectedTab == 5) {
             setSelectedTab5();
             loadProfile();
         }
 
     }
 
-    public Integer indexNotify(){
+    public Integer indexNotify() {
         return indexNotify;
     }
+
     private void mapping() {
 
         flMain = findViewById(R.id.flMain);
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         rlViewSignOut = findViewById(R.id.rlViewSignOut);
 
     }
+
     private void setSelectedTab1() {
         viewHome.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -182,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         viewHome.startAnimation(scaleAnimation);
         viewHome.setVisibility(View.VISIBLE);
     }
+
     private void setSelectedTab2() {
         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewNotification.setBackgroundResource(R.drawable.background_item_bottomtab);
@@ -215,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
         viewNotification.startAnimation(scaleAnimation);
         viewNotification.setVisibility(View.VISIBLE);
     }
+
     private void setSelectedTab3() {
         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -283,7 +287,8 @@ public class MainActivity extends AppCompatActivity {
     private void setSelectedTab5() {
         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewService.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
@@ -312,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
         viewProfile.startAnimation(scaleAnimation);
         viewProfile.setVisibility(View.VISIBLE);
     }
+
     public void signOut() {
         if (account != null) {
             gsc.signOut().addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
@@ -327,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
             bottomBar.setVisibility(View.VISIBLE);
         }
     }
+
     public void showSignOut() {
         bottomBar.setVisibility(View.GONE);
         rlSignOut.setVisibility(View.VISIBLE);
@@ -344,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
         rlViewSignOut.setPivotY(viewHome.getHeight() / 2f);
         rlViewSignOut.startAnimation(scaleAnimation);
     }
+
     private void hideSignOut() {
         rlSignOut.setVisibility(View.GONE);
         rlViewSignOut.setVisibility(View.GONE);
@@ -357,7 +365,8 @@ public class MainActivity extends AppCompatActivity {
         scaleAnimation.setDuration(300);
         rlViewSignOut.startAnimation(scaleAnimation);
     }
-    private void loadSubjectStudy (){
+
+    private void loadSubjectStudy() {
         SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
         SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
         SubjectStudy subjectStudy2 = new SubjectStudy(3, "Android Networking", "MOB403", "Offline", "17 buổi");
@@ -385,19 +394,22 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy))
                 .commit();
     }
+
     private void loadSchedulePlus() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flMain, SchedulePlusFragment.newInstance())
                 .commit();
     }
+
     public void loadNotification() {
 
-                getSupportFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flMain, NotificationPlusFragment.newInstance())
                 .commit();
     }
+
     public void loadNotifyFragment(FrameLayout frameLayout) {
         Notification notification = new Notification("THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP \n" +
                 "(ĐỢT TỐT NGHIỆP THÁNG 06/2023)", "nhapnh", "15/07/2023 11:08", "Địa điểm: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12.\n" +
@@ -411,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
                 "Trường hợp nhận thay phải có ủy quyền bằng văn bản có chứng thực theo quy định của Pháp luật, CMND/CCCD photo công chứng của người ủy quyền và người được ủy quyền (trong 6 tháng)\n" +
                 "Bằng Tốt nghiệp sẽ giữ lại trong vòng 1 năm tại trường cơ sở HCM, sau thời gian trên nếu chưa nhận sẽ chuyển về Hà Nội.");
 
-        Notification notification1 = new Notification("[QUAN TRỌNG] YÊU CẦU BỔ SUNG BẰNG TỐT NGHIỆP THPT","huynh43", "19/07/2023 14:40", "Phòng Đào Tạo thông báo yêu cầu các bạn sinh viên đang thiếu bằng tốt nghiệp THPT vui lòng bổ sung đầy đủ hồ sơ. Nộp bản sao/photo công chứng bằng THPT là yêu cầu bắt buộc để lưu trữ hồ sơ sinh viên trong suốt quá trình học tập đến khi được xét tốt nghiệp. Sau thời hạn bổ sung bên dưới, sinh viên chưa bổ sung bằng THPT sẽ bị đình chỉ học tập mức cao nhất: BUỘC THÔI HỌC\n" +
+        Notification notification1 = new Notification("[QUAN TRỌNG] YÊU CẦU BỔ SUNG BẰNG TỐT NGHIỆP THPT", "huynh43", "19/07/2023 14:40", "Phòng Đào Tạo thông báo yêu cầu các bạn sinh viên đang thiếu bằng tốt nghiệp THPT vui lòng bổ sung đầy đủ hồ sơ. Nộp bản sao/photo công chứng bằng THPT là yêu cầu bắt buộc để lưu trữ hồ sơ sinh viên trong suốt quá trình học tập đến khi được xét tốt nghiệp. Sau thời hạn bổ sung bên dưới, sinh viên chưa bổ sung bằng THPT sẽ bị đình chỉ học tập mức cao nhất: BUỘC THÔI HỌC\n" +
                 "\n" +
                 "Hồ sơ nộp: 1 bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng THPT. Trường hợp sinh viên học trung cấp thì có thể nộp bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng tốt nghiệp trung cấp.\n" +
                 "\n" +
@@ -448,6 +460,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), NotificationFragment.newInstance(listNotification))
                 .commit();
     }
+
     public void loadNewsFragment(FrameLayout frameLayout) {
         Notification news = new Notification("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
                 "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43", "Hiện tại BHYT đợt 2 – học kỳ Summer năm 2023 đã đăng ký thành công và có thể sử dụng trên ứng dụng VssID các bạn sinh viên có thể vào app VssID hoặc trang baohiemxahoi.gov.vn để tra cứu thông tin. \n" +
@@ -490,6 +503,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), NewsFragment.newInstance(listNews))
                 .commit();
     }
+
     public void loadTutionsFragment(FrameLayout frameLayout) {
         Notification tution = new Notification("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
                 "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32", "Phòng Dịch Vụ Sinh Viên thông báo danh sách sinh viên THÔI HỌC TỰ NGUYỆN học kỳ SUMMER 2023 cập nhật ngày 26/05/2023.\n" +
@@ -574,12 +588,14 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.flMain, ServiceFragment.newInstance())
                 .commit();
     }
+
     public void loadProfile() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flMain, ProfileFragment.newInstance())
                 .commit();
     }
+
     public void onCLickList(View view) {
         int id = view.getId();
         switch (id) {
@@ -630,7 +646,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-    public void showDetaiSchedule(Schedule schedule){
+
+    public void showDetaiSchedule(Schedule schedule) {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View viewDialog = inflater.inflate(R.layout.dialog_detail_schedule, null);
@@ -670,8 +687,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public ArrayList<Schedule> getDataSchedule () {
-        Schedule schedule = new Schedule("MOB403","Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)","17h30 - 19h30", "MD17306", "channn3", "Ca 5" );
+
+    public ArrayList<Schedule> getDataSchedule() {
+        Schedule schedule = new Schedule("MOB403", "Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)", "17h30 - 19h30", "MD17306", "channn3", "Ca 5");
         ArrayList<Schedule> listSchedule = new ArrayList<>();
         listSchedule.add(schedule);
         listSchedule.add(schedule);
@@ -679,7 +697,8 @@ public class MainActivity extends AppCompatActivity {
         listSchedule.add(schedule);
         return listSchedule;
     }
-    public ArrayList<TestSchedule> getDataTestSchedule () {
+
+    public ArrayList<TestSchedule> getDataTestSchedule() {
         TestSchedule testSchedule = new TestSchedule("11/08/2023", "Phòng 308 (Toà T)", "Ca 5", "Android Networking", "MOB403", "17h30 - 19h30", "chann3");
         ArrayList<TestSchedule> listTestSchedule = new ArrayList<>();
         listTestSchedule.add(testSchedule);
@@ -687,6 +706,7 @@ public class MainActivity extends AppCompatActivity {
         listTestSchedule.add(testSchedule);
         return listTestSchedule;
     }
+
     //Tín hiệu Bottom Service
     private BroadcastReceiver bottomReceiver = new BroadcastReceiver() {
         @Override
@@ -736,16 +756,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-    
+
     public void handleToDetaiNotify(Notification notification, Integer index) {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("notification",(Serializable) notification);
+        intent.putExtra("notification", (Serializable) notification);
         intent.putExtra("indexNotify", index);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
     }
-    public void handleToEditProfile(){
+
+    public void handleToEditProfile() {
         Intent intent = new Intent(MainActivity.this, EditProfile.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

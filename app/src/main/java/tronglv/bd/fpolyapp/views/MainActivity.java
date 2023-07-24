@@ -619,21 +619,27 @@ public class MainActivity extends AppCompatActivity {
     public void onCLickListService(int index) {
         switch (index) {
             case 1:
-                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(MainActivity.this, AttendenceActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent2);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
             case 3:
-                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                Intent intent3 = new Intent(MainActivity.this, FreeStudyActivity.class);
+                intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent3);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
             case 4:
-                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
-                Intent intent = new Intent(MainActivity.this, OtherServiceActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                Intent intent5 = new Intent(MainActivity.this, OtherServiceActivity.class);
+                intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent5);
                 overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
         }

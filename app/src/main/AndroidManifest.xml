@@ -12,17 +12,18 @@
         android:theme="@style/Theme.FpolyApp"
         tools:targetApi="31">
         <activity
-            android:name=".views.AttendenceActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".views.FreeStudyActivity"
+            android:exported="false" >
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".views.AttendenceActivity"
+            android:exported="false">
+
         </activity>
         <activity
             android:name=".views.OtherServiceActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".views.EditProfile"
             android:exported="false" />
@@ -42,8 +43,12 @@
             android:exported="false" />
         <activity
             android:name=".views.SpalshActivity"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".views.MainActivity"

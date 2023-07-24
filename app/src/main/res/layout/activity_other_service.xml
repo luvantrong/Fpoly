@@ -91,14 +91,15 @@
             android:layout_below="@id/tlPhone"
             android:background="@drawable/background_service_study"
             >
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/backgroud_transparent"
                 android:layout_marginBottom="9dp"
+                android:background="@drawable/backgroud_transparent"
                 android:gravity="top"
-                android:paddingHorizontal="20dp"/>
+                android:paddingHorizontal="20dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </RelativeLayout>

@@ -109,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
             loadNotification();
         }
 
+        if(selectedTab == 4){
+            setSelectedTab4();
+            loadService();
+        }
+
         if(selectedTab == 5){
             setSelectedTab5();
             loadProfile();
@@ -626,7 +631,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
-                Toast.makeText(this, "5", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, OtherServiceActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
         }
     }

@@ -44,8 +44,8 @@ public class OtherServiceActivity extends AppCompatActivity {
     TextView txtPhone, txtDescripttion;
     private int[] images = {R.drawable.img_slide_1, R.drawable.img_slide_2, R.drawable.img_slide_3, R.drawable.img_slide_4};
     private int currentPage = 0;
-    private final int DELAY_MS = 2000;
-    private final int PERIOD_MS = 2000;
+    private final int DELAY_MS = 1000;
+    private final int PERIOD_MS = 1000;
     private Handler handler = new Handler();
 
     ArrayList<String> rooms = new ArrayList<>();

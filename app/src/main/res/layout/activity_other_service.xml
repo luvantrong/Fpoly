@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.OtherServiceActivity"
+    android:background="#F08E47">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/background_notify_plus"
+        android:layout_marginTop="-300dp"
+        android:layout_marginRight="-96dp"/>
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_button_detai"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký dịch vụ khác"
+        android:textColor="#161E49"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpSlide"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/imgBack" />
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/vpSlide"
+        android:background="@drawable/background_study"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:id="@+id/tlRoom"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:background="@drawable/background_service_study">
+            <Spinner
+                android:id="@+id/spRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"/>
+        </RelativeLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlPhone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:layout_below="@id/tlRoom"
+            android:background="@drawable/background_service_study"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/backgroud_transparent"
+                android:layout_marginBottom="9dp"
+                android:paddingHorizontal="20dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tlDescription"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="39dp"
+            android:layout_below="@id/tlPhone"
+            android:background="@drawable/background_service_study"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="9dp"
+                android:background="@drawable/backgroud_transparent"
+                android:gravity="top"
+                android:paddingHorizontal="20dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="Phòng ban xử lý"
+        android:textColor="@color/text_bottom_tab"
+        android:textSize="18sp"
+        android:layout_marginTop="323dp"
+        android:layout_marginStart="30dp"
+        android:paddingHorizontal="5dp"/>
+
+    <TextView
+        android:id="@+id/txtPhone"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="Số điện thoại *"
+        android:textColor="@color/text_bottom_tab"
+        android:textSize="18sp"
+        android:layout_marginTop="412dp"
+        android:layout_marginStart="30dp"
+        android:paddingHorizontal="5dp"/>
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center"
+        android:text="Nội dung yêu cầu *"
+        android:textColor="@color/text_bottom_tab"
+        android:textSize="18sp"
+        android:layout_marginTop="499dp"
+        android:layout_marginStart="30dp"
+        android:paddingHorizontal="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Huỷ"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@color/primary"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/background_edt_email"/>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="Đăng ký"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@drawable/background_btn_login"/>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

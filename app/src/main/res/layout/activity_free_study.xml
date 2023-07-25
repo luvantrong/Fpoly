@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.OtherServiceActivity"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_button_detai"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng ký miễn giảm học phần"
+        android:textColor="#161E49"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"/>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_below="@+id/txtTitle">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <LinearLayout
+                android:id="@+id/lnInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/custom_profile"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon1" />
+
+                    <TextView
+                        android:id="@+id/textAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Trạng thái HDI"
+                        android:textColor="@color/seconds"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon2" />
+
+                    <TextView
+                        android:id="@+id/textMajoy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Kỳ học - 6"
+                        android:textColor="@color/seconds"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon3" />
+
+                    <TextView
+                        android:id="@+id/textStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Lập trình máy tính (Mobie)"
+                        android:textColor="@color/seconds"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thông tin"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/text_bottom_tab"
+                android:textSize="18sp"
+                android:paddingHorizontal="15dp"
+                android:fontFamily="@font/roboto_bold"
+                android:background="@color/white"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="17dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnInfo">
+                <RelativeLayout
+                    android:id="@+id/tlCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlCourse"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtReason"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"/>
+                </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlSuggestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_below="@id/tlReason"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtSuggestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="9dp"
+                        android:background="@drawable/backgroud_transparent"
+                        android:gravity="top"
+                        android:paddingHorizontal="20dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlFiless"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlSuggestion"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFiless"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtFiless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Môn học *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtReason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Lý do *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="121dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Đề nghị *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="210dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtTeacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Tên hồ sơ *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="349dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtABC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tài liệu đính kèm"
+                    android:layout_below="@+id/tlFiless"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="17sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_bold"/>
+
+                <LinearLayout
+                    android:id="@+id/lnFiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/txtABC"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp">
+
+                    <TextView
+                        android:id="@+id/txtFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chọn tệp"
+                        android:textColor="@color/text_bottom_tab"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="5dp"
+                        android:background="@drawable/background_edt_file"
+                        android:layout_marginEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/txtNameFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Không có tệp nào được chọn"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textColor="@color/text_bottom_tab"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lưu ý:"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="17sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/lnFiles"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/primary"/>
+
+                <LinearLayout
+                    android:id="@+id/tlNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/txtNotes"
+                    android:layout_marginHorizontal="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1. "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"
+                            android:text="SV cần nộp 01 bản sao y công chứng hồ sơ cho phòng DVSV trong vòng 72 giờ (CPN sẽ tính thời gian theo dấu bưu điện)."/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"
+                            android:text="Sinh viên nên nộp/nhận hồ sơ trực tiếp tại phòng DVSV, nếu SV chọn hình thức chuyển phát nhanh thì Phí CPN do sinh viên thanh toán."/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlForm"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:layout_below="@id/tlNotes"
+                    android:background="@drawable/background_service_study"
+                    android:layout_marginHorizontal="20dp">
+                    <Spinner
+                        android:id="@+id/spForm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Hình thức gửi hồ sơ *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="661dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/tlAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@id/tlForm"
+                    android:background="@drawable/background_service_study"
+                    android:layout_marginHorizontal="20dp">
+                    <Spinner
+                        android:id="@+id/spAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Nhận kết quả *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="750dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <RelativeLayout
+                    android:id="@+id/tlReceive"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlAddress"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtReceive"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtReceive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Địa chỉ nhận"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="837dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlFees"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@id/tlReceive"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_fees"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFees"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="9dp"
+                        android:background="@drawable/backgroud_transparent"
+                        android:gravity="top"
+                        android:paddingHorizontal="20dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtFees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Phí dịch vụ"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="928dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="Đăng ký"
+                    android:layout_below="@+id/tlFees"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_btn_register"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_service_abc"
+                    android:text="Lưu ý: Để đảm bảo chính xác khi thanh toán trên DNG, sinh viên cần thanh toán qua đường link được mở qua AP"
+                    android:paddingHorizontal="30dp"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="16sp"
+                    android:layout_below="@id/btnRegister"
+                    android:paddingVertical="7dp"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="10dp"/>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

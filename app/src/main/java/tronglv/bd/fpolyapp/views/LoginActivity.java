@@ -148,7 +148,11 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         GoogleSignInAccount account = task.getResult(ApiException.class);
                         String email = account.getEmail();
+                        String name = account.getGivenName();
+                        String avartar = String.valueOf(account.getPhotoUrl());
                         Log.d(">>>TAG", "onActivityResult: " + email);
+                        Log.d(">>>TAG", "onActivityResult: " + name);
+                        Log.d(">>>TAG", "onActivityResult: " + avartar);
                         //Chuyển qua màn hình MainActivity
                         if (account != null) {
                             Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);

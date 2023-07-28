@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="4"
+        android:weightSum="5"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:paddingTop="10dp"
@@ -128,6 +128,39 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/viewService"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:gravity="center"
+            android:onClick="onCLickList"
+            android:layout_weight="1"
+            >
+
+            <ImageView
+                android:id="@+id/imgService"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo_service"/>
+            <TextView
+                android:id="@+id/txtService"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/viewProfile"
             android:background="@android:color/transparent"
             android:layout_width="wrap_content"
@@ -138,7 +171,7 @@
             android:gravity="center"
             android:onClick="onCLickList"
             android:layout_weight="1"
-          >
+            >
 
             <ImageView
                 android:id="@+id/imgProfile"

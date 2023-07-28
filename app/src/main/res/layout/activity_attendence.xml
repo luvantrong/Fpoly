@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.OtherServiceActivity"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back_button_detai"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khôi phục điểm danh"
+        android:textColor="#161E49"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"/>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_below="@+id/txtTitle">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+
+            <LinearLayout
+                android:id="@+id/lnInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/custom_profile"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon1" />
+
+                    <TextView
+                        android:id="@+id/textAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Trạng thái HDI"
+                        android:textColor="@color/seconds"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon2" />
+
+                    <TextView
+                        android:id="@+id/textMajoy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Kỳ học - 6"
+                        android:textColor="@color/seconds"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon3" />
+
+                    <TextView
+                        android:id="@+id/textStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="Lập trình máy tính (Mobie)"
+                        android:textColor="@color/seconds"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thông tin"
+                android:layout_alignParentTop="true"
+                android:textColor="@color/text_bottom_tab"
+                android:textSize="18sp"
+                android:paddingHorizontal="15dp"
+                android:fontFamily="@font/roboto_bold"
+                android:background="@color/white"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="17dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnInfo">
+                <RelativeLayout
+                    android:id="@+id/tlCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtCourse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlCourse"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtClass"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlClass"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlDate"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtTeacher"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Môn học *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Lớp học *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="121dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Ngày xin *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="210dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtTeacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Giảng viên *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="297dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <ImageView
+                    android:id="@+id/imgCalendar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/calendar_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginTop="238dp"/>
+
+                <TextView
+                    android:id="@+id/txtNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lưu ý:"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="17sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_below="@id/tlTeacher"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/primary"/>
+
+                <LinearLayout
+                    android:id="@+id/tlNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/txtNotes"
+                    android:layout_marginHorizontal="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1. "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"
+                            android:text="Sinh viên chỉ được đăng ký 1 lần/ môn/ kỳ trong vòng 2 ngày kể từ khi không được điểm danh."/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2. "
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/primary"
+                            android:text="Khi đăng ký dịch vụ thành công, bạn vui lòng nhắc giảng viên xác nhận để phòng đào tạo xử lý tiếp."/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tlPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:layout_below="@+id/tlNotes"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/backgroud_transparent"
+                        android:paddingHorizontal="20dp"
+                        />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Số điện thoại *"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="499dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_below="@id/tlPhone"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_study"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="9dp"
+                        android:background="@drawable/backgroud_transparent"
+                        android:gravity="top"
+                        android:paddingHorizontal="20dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Lý do"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="588dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <TextView
+                    android:id="@+id/txtABC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tài liệu đính kèm"
+                    android:layout_below="@+id/tlDescription"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="17sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_bold"/>
+
+                <LinearLayout
+                    android:id="@+id/lnFiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/txtABC"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp">
+
+                    <TextView
+                        android:id="@+id/txtFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chọn tệp"
+                        android:textColor="@color/text_bottom_tab"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="5dp"
+                        android:background="@drawable/background_edt_file"
+                        android:layout_marginEnd="10dp"/>
+
+                    <TextView
+                        android:id="@+id/txtNameFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Không có tệp nào được chọn"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textColor="@color/text_bottom_tab"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tlFees"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@id/lnFiles"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/background_service_fees"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtFees"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="9dp"
+                        android:background="@drawable/backgroud_transparent"
+                        android:gravity="top"
+                        android:paddingHorizontal="20dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtFees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Phí dịch vụ"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="18sp"
+                    android:layout_marginTop="798dp"
+                    android:layout_marginStart="40dp"
+                    android:paddingHorizontal="10dp"/>
+
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="Đăng ký"
+                    android:layout_below="@+id/tlFees"
+                    android:layout_marginHorizontal="20dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dp"
+                    android:textAllCaps="false"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_btn_register"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/background_service_abc"
+                    android:text="Lưu ý: Để đảm bảo chính xác khi thanh toán trên DNG, sinh viên cần thanh toán qua đường link được mở qua AP"
+                    android:paddingHorizontal="30dp"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="16sp"
+                    android:layout_below="@id/btnRegister"
+                    android:paddingVertical="7dp"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="10dp"/>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

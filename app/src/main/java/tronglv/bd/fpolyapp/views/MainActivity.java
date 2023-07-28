@@ -39,6 +39,7 @@ import tronglv.bd.fpolyapp.fragments.NotificationFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationPlusFragment;
 import tronglv.bd.fpolyapp.fragments.ProfileFragment;
 import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
+import tronglv.bd.fpolyapp.fragments.ServiceFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
 import tronglv.bd.fpolyapp.fragments.TutionFragment;
 import tronglv.bd.fpolyapp.models.Notification;
@@ -51,9 +52,9 @@ import tronglv.bd.fpolyapp.services.BottomService;
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout flMain;
-    private LinearLayout viewHome, viewNotification, viewSchedule, viewProfile, bottomBar;
-    private ImageView imgHome, imgNotification, imgSchedule, imgProfile;
-    private TextView txtHome, txtNotification, txtSchedule, txtProfile, txtCancelSignOut;
+    private LinearLayout viewHome, viewNotification, viewSchedule, viewProfile, viewService, bottomBar;
+    private ImageView imgHome, imgNotification, imgSchedule, imgProfile, imgService;
+    private TextView txtHome, txtNotification, txtSchedule, txtProfile, txtService, txtCancelSignOut;
 
     private RelativeLayout rlSignOut, rlViewSignOut;
 
@@ -72,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mapping();
+
+        loadSubjectStudy();
+
+        txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideSignOut();
+            }
+        });
+
+        btnSignOutMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
 
         account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
@@ -94,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(selectedTab == 4){
             setSelectedTab4();
+            loadService();
+        }
+
+        if(selectedTab == 5){
+            setSelectedTab5();
             loadProfile();
         }
 
@@ -109,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         viewHome = findViewById(R.id.viewHome);
         viewNotification = findViewById(R.id.viewNotification);
         viewSchedule = findViewById(R.id.viewSchedule);
+        viewService = findViewById(R.id.viewService);
         viewProfile = findViewById(R.id.viewProfile);
         bottomBar = findViewById(R.id.bottomBar);
 
@@ -117,49 +140,40 @@ public class MainActivity extends AppCompatActivity {
         imgNotification = findViewById(R.id.imgNotification);
         imgSchedule = findViewById(R.id.imgSchedule);
         imgProfile = findViewById(R.id.imgProfile);
+        imgService = findViewById(R.id.imgService);
 
         txtHome = findViewById(R.id.txtHome);
         txtNotification = findViewById(R.id.txtNotification);
         txtSchedule = findViewById(R.id.txtSchedule);
         txtProfile = findViewById(R.id.txtProfile);
+        txtService = findViewById(R.id.txtService);
         txtCancelSignOut = findViewById(R.id.txtCancelSignOut);
 
         btnSignOutMain = findViewById(R.id.btnSignOutMain);
         rlSignOut = findViewById(R.id.rlSignOut);
         rlViewSignOut = findViewById(R.id.rlViewSignOut);
 
-
-        loadSubjectStudy();
-
-        txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hideSignOut();
-            }
-        });
-
-        btnSignOutMain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signOut();
-            }
-        });
     }
     private void setSelectedTab1() {
         viewHome.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewService.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
 
         imgHome.setImageResource(R.drawable.logo_home_focus);
         imgNotification.setImageResource(R.drawable.logo_notification);
         imgSchedule.setImageResource(R.drawable.logo_schedule);
         imgProfile.setImageResource(R.drawable.logo_profile);
+        imgService.setImageResource(R.drawable.logo_service);
+
 
         txtHome.setVisibility(View.VISIBLE);
         txtNotification.setVisibility(View.GONE);
         txtSchedule.setVisibility(View.GONE);
         txtProfile.setVisibility(View.GONE);
+        txtService.setVisibility(View.GONE);
 
 
 //                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
@@ -178,16 +192,22 @@ public class MainActivity extends AppCompatActivity {
         viewNotification.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewService.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
 
         imgHome.setImageResource(R.drawable.logo_home);
         imgNotification.setImageResource(R.drawable.logo_notification_focus);
         imgSchedule.setImageResource(R.drawable.logo_schedule);
         imgProfile.setImageResource(R.drawable.logo_profile);
+        imgService.setImageResource(R.drawable.logo_service);
+
 
         txtHome.setVisibility(View.GONE);
         txtNotification.setVisibility(View.VISIBLE);
         txtSchedule.setVisibility(View.GONE);
         txtProfile.setVisibility(View.GONE);
+        txtService.setVisibility(View.GONE);
+
 
 //                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 //                        scaleAnimation.setDuration(200);
@@ -205,16 +225,20 @@ public class MainActivity extends AppCompatActivity {
         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewSchedule.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewService.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
 
         imgHome.setImageResource(R.drawable.logo_home);
         imgNotification.setImageResource(R.drawable.logo_notification);
         imgSchedule.setImageResource(R.drawable.logo_schedule_focus);
         imgProfile.setImageResource(R.drawable.logo_profile);
+        imgService.setImageResource(R.drawable.logo_service);
 
         txtHome.setVisibility(View.GONE);
         txtNotification.setVisibility(View.GONE);
         txtSchedule.setVisibility(View.VISIBLE);
         txtProfile.setVisibility(View.GONE);
+        txtService.setVisibility(View.GONE);
 
 //                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 //                        scaleAnimation.setDuration(200);
@@ -227,20 +251,58 @@ public class MainActivity extends AppCompatActivity {
         viewSchedule.startAnimation(scaleAnimation);
         viewSchedule.setVisibility(View.VISIBLE);
     }
+
     private void setSelectedTab4() {
+        viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewService.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewProfile.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
+
+        imgHome.setImageResource(R.drawable.logo_home);
+        imgNotification.setImageResource(R.drawable.logo_notification);
+        imgSchedule.setImageResource(R.drawable.logo_schedule);
+        imgProfile.setImageResource(R.drawable.logo_profile);
+        imgService.setImageResource(R.drawable.logo_service_select);
+
+        txtHome.setVisibility(View.GONE);
+        txtNotification.setVisibility(View.GONE);
+        txtSchedule.setVisibility(View.GONE);
+        txtProfile.setVisibility(View.GONE);
+        txtService.setVisibility(View.VISIBLE);
+
+//                        ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f, 1.0f, 1f, 1f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+//                        scaleAnimation.setDuration(200);
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.5f, 1f, 0.5f, 1f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setFillAfter(true);
+        viewService.setPivotX(viewService.getWidth() / 2f);
+        viewService.setPivotY(viewService.getHeight() / 2f);
+        viewService.startAnimation(scaleAnimation);
+        viewService.setVisibility(View.VISIBLE);
+    }
+
+
+    private void setSelectedTab5() {
         viewHome.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewNotification.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         viewSchedule.setBackgroundColor(getResources().getColor(android.R.color.transparent));                        viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
         viewProfile.setBackgroundResource(R.drawable.background_item_bottomtab);
+        viewService.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
 
         imgHome.setImageResource(R.drawable.logo_home);
         imgNotification.setImageResource(R.drawable.logo_notification);
         imgSchedule.setImageResource(R.drawable.logo_schedule);
         imgProfile.setImageResource(R.drawable.logo_profile_focus);
+        imgService.setImageResource(R.drawable.logo_service);
 
         txtHome.setVisibility(View.GONE);
         txtNotification.setVisibility(View.GONE);
         txtSchedule.setVisibility(View.GONE);
+        txtService.setVisibility(View.GONE);
         txtProfile.setVisibility(View.VISIBLE);
 
 
@@ -510,6 +572,13 @@ public class MainActivity extends AppCompatActivity {
                 .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
                 .commit();
     }
+
+    public void loadService() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flMain, ServiceFragment.newInstance())
+                .commit();
+    }
     public void loadProfile() {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -534,10 +603,44 @@ public class MainActivity extends AppCompatActivity {
                 intentSchedule.setAction(BottomService.BOTTOM_SERVICE_SCHEDULE);
                 startService(intentSchedule);
                 break;
+            case R.id.viewService:
+                Intent intentService = new Intent(this, BottomService.class);
+                intentService.setAction(BottomService.BOTTOM_SERVICE_SERVICE);
+                startService(intentService);
+                break;
             case R.id.viewProfile:
                 Intent intentProfile = new Intent(this, BottomService.class);
                 intentProfile.setAction(BottomService.BOTTOM_SERVICE_PROFILE);
                 startService(intentProfile);
+                break;
+        }
+    }
+
+    public void onCLickListService(int index) {
+        switch (index) {
+            case 1:
+                Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Intent intent2 = new Intent(MainActivity.this, AttendenceActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent2);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+                break;
+            case 3:
+                Intent intent3 = new Intent(MainActivity.this, FreeStudyActivity.class);
+                intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent3);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+                break;
+            case 4:
+                Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
+                break;
+            case 5:
+                Intent intent5 = new Intent(MainActivity.this, OtherServiceActivity.class);
+                intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent5);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
         }
     }
@@ -628,11 +731,19 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                case "profile": {
-                    loadProfile();
+                case "service": {
+                    loadService();
                     if (selectedTab != 4) {
                         setSelectedTab4();
                         selectedTab = 4;
+                        break;
+                    }
+                }
+                case "profile": {
+                    loadProfile();
+                    if (selectedTab != 5) {
+                        setSelectedTab5();
+                        selectedTab = 5;
                         break;
                     }
                 }

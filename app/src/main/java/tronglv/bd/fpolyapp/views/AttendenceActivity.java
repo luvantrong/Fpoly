@@ -8,42 +8,41 @@ import android.view.View;
 import android.widget.ImageView;
 
 import tronglv.bd.fpolyapp.R;
-import tronglv.bd.fpolyapp.fragments.ProfileFragment;
 
-public class EditProfile extends AppCompatActivity {
+public class AttendenceActivity extends AppCompatActivity {
+
+    private ImageView imgBack;
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        backToProfile();
+        backToService();
     }
-
-    ImageView imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_attendence);
 
         mapping();
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                backToProfile();
+                backToService();
             }
         });
-
     }
 
     private void mapping() {
         imgBack = findViewById(R.id.imgBack);
     }
 
-    public void backToProfile() {
+    public void backToService() {
         // Quay lại MainActivity khi người dùng bấm nút "Back" trên điện thoại
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("index", 5);
+        intent.putExtra("index", 4);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }

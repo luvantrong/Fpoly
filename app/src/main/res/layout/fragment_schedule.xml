@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#EEEEEE"
-    android:paddingHorizontal="10dp"
+    android:background="@android:color/transparent"
     tools:context=".fragments.ScheduleFragment">
+
+
+<!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:src="@drawable/background_notify_plus"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_marginRight="-116dp"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSchedule"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:paddingHorizontal="20dp"/>
 
-</LinearLayout>
+
+</RelativeLayout>

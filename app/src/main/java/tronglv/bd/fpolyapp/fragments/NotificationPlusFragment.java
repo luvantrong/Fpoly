@@ -14,9 +14,12 @@ import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,6 +37,8 @@ public class NotificationPlusFragment extends Fragment {
     public FrameLayout flNotifyPlus;
 
     public Integer index = 1;
+
+    private LinearLayout  lnNotifyPlus;
 
     public NotificationPlusFragment() {
         // Required empty public constructor
@@ -74,22 +79,26 @@ public class NotificationPlusFragment extends Fragment {
         rlNews = view.findViewById(R.id.rlNews);
         rlTution = view.findViewById(R.id.rlTution);
         flNotifyPlus = view.findViewById(R.id.flNotifyPlus);
+        lnNotifyPlus= view.findViewById(R.id.lnNotifyPlus);
+
+//        ((MainActivity)view.getContext()).showMenuNotify(lnNotifyPlus, flNotifyPlus);
 
         index = ((MainActivity) view.getContext()).indexNotify();
 
         if (index == 1) {
             indexNotify1();
-            ((MainActivity) view.getContext()).loadNotifyFragment(flNotifyPlus);
+            ((MainActivity)view.getContext()).showMenuNotify(lnNotifyPlus, flNotifyPlus);
+
         }
 
         if (index == 2) {
             indexNotify2();
-            ((MainActivity) view.getContext()).loadNewsFragment(flNotifyPlus);
+            ((MainActivity)view.getContext()).showMenuNotify2(lnNotifyPlus,flNotifyPlus);
         }
 
         if (index == 3) {
             indexNotify3();
-            ((MainActivity) view.getContext()).loadTutionsFragment(flNotifyPlus);
+            ((MainActivity)view.getContext()).showMenuNotify3( lnNotifyPlus,flNotifyPlus);
         }
 
 
@@ -97,7 +106,8 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify1();
-                ((MainActivity) view.getContext()).loadNotifyFragment(flNotifyPlus);
+                ((MainActivity)view.getContext()).loadNotifyFragment( flNotifyPlus);
+
                 index = 1;
             }
         });
@@ -106,7 +116,7 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify2();
-                ((MainActivity) view.getContext()).loadNewsFragment(flNotifyPlus);
+                ((MainActivity)view.getContext()).loadNewsFragment(flNotifyPlus);
                 index = 2;
             }
         });
@@ -115,7 +125,8 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify3();
-                ((MainActivity) view.getContext()).loadTutionsFragment(flNotifyPlus);
+                ((MainActivity)view.getContext()).loadTutionsFragment( flNotifyPlus);
+
                 index = 3;
             }
         });

@@ -226,10 +226,9 @@ public class AttendenceActivity extends AppCompatActivity {
                 ServiceResponseDTO serviceResponseDTO = response.body();
                 if (serviceResponseDTO.isStatus()) {
                     Toast.makeText(AttendenceActivity.this, "Đăng ký dịch vụ thành công", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(AttendenceActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                    overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
-//                    finish();
+                    Intent intent = new Intent(AttendenceActivity.this, ServiceListActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 } else {
                     Toast.makeText(AttendenceActivity.this, "Đăng ký dịch vụ không thành công", Toast.LENGTH_SHORT).show();
                 }

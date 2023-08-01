@@ -16,19 +16,20 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.ScheduleAdapter;
+import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.models.Schedule;
 
 
 public class ScheduleFragment extends Fragment {
     private RecyclerView rvSchedules;
-    ArrayList<Schedule> listSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule;
 
     public ScheduleFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static ScheduleFragment newInstance(ArrayList<Schedule> listSchedule) {
+    public static ScheduleFragment newInstance(ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule) {
         ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();
         args.putSerializable("schedules", listSchedule);
@@ -41,7 +42,7 @@ public class ScheduleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listSchedule = (ArrayList<Schedule>) getArguments().getSerializable("schedules");
+            listSchedule = (ArrayList<ListSchedulesResponseDTO.Schedule>) getArguments().getSerializable("schedules");
         }
     }
 

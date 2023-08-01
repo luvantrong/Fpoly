@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.Schedule;
@@ -20,9 +22,9 @@ import tronglv.bd.fpolyapp.views.MainActivity;
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleViewHolder> {
 
     Context context;
-    List<Schedule> listSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule;
 
-    public ScheduleAdapter(Context context, List<Schedule> listSchedule) {
+    public ScheduleAdapter(Context context, ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule) {
         this.context = context;
         this.listSchedule = listSchedule;
     }
@@ -36,26 +38,26 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ScheduleViewHolder holder, int position) {
-        Schedule schedule = listSchedule.get(holder.getAdapterPosition());
+        ListSchedulesResponseDTO.Schedule schedule = listSchedule.get(holder.getAdapterPosition());
 
-        String codeCourse = schedule.getCodeCourse();//mã môn
-        String nameCourse = schedule.getNameCourse();//tên môn
-        String day = schedule.getDay(); //ngày học
+        String codeCourse = schedule.getCourse_name().substring(schedule.getCourse_name().indexOf("-") + 1);//mã môn
+        String nameCourse = schedule.getCourse_name();//tên môn
+        String day = schedule.getDate(); //ngày học
         String address = schedule.getAddress(); //địa chỉ
         String room = schedule.getRoom(); //phòng học
         String time = schedule.getTime(); //giờ học
-        String className = schedule.getClassName(); //lớp học
-        String teacherName = schedule.getTeacherName(); //giảng viên
-        String slot = schedule.getSlot(); //ca học
+        String className = schedule.getClass_name(); //lớp học
+        String teacherName = schedule.getTeacher_name(); //giảng viên
+        String slot = schedule.getTime(); //ca học
 
         holder.txtDay.setText(day);
-        holder.txtRoom.setText(room + " - " + slot);
-        holder.txtNameCourse.setText(nameCourse + " - " +codeCourse);
+        holder.txtRoom.setText(room + " - Ca: " + slot);
+        holder.txtNameCourse.setText(nameCourse);
 
         holder.btnMoreSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)context).showDetaiSchedule(schedule);
+                ((MainActivity)context).showDetaiSchedule(schedule.getId());
             }
         });
 
@@ -65,7 +67,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleViewHolder> {
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-                    ((MainActivity)context).showDetaiSchedule(schedule);
+                    ((MainActivity)context).showDetaiSchedule(schedule.getId());
                 }
             }
         });

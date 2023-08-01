@@ -9,9 +9,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -34,7 +36,13 @@ import com.google.android.gms.tasks.Task;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
+import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
+import tronglv.bd.fpolyapp.dto.ScheduleGetByIdResponseDTO;
 import tronglv.bd.fpolyapp.fragments.NewsFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationPlusFragment;
@@ -43,11 +51,11 @@ import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.ServiceFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
 import tronglv.bd.fpolyapp.fragments.TutionFragment;
+import tronglv.bd.fpolyapp.helpers.IRetrofit;
+import tronglv.bd.fpolyapp.helpers.RetrofitHelper;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
-import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
-import tronglv.bd.fpolyapp.models.TestSchedule;
 import tronglv.bd.fpolyapp.services.BottomService;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,6 +76,16 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     GoogleSignInAccount account;
 
+    IRetrofit iRetrofit;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listTestSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listScheduleById;
+
+
+    int user_id = -1;
+
+    private LoginResponseDTO.User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +93,26 @@ public class MainActivity extends AppCompatActivity {
 
         mapping();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        int _id = sharedPreferences.getInt("id", -1);
+        int status = sharedPreferences.getInt("status", -1);
+        String email = sharedPreferences.getString("email", "");
+        String avatar = sharedPreferences.getString("avatar", "");
+        String student_code = sharedPreferences.getString("student_code", "");
+        String birthday = sharedPreferences.getString("birthday", "");
+        String address = sharedPreferences.getString("address", "");
+        String course = sharedPreferences.getString("course", "");
+        String semester = sharedPreferences.getString("semester", "");
+        String name = sharedPreferences.getString("name", "");
+        int gender = sharedPreferences.getInt("gender", -1);
+
+        user = new LoginResponseDTO.User(_id, status,email, avatar, student_code, birthday, address, course, semester, gender, name);
+
         loadSubjectStudy();
+        iRetrofit = RetrofitHelper.createService(IRetrofit.class);
+        listSchedule = new ArrayList<>();
+        listTestSchedule = new ArrayList<>();
+        listScheduleById = new ArrayList<>();
 
         txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -329,6 +366,10 @@ public class MainActivity extends AppCompatActivity {
             gsc.signOut().addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
                     Intent homeIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(homeIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -441,10 +482,6 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
         loadTutionsFragment(fr);
     }
-
-
-
-
     private void loadSubjectStudy() {
         SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
         SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
@@ -468,9 +505,11 @@ public class MainActivity extends AppCompatActivity {
         listProgressStudy.add(progressStudy1);
         listProgressStudy.add(progressStudy3);
 
+
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy))
+                .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy, user))
                 .commit();
     }
 
@@ -484,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
     public void loadNotification() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, NotificationPlusFragment.newInstance())
+                .replace(R.id.flMain, NotificationPlusFragment.newInstance(user))
                 .commit();
     }
 
@@ -663,14 +702,14 @@ public class MainActivity extends AppCompatActivity {
     public void loadService() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, ServiceFragment.newInstance())
+                .replace(R.id.flMain, ServiceFragment.newInstance(user))
                 .commit();
     }
 
     public void loadProfile() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, ProfileFragment.newInstance())
+                .replace(R.id.flMain, ProfileFragment.newInstance(user))
                 .commit();
     }
 
@@ -734,65 +773,143 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showDetaiSchedule(Schedule schedule) {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View viewDialog = inflater.inflate(R.layout.dialog_detail_schedule, null);
+    Callback<ScheduleGetByIdResponseDTO> getScheduleById = new Callback<ScheduleGetByIdResponseDTO>() {
+        @Override
+        public void onResponse(Call<ScheduleGetByIdResponseDTO> call, Response<ScheduleGetByIdResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ScheduleGetByIdResponseDTO responseDTO = response.body();
+                listScheduleById.clear();
+                listScheduleById.addAll(responseDTO.getSchedules());
+                ListSchedulesResponseDTO.Schedule schedule = listScheduleById.get(0);
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View viewDialog = inflater.inflate(R.layout.dialog_detail_schedule, null);
 
-        TextView txtCodeNameClass = viewDialog.findViewById(R.id.txtCodeNameClass);
-        TextView txtNameTeacher = viewDialog.findViewById(R.id.txtNameTeacher);
-        TextView txtSlot = viewDialog.findViewById(R.id.txtSlot);
-        TextView txtBasis = viewDialog.findViewById(R.id.txtBasis);
-        TextView txtLinkMeet = viewDialog.findViewById(R.id.txtLinkMeet);
-        Button btnClose = viewDialog.findViewById(R.id.btnClose);
+                TextView txtCodeNameClass = viewDialog.findViewById(R.id.txtCodeNameClass);
+                TextView txtNameTeacher = viewDialog.findViewById(R.id.txtNameTeacher);
+                TextView txtSlot = viewDialog.findViewById(R.id.txtSlot);
+                TextView txtBasis = viewDialog.findViewById(R.id.txtBasis);
+                TextView txtLinkMeet = viewDialog.findViewById(R.id.txtLinkMeet);
+                TextView txtRoom = viewDialog.findViewById(R.id.txtRoom);
+                TextView txtFullNameCourse = viewDialog.findViewById(R.id.txtFullNameCourse);
+                TextView txtDate = viewDialog.findViewById(R.id.txtDate);
 
-        String t1 = "<b>Lớp: </b>" + schedule.getClassName();
-        txtCodeNameClass.setText(android.text.Html.fromHtml(t1));
 
-        String t2 = "<b>Giảng viên: </b>" + schedule.getTeacherName();
-        txtNameTeacher.setText(android.text.Html.fromHtml(t2));
+                Button btnClose = viewDialog.findViewById(R.id.btnClose);
 
-        String t3 = "<b>Thời gian: </b>" + schedule.getSlot();
-        txtSlot.setText(android.text.Html.fromHtml(t3));
+                String t1 = "<b>Lớp: </b>" + schedule.getClass_name();
+                txtCodeNameClass.setText(android.text.Html.fromHtml(t1));
 
-        String t4 = "<b>Giảng đường: </b>" + schedule.getAddress();
-        txtBasis.setText(android.text.Html.fromHtml(t4));
+                String t2 = "<b>Giảng viên: </b>" + schedule.getTeacher_name();
+                txtNameTeacher.setText(android.text.Html.fromHtml(t2));
 
-        String t5 = "<b>Link meet: </b>" + "https://meet.google.com/top-ynme-hka?authuser=0&pli=1";
-        txtLinkMeet.setText(android.text.Html.fromHtml(t5));
-        builder.setView(viewDialog);
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.background_dialog_schedule_show);
-        androidx.appcompat.app.AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(drawable);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
+                String room = "<b>Phòng: </b>" + schedule.getRoom();
+                txtRoom.setText(android.text.Html.fromHtml(room));
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
+                String course = "<b>Môn: </b>" + schedule.getCourse_name();
+                txtFullNameCourse.setText(android.text.Html.fromHtml(course));
+
+                String day = "<b>Ngày: </b>" + schedule.getDate();
+                txtDate.setText(android.text.Html.fromHtml(day));
+
+                String slot = "";
+                switch (String.valueOf(schedule.getTime())){
+                    case "1":
+                        slot = "7h30 - 9h30";
+                        break;
+                    case "2":
+                        slot = "9h35 - 11h45";
+                        break;
+                    case "3":
+                        slot = "13h00 - 15h00";
+                        break;
+                    case "4":
+                        slot = "15h15 - 17h15";
+                        break;
+                    case "5":
+                        slot = "17h30 - 19h30";
+                        break;
+                    case "6":
+                        slot = "19h30 - 21h30";
+                        break;
+                    default:
+                        slot = "Tự học";
+                        break;
+                }
+
+                String t3 = "<b>Thời gian: </b>" + slot;
+                txtSlot.setText(android.text.Html.fromHtml(t3));
+
+                String t4 = "<b>Giảng đường: </b>" + schedule.getAddress();
+                txtBasis.setText(android.text.Html.fromHtml(t4));
+
+                String t5 = "<b>Link meet: </b>" + schedule.getMeet();
+                txtLinkMeet.setText(android.text.Html.fromHtml(t5));
+                builder.setView(viewDialog);
+                Drawable drawable = ContextCompat.getDrawable(MainActivity.this, R.drawable.background_dialog_schedule_show);
+                androidx.appcompat.app.AlertDialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawable(drawable);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
             }
-        });
+        }
+
+        @Override
+        public void onFailure(Call<ScheduleGetByIdResponseDTO> call, Throwable t) {
+            Log.d(">>> login", "onFailure: " + t.getMessage());
+        }
+    };
+
+    public void showDetaiSchedule(int id) {
+        iRetrofit.getSchedulesById(id).enqueue(getScheduleById);
     }
 
-    public ArrayList<Schedule> getDataSchedule() {
-        Schedule schedule = new Schedule("MOB403", "Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)", "17h30 - 19h30", "MD17306", "channn3", "Ca 5");
-        ArrayList<Schedule> listSchedule = new ArrayList<>();
-        listSchedule.add(schedule);
-        listSchedule.add(schedule);
-        listSchedule.add(schedule);
-        listSchedule.add(schedule);
+    public ArrayList<ListSchedulesResponseDTO.Schedule> getDataSchedule() {
         return listSchedule;
     }
 
-    public ArrayList<TestSchedule> getDataTestSchedule() {
-        TestSchedule testSchedule = new TestSchedule("11/08/2023", "Phòng 308 (Toà T)", "Ca 5", "Android Networking", "MOB403", "17h30 - 19h30", "chann3");
-        ArrayList<TestSchedule> listTestSchedule = new ArrayList<>();
-        listTestSchedule.add(testSchedule);
-        listTestSchedule.add(testSchedule);
-        listTestSchedule.add(testSchedule);
+    Callback<ListSchedulesResponseDTO> getListScheduleCallback = new Callback<ListSchedulesResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListSchedulesResponseDTO> call, Response<ListSchedulesResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListSchedulesResponseDTO responseDTO = response.body();
+                listSchedule.clear();
+                listSchedule.addAll(responseDTO.getData());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ListSchedulesResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    public ArrayList<ListSchedulesResponseDTO.Schedule> getDataTestSchedule() {
         return listTestSchedule;
     }
+
+    Callback<ListSchedulesResponseDTO> getListTestScheduleCallback = new Callback<ListSchedulesResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListSchedulesResponseDTO> call, Response<ListSchedulesResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListSchedulesResponseDTO responseDTO = response.body();
+                listTestSchedule.clear();
+                listTestSchedule.addAll(responseDTO.getData());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ListSchedulesResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
 
     //Tín hiệu Bottom Service
     private BroadcastReceiver bottomReceiver = new BroadcastReceiver() {
@@ -865,7 +982,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter intentBottom = new IntentFilter(BottomService.BOTTOM_SERVICE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(bottomReceiver, intentBottom);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        user_id = sharedPreferences.getInt("id", -1);
+        iRetrofit.getAllSchedule(user_id, 0).enqueue(getListScheduleCallback);
+        iRetrofit.getAllSchedule(user_id, 1).enqueue(getListTestScheduleCallback);
     }
 
     @Override

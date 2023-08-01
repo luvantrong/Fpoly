@@ -135,50 +135,54 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lnInfo">
+                android:layout_below="@+id/lnInfo"
+                >
+
                 <RelativeLayout
                     android:id="@+id/tlCourse"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="50dp"
-                    android:gravity="center"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/background_service_study">
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/background_service_study"
+                    android:gravity="center">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtCourse"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/backgroud_transparent"
-                        android:paddingHorizontal="20dp"/>
+                        android:paddingHorizontal="20dp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/tlClass"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center"
                     android:layout_below="@+id/tlCourse"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/background_service_study">
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/background_service_study"
+                    android:gravity="center">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtClass"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/backgroud_transparent"
-                        android:paddingHorizontal="20dp"/>
+                        android:paddingHorizontal="20dp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/tlDate"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center"
                     android:layout_below="@+id/tlClass"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/background_service_study">
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/background_service_study"
+                    android:gravity="center">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtDate"
                         android:layout_width="match_parent"
@@ -192,104 +196,105 @@
                     android:id="@+id/tlTeacher"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center"
                     android:layout_below="@+id/tlDate"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/background_service_study">
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/background_service_study"
+                    android:gravity="center">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtTeacher"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/backgroud_transparent"
-                        android:paddingHorizontal="20dp"
-                        />
+                        android:paddingHorizontal="20dp" />
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/txtCourse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="33dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Môn học *"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="33dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtClass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="121dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Lớp học *"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="121dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="210dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Ngày xin *"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="210dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtTeacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="297dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Giảng viên *"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="297dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/imgCalendar"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/calendar_icon"
                     android:layout_alignParentRight="true"
+                    android:layout_marginTop="238dp"
                     android:layout_marginEnd="40dp"
-                    android:layout_marginTop="238dp"/>
+                    android:src="@drawable/calendar_icon" />
 
                 <TextView
                     android:id="@+id/txtNotes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lưu ý:"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textSize="17sp"
-                    android:layout_marginStart="10dp"
                     android:layout_below="@id/tlTeacher"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
-                    android:textColor="@color/primary"/>
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Lưu ý:"
+                    android:textColor="@color/primary"
+                    android:textSize="17sp" />
 
                 <LinearLayout
                     android:id="@+id/tlNotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_below="@+id/txtNotes"
-                    android:layout_marginHorizontal="20dp">
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -298,18 +303,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1. "
-                            android:textSize="15sp"
                             android:fontFamily="@font/roboto_medium"
-                            android:textColor="@color/primary"/>
+                            android:text="1. "
+                            android:textColor="@color/primary"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="Sinh viên chỉ được đăng ký 1 lần/ môn/ kỳ trong vòng 2 ngày kể từ khi không được điểm danh."
                             android:textColor="@color/primary"
-                            android:text="Sinh viên chỉ được đăng ký 1 lần/ môn/ kỳ trong vòng 2 ngày kể từ khi không được điểm danh."/>
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -321,18 +326,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2. "
-                            android:textSize="15sp"
                             android:fontFamily="@font/roboto_medium"
-                            android:textColor="@color/primary"/>
+                            android:text="2. "
+                            android:textColor="@color/primary"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="15sp"
                             android:fontFamily="@font/roboto_medium"
+                            android:text="Khi đăng ký dịch vụ thành công, bạn vui lòng nhắc giảng viên xác nhận để phòng đào tạo xử lý tiếp."
                             android:textColor="@color/primary"
-                            android:text="Khi đăng ký dịch vụ thành công, bạn vui lòng nhắc giảng viên xác nhận để phòng đào tạo xử lý tiếp."/>
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -342,43 +347,44 @@
                     android:id="@+id/tlPhone"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center"
                     android:layout_below="@+id/tlNotes"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/background_service_study">
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/background_service_study"
+                    android:gravity="center">
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtPhone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/backgroud_transparent"
                         android:paddingHorizontal="20dp"
-                        />
+                        android:inputType="phone"
+                        android:maxLength="10"/>
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/txtPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="499dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Số điện thoại *"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="499dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tlDescription"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:layout_marginTop="40dp"
                     android:layout_below="@id/tlPhone"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/background_service_study"
-                    >
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/background_service_study">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtDescription"
@@ -395,55 +401,55 @@
                     android:id="@+id/txtDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="588dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Lý do"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="588dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtABC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tài liệu đính kèm"
                     android:layout_below="@+id/tlDescription"
-                    android:textColor="@color/text_bottom_tab"
-                    android:textSize="17sp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/roboto_bold"/>
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Tài liệu đính kèm"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="17sp" />
 
                 <LinearLayout
                     android:id="@+id/lnFiles"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_below="@+id/txtABC"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="5dp">
+                    android:layout_marginVertical="5dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/txtFile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chọn tệp"
-                        android:textColor="@color/text_bottom_tab"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/background_edt_file"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="5dp"
-                        android:background="@drawable/background_edt_file"
-                        android:layout_marginEnd="10dp"/>
+                        android:text="Chọn tệp"
+                        android:textColor="@color/text_bottom_tab" />
 
                     <TextView
                         android:id="@+id/txtNameFile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Không có tệp nào được chọn"
                         android:fontFamily="@font/roboto_medium"
-                        android:textColor="@color/text_bottom_tab"/>
+                        android:text="Không có tệp nào được chọn"
+                        android:textColor="@color/text_bottom_tab" />
 
                 </LinearLayout>
 
@@ -451,11 +457,11 @@
                     android:id="@+id/tlFees"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="30dp"
                     android:layout_below="@id/lnFiles"
                     android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/background_service_fees"
-                    >
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtFees"
@@ -472,45 +478,45 @@
                     android:id="@+id/txtFees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="798dp"
                     android:background="@color/white"
                     android:fontFamily="@font/roboto_bold"
                     android:gravity="center"
+                    android:paddingHorizontal="10dp"
                     android:text="Phí dịch vụ"
                     android:textColor="@color/text_bottom_tab"
-                    android:textSize="18sp"
-                    android:layout_marginTop="798dp"
-                    android:layout_marginStart="40dp"
-                    android:paddingHorizontal="10dp"/>
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="Đăng ký"
                     android:layout_below="@+id/tlFees"
                     android:layout_marginHorizontal="20dp"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textSize="20sp"
                     android:layout_marginTop="20dp"
-                    android:textAllCaps="false"
-                    android:gravity="center"
-                    android:textColor="@color/white"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/background_btn_register"/>
+                    android:background="@drawable/background_btn_register"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="Đăng ký"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/btnRegister"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/background_service_abc"
-                    android:text="Lưu ý: Để đảm bảo chính xác khi thanh toán trên DNG, sinh viên cần thanh toán qua đường link được mở qua AP"
-                    android:paddingHorizontal="30dp"
-                    android:textColor="@color/text_bottom_tab"
-                    android:textSize="16sp"
-                    android:layout_below="@id/btnRegister"
-                    android:paddingVertical="7dp"
                     android:gravity="center"
-                    android:layout_marginHorizontal="10dp"/>
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="7dp"
+                    android:text="Lưu ý: Để đảm bảo chính xác khi thanh toán trên DNG, sinh viên cần thanh toán qua đường link được mở qua AP"
+                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="16sp" />
 
 
             </RelativeLayout>

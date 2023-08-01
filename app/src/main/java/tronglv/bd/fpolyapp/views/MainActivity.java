@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -109,12 +110,12 @@ public class MainActivity extends AppCompatActivity {
             loadNotification();
         }
 
-        if(selectedTab == 4){
+        if (selectedTab == 4) {
             setSelectedTab4();
             loadService();
         }
 
-        if(selectedTab == 5){
+        if (selectedTab == 5) {
             setSelectedTab5();
             loadProfile();
         }
@@ -371,6 +372,79 @@ public class MainActivity extends AppCompatActivity {
         rlViewSignOut.startAnimation(scaleAnimation);
     }
 
+    public void showMenuNotify(LinearLayout ln, FrameLayout fr) {
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ln.setVisibility(View.VISIBLE);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                ScaleAnimation anim = new ScaleAnimation(
+                        0, // fromXScale
+                        1, // toXScale
+                        1, // fromYScale
+                        1, // toYScale
+                        Animation.RELATIVE_TO_SELF, 0, // pivotX
+                        Animation.RELATIVE_TO_SELF, 0 // pivotY
+                );
+                anim.setDuration(700);
+                ln.startAnimation(anim);
+            }
+        }, 1000);
+
+        loadNotifyFragment(fr);
+
+    }
+
+    public void showMenuNotify2(LinearLayout ln, FrameLayout fr) {
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ln.setVisibility(View.VISIBLE);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                ScaleAnimation anim = new ScaleAnimation(
+                        0, // fromXScale
+                        1, // toXScale
+                        1, // fromYScale
+                        1, // toYScale
+                        Animation.RELATIVE_TO_SELF, 0, // pivotX
+                        Animation.RELATIVE_TO_SELF, 0 // pivotY
+                );
+                anim.setDuration(700);
+                ln.startAnimation(anim);
+            }
+        }, 1000);
+        loadNewsFragment(fr);
+    }
+
+    public void showMenuNotify3(LinearLayout ln, FrameLayout fr) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ln.setVisibility(View.VISIBLE);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                ScaleAnimation anim = new ScaleAnimation(
+                        0, // fromXScale
+                        1, // toXScale
+                        1, // fromYScale
+                        1, // toYScale
+                        Animation.RELATIVE_TO_SELF, 0, // pivotX
+                        Animation.RELATIVE_TO_SELF, 0 // pivotY
+                );
+                anim.setDuration(700);
+                ln.startAnimation(anim);
+            }
+        }, 1000);
+        loadTutionsFragment(fr);
+    }
+
+
+
+
     private void loadSubjectStudy() {
         SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
         SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
@@ -408,7 +482,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadNotification() {
-
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flMain, NotificationPlusFragment.newInstance())

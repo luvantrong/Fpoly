@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.viewHolders.NotificationViewHolder;
@@ -19,9 +21,9 @@ import tronglv.bd.fpolyapp.views.MainActivity;
 public class NewsAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     Context context;
-    List<Notification> listNews;
+    ArrayList<ListNotifyResponseDTO.Notify> listNews;
 
-    public NewsAdapter(Context context, List<Notification> listNews) {
+    public NewsAdapter(Context context,ArrayList<ListNotifyResponseDTO.Notify> listNews) {
         this.context = context;
         this.listNews = listNews;
     }
@@ -35,12 +37,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        Notification news = listNews.get(holder.getAdapterPosition());
+        ListNotifyResponseDTO.Notify news = listNews.get(holder.getAdapterPosition());
         String name = news.getTitle();
         holder.txtTitle.setText(name);
         String poster = news.getPoster();
         holder.txtPoster.setText("Người đăng: "+ poster);
-        String time = news.getTime();
+        String time = news.getCreated_at();
         holder.txtTime.setText("Thời gian: "+ time);
 
         holder.setItemClickListener(new ItemClickListener() {
@@ -49,7 +51,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-                    ((MainActivity)context).handleToDetaiNotify(news, 2);
+                    ((MainActivity)context).handleToDetaiNotify(news.getId(), 2);
                 }
             }
         });

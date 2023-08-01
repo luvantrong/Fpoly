@@ -40,8 +40,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
+import tronglv.bd.fpolyapp.dto.NotifyGetByIdResponseDTO;
 import tronglv.bd.fpolyapp.dto.ScheduleGetByIdResponseDTO;
 import tronglv.bd.fpolyapp.fragments.NewsFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationFragment;
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule;
     ArrayList<ListSchedulesResponseDTO.Schedule> listTestSchedule;
     ArrayList<ListSchedulesResponseDTO.Schedule> listScheduleById;
+    ArrayList<ListNotifyResponseDTO.Notify> listNoifys;
+    ArrayList<ListNotifyResponseDTO.Notify> listNews;
+    ArrayList<ListNotifyResponseDTO.Notify> listTutions;
+
+
+    Intent intentNotify;
 
 
     int user_id = -1;
@@ -92,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mapping();
+
+        intentNotify = new Intent(MainActivity.this, DetailActivity.class);
 
         SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         int _id = sharedPreferences.getInt("id", -1);
@@ -113,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
         listSchedule = new ArrayList<>();
         listTestSchedule = new ArrayList<>();
         listScheduleById = new ArrayList<>();
+        listNoifys = new ArrayList<>();
+        listNews = new ArrayList<>();
+        listTutions = new ArrayList<>();
 
         txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         Integer index = getIntent().getIntExtra("index", 1);
         selectedTab = index;
 
-        indexNotify = getIntent().getIntExtra("indexNotify", 1);
+        indexNotify = getIntent().getIntExtra("indexNotify", -1);
 
         if (selectedTab == 2) {
             setSelectedTab2();
@@ -415,7 +428,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void showMenuNotify(LinearLayout ln, FrameLayout fr) {
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -527,94 +539,61 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    Callback<ListNotifyResponseDTO> getListNotifyCallback = new Callback<ListNotifyResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListNotifyResponseDTO> call, Response<ListNotifyResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListNotifyResponseDTO responseDTO = response.body();
+                listNoifys.clear();
+                listNoifys.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListNotifyResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    Callback<ListNotifyResponseDTO> getListNewCallback = new Callback<ListNotifyResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListNotifyResponseDTO> call, Response<ListNotifyResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListNotifyResponseDTO responseDTO = response.body();
+                listNews.clear();
+                listNews.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListNotifyResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    Callback<ListNotifyResponseDTO> getListTutionCallback = new Callback<ListNotifyResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListNotifyResponseDTO> call, Response<ListNotifyResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListNotifyResponseDTO responseDTO = response.body();
+                listTutions.clear();
+                listTutions.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListNotifyResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
     public void loadNotifyFragment(FrameLayout frameLayout) {
-        Notification notification = new Notification("THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP \n" +
-                "(ĐỢT TỐT NGHIỆP THÁNG 06/2023)", "nhapnh", "15/07/2023 11:08", "Địa điểm: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12.\n" +
-                "Thời gian: Bắt đầu ngày 24/07/2023\n" +
-                "Thứ 2 đến thứ 6: Sáng : 08h30 – 11h30 và Chiều : 13:30 – 16:30\n" +
-                "Thứ 7: Sáng : 08h30 – 11h30\n" +
-                "Danh sách sinh viên nhận bằng: DANH SÁCH SINH VIÊN TỐT NGHIỆP ĐỢT THÁNG 06 NĂM 2023\n" +
-                "Lưu ý:\n" +
-                "Khi nhận bằng : Sinh viên là người trực tiếp đến nhận, mang theo 1 CMND/CCCD bản chính và 1 bản sao có công chứng trong vòng 6 tháng\n" +
-                "Bản gốc bằng Tốt nghiệp chỉ được cấp 1 lần, sinh viên mất bản gốc chỉ được cấp lại bản sao\n" +
-                "Trường hợp nhận thay phải có ủy quyền bằng văn bản có chứng thực theo quy định của Pháp luật, CMND/CCCD photo công chứng của người ủy quyền và người được ủy quyền (trong 6 tháng)\n" +
-                "Bằng Tốt nghiệp sẽ giữ lại trong vòng 1 năm tại trường cơ sở HCM, sau thời gian trên nếu chưa nhận sẽ chuyển về Hà Nội.");
-
-        Notification notification1 = new Notification("[QUAN TRỌNG] YÊU CẦU BỔ SUNG BẰNG TỐT NGHIỆP THPT", "huynh43", "19/07/2023 14:40", "Phòng Đào Tạo thông báo yêu cầu các bạn sinh viên đang thiếu bằng tốt nghiệp THPT vui lòng bổ sung đầy đủ hồ sơ. Nộp bản sao/photo công chứng bằng THPT là yêu cầu bắt buộc để lưu trữ hồ sơ sinh viên trong suốt quá trình học tập đến khi được xét tốt nghiệp. Sau thời hạn bổ sung bên dưới, sinh viên chưa bổ sung bằng THPT sẽ bị đình chỉ học tập mức cao nhất: BUỘC THÔI HỌC\n" +
-                "\n" +
-                "Hồ sơ nộp: 1 bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng THPT. Trường hợp sinh viên học trung cấp thì có thể nộp bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng tốt nghiệp trung cấp.\n" +
-                "\n" +
-                "Địa điểm nộp:\n" +
-                "\n" +
-                "- Cơ sở Nguyễn Kiệm: Phòng Đào Tạo - Tầng 1 - 778/B1 Nguyễn Kiệm, Phường 4, Quận Phú Nhuận, TP.HCM.\n" +
-                "\n" +
-                "- Cơ sở Quang Trung: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12, TP.HCM.\n" +
-                "\n" +
-                "Hạn nộp:31/07/2023\n" +
-                "\n" +
-                "Sinh viên có thể truy cập TẠI ĐÂY để kiểm tra thông tin cá nhân cũng như thông tin nộp bằng THPT (sinh viên chưa bổ sung bằng THPT sẽ được ghi chú \"Chưa nộp bằng THPT\")");
-
-        Notification notification2 = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHÓA 19.3 HỌC KỲ SUMMER 2023 (BLOCK 2)", "kieuntt", "5/07/2023 10:10", "Sinh viên vui lòng check lịch học của mình trên hệ thống Ap.poly.edu.vn trước khi đến lớp.\n" +
-                "\n" +
-                "(Tại đây)\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Mọi thông tin, vui lòng liên hệ phòng Tổ chức và Quản lý Đào tạo –Email:\n" +
-                "\n" +
-                "daotaofpoly.hcm@fe.edu.vn\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Chúc các bạn học tốt !");
-        ArrayList<Notification> listNotification = new ArrayList<>();
-        listNotification.add(notification);
-        listNotification.add(notification1);
-        listNotification.add(notification2);
-
+        iRetrofit.getAllNotify(0).enqueue(getListNotifyCallback);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(frameLayout.getId(), NotificationFragment.newInstance(listNotification))
+                .replace(frameLayout.getId(), NotificationFragment.newInstance(listNoifys))
                 .commit();
     }
 
     public void loadNewsFragment(FrameLayout frameLayout) {
-        Notification news = new Notification("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
-                "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43", "Hiện tại BHYT đợt 2 – học kỳ Summer năm 2023 đã đăng ký thành công và có thể sử dụng trên ứng dụng VssID các bạn sinh viên có thể vào app VssID hoặc trang baohiemxahoi.gov.vn để tra cứu thông tin. \n" +
-                "\n" +
-                "  \n" +
-                "\n" +
-                "Từ năm 2020 BHYT sẽ sử dụng thẻ BHYT điện tử VssID và KHÔNG CẤP thẻ BHYT giấy.\n" +
-                "\n" +
-                "  \n" +
-                "\n" +
-                "Bảo hiểm xã hội số (VssID) là ứng dụng trên nền tảng thiết bị di động của BHXH Việt Nam thuộc quyền quản lý của cơ quan BHXH. Với phần mềm này, người tham gia BHXH có thể tra cứu quá trình tham gia bảo hiểm và tiếp cận thông tin dễ dàng, thuận tiện nhất. \n" +
-                "\n" +
-                "  \n" +
-                "\n" +
-                "- Lợi ích của việc sử dụng Ứng dụng VssID\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "+ Tra cứu mã số BHXH\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "+ Tra cứu quá trình tham gia BHXH, BHYT, BHTN\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "+ Tra cứu thời gian sử dụng, sử dụng thẻ\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Hướng dẫn sử dụng VssID tại đây\n" +
-                "Clip hướng dẫn tại đây \n" +
-                "Lưu ý: Ứng dụng VssID thuộc quyền quản lý của Cơ quan BHXH Việt Nam. Trong quá trình sử dụng nếu có bất kì lỗi hay thắc mắc nào, vui lòng liên hệ tổng đài hỗ trợ 24/7 Số hotline: 19009068 để được hỗ trợ. ");
-
-        ArrayList<Notification> listNews = new ArrayList<>();
-        listNews.add(news);
-
+        iRetrofit.getAllNotify(1).enqueue(getListNewCallback);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(frameLayout.getId(), NewsFragment.newInstance(listNews))
@@ -622,80 +601,81 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadTutionsFragment(FrameLayout frameLayout) {
-        Notification tution = new Notification("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
-                "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32", "Phòng Dịch Vụ Sinh Viên thông báo danh sách sinh viên THÔI HỌC TỰ NGUYỆN học kỳ SUMMER 2023 cập nhật ngày 26/05/2023.\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Sinh viên sẽ không được xếp lớp học từ tháng 05/2023.\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Sinh viên xem danh sách Tại đây\n" +
-                "\n" +
-                ".\n" +
-                "\n" +
-                "Mọi thắc mắc, Sinh viên có thể liên hệ với phòng Dịch vụ sinh viên qua các kênh như sau:\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "- Email: dvsvpoly.hcm@poly.edu.vn\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "- Link google meet: https://meet.google.com/frw-xyyf-afk \n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "- Hotline: 028.7308.8800\n" +
-                "\n" +
-                "  (Khung giờ từ 7h00 - 20h30, Từ thứ 2 đến thứ 7)\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Cảm ơn vì Bạn đã luôn đồng hành cùng FPT Polytechnic HCM,\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Chúc các bạn thật nhiều sức khỏe!");
-        Notification tution1 = new Notification("DANH SÁCH SINH VIÊN HOÀN THÀNH \n" +
-                "HỌC PHÍ KỲ SUMMER 2023", "lientt", "05/05/2023 10:26", "Bạn đang muốn đổi nhà mới nhân dịp học kỳ mới?\n" +
-                "\n" +
-                "Bạn đang muốn tìm kiếm nhà trọ thuận tiện với kế hoạch di chuyển của bản thân mình?\n" +
-                "\n" +
-                "Hay bất kì mong muốn về chổ ở nào của bạn cũng đã có P.CTSV lo rồi đây!!!\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Link điền thông tin cần hỗ trợ nhà trọ: https://docs.google.com/forms/d/e/1FAIpQLSd5uqxACL-RazXFD0D13BwdGyiOwTR4-4FqZQoxppOJyhT23A/viewform\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Với mong muốn giúp các bạn có thể chọn lựa cho mình được căn phòng ưng ý và phù hợp, Sinh viên chỉ cần điền thông tin vào link, bộ phận phụ trách sẽ cung cấp thông tin hỗ trợ tham khảo tìm phòng trọ đầy đủ tiện nghi, với nhiều mức giá hợp lý.\n" +
-                "\n" +
-                "Việc lựa chọn loại hình phòng trọ sẽ dựa vào nhu cầu ở ghép hay ở một mình của các bạn và khả năng tài chính nữa. Vì thế, chất lượng nhà trọ sẽ được đánh giá dựa trên các tiêu chí sau:\n" +
-                "\n" +
-                "- An ninh\n" +
-                "\n" +
-                "- Giá cả phù hợp với chất lượng\n" +
-                "\n" +
-                "- Tiện nghi đảm bảo\n" +
-                "\n" +
-                "- Vị trí thuận tiện cho việc đi lại\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Hy vọng đây sẽ là những thông tin hữu ích cho các bạn.\n" +
-                "\n" +
-                "Chúc tất cả các bạn sinh viên tìm được một chỗ trọ ưng ý để có thể tập trung tốt cho việc học tập nhé!");
+//        Notification tution = new Notification("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
+//                "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32", "Phòng Dịch Vụ Sinh Viên thông báo danh sách sinh viên THÔI HỌC TỰ NGUYỆN học kỳ SUMMER 2023 cập nhật ngày 26/05/2023.\n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "Sinh viên sẽ không được xếp lớp học từ tháng 05/2023.\n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "Sinh viên xem danh sách Tại đây\n" +
+//                "\n" +
+//                ".\n" +
+//                "\n" +
+//                "Mọi thắc mắc, Sinh viên có thể liên hệ với phòng Dịch vụ sinh viên qua các kênh như sau:\n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "- Email: dvsvpoly.hcm@poly.edu.vn\n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "- Link google meet: https://meet.google.com/frw-xyyf-afk \n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "- Hotline: 028.7308.8800\n" +
+//                "\n" +
+//                "  (Khung giờ từ 7h00 - 20h30, Từ thứ 2 đến thứ 7)\n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "Cảm ơn vì Bạn đã luôn đồng hành cùng FPT Polytechnic HCM,\n" +
+//                "\n" +
+//                " \n" +
+//                "\n" +
+//                "Chúc các bạn thật nhiều sức khỏe!");
+//        Notification tution1 = new Notification("DANH SÁCH SINH VIÊN HOÀN THÀNH \n" +
+//                "HỌC PHÍ KỲ SUMMER 2023", "lientt", "05/05/2023 10:26", "Bạn đang muốn đổi nhà mới nhân dịp học kỳ mới?\n" +
+//                "\n" +
+//                "Bạn đang muốn tìm kiếm nhà trọ thuận tiện với kế hoạch di chuyển của bản thân mình?\n" +
+//                "\n" +
+//                "Hay bất kì mong muốn về chổ ở nào của bạn cũng đã có P.CTSV lo rồi đây!!!\n" +
+//                "\n" +
+//                "\n" +
+//                "\n" +
+//                "Link điền thông tin cần hỗ trợ nhà trọ: https://docs.google.com/forms/d/e/1FAIpQLSd5uqxACL-RazXFD0D13BwdGyiOwTR4-4FqZQoxppOJyhT23A/viewform\n" +
+//                "\n" +
+//                "\n" +
+//                "\n" +
+//                "Với mong muốn giúp các bạn có thể chọn lựa cho mình được căn phòng ưng ý và phù hợp, Sinh viên chỉ cần điền thông tin vào link, bộ phận phụ trách sẽ cung cấp thông tin hỗ trợ tham khảo tìm phòng trọ đầy đủ tiện nghi, với nhiều mức giá hợp lý.\n" +
+//                "\n" +
+//                "Việc lựa chọn loại hình phòng trọ sẽ dựa vào nhu cầu ở ghép hay ở một mình của các bạn và khả năng tài chính nữa. Vì thế, chất lượng nhà trọ sẽ được đánh giá dựa trên các tiêu chí sau:\n" +
+//                "\n" +
+//                "- An ninh\n" +
+//                "\n" +
+//                "- Giá cả phù hợp với chất lượng\n" +
+//                "\n" +
+//                "- Tiện nghi đảm bảo\n" +
+//                "\n" +
+//                "- Vị trí thuận tiện cho việc đi lại\n" +
+//                "\n" +
+//                "\n" +
+//                "\n" +
+//                "Hy vọng đây sẽ là những thông tin hữu ích cho các bạn.\n" +
+//                "\n" +
+//                "Chúc tất cả các bạn sinh viên tìm được một chỗ trọ ưng ý để có thể tập trung tốt cho việc học tập nhé!");
+//
+//        ArrayList<Notification> listTution = new ArrayList<>();
+//        listTution.add(tution);
+//        listTution.add(tution1);
 
-        ArrayList<Notification> listTution = new ArrayList<>();
-        listTution.add(tution);
-        listTution.add(tution1);
-
+        iRetrofit.getAllNotify(2).enqueue(getListTutionCallback);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
+                .replace(frameLayout.getId(), TutionFragment.newInstance(listTutions))
                 .commit();
     }
 
@@ -904,7 +884,6 @@ public class MainActivity extends AppCompatActivity {
                 listTestSchedule.addAll(responseDTO.getData());
             }
         }
-
         @Override
         public void onFailure(Call<ListSchedulesResponseDTO> call, Throwable t) {
             Log.d(">>> schedule", "onFailure: " + t.getMessage());
@@ -961,13 +940,31 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void handleToDetaiNotify(Notification notification, Integer index) {
-        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("notification", (Serializable) notification);
-        intent.putExtra("indexNotify", index);
-        startActivity(intent);
-        overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+    Callback<NotifyGetByIdResponseDTO> getNotifyByIdCallback = new Callback<NotifyGetByIdResponseDTO>() {
+        @Override
+        public void onResponse(Call<NotifyGetByIdResponseDTO> call, Response<NotifyGetByIdResponseDTO> response) {
+            if (response.isSuccessful()) {
+                NotifyGetByIdResponseDTO responseDTO = response.body();
+                ArrayList<ListNotifyResponseDTO.Notify> notifies = new ArrayList<>();
+                notifies.clear();
+                notifies.addAll(responseDTO.getNotify());
+                ListNotifyResponseDTO.Notify notify = notifies.get(0);
+                intentNotify.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intentNotify.putExtra("notification", notify);
+                startActivity(intentNotify);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<NotifyGetByIdResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    public void handleToDetaiNotify(int id, Integer index) {
+        intentNotify.putExtra("indexNotify", index);
+        iRetrofit.getNotifyById(id).enqueue(getNotifyByIdCallback);
     }
 
     public void handleToEditProfile() {
@@ -986,6 +983,10 @@ public class MainActivity extends AppCompatActivity {
         user_id = sharedPreferences.getInt("id", -1);
         iRetrofit.getAllSchedule(user_id, 0).enqueue(getListScheduleCallback);
         iRetrofit.getAllSchedule(user_id, 1).enqueue(getListTestScheduleCallback);
+        iRetrofit.getAllNotify(0).enqueue(getListNotifyCallback);
+        iRetrofit.getAllNotify(1).enqueue(getListNewCallback);
+        iRetrofit.getAllNotify(2).enqueue(getListTutionCallback);
+
     }
 
     @Override

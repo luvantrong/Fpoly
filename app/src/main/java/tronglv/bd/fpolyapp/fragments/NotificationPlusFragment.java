@@ -93,7 +93,7 @@ public class NotificationPlusFragment extends Fragment {
         Glide.with(view.getContext()).load(user.getAvatar()).into(imgAvatar);
         txtNameUser.setText(user.getName());
 
-//        ((MainActivity)view.getContext()).showMenuNotify(lnNotifyPlus, flNotifyPlus);
+        ((MainActivity)view.getContext()).showMenuNotify(lnNotifyPlus, flNotifyPlus);
 
         index = ((MainActivity) view.getContext()).indexNotify();
 
@@ -118,8 +118,7 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify1();
-                ((MainActivity)view.getContext()).loadNotifyFragment( flNotifyPlus);
-
+                ((MainActivity)view.getContext()).loadNotifyFragment(flNotifyPlus);
                 index = 1;
             }
         });

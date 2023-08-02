@@ -9,6 +9,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
+import tronglv.bd.fpolyapp.dto.ListProgressResponseDTO;
 import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.dto.ListServiceResponseDTO;
 import tronglv.bd.fpolyapp.dto.LoginRequestDTO;
@@ -32,7 +33,7 @@ public interface IRetrofit {
     Call<ServiceResponseDTO> service(@Body ServiceRequestDTO body);
 
     @GET("/api/get-services.php")
-    Call<ListServiceResponseDTO> getAllServices();
+    Call<ListServiceResponseDTO> getAllServices(@Query("user_id") int user_id);
 
     @POST("/api/login.php")
     Call<LoginResponseDTO> login(@Body LoginRequestDTO body);
@@ -48,5 +49,8 @@ public interface IRetrofit {
 
     @GET("/api/get-notify-by-id.php")
     Call<NotifyGetByIdResponseDTO> getNotifyById(@Query("id") int id);
+
+    @GET("/api/get-progress.php")
+    Call<ListProgressResponseDTO> getAllProgres(@Query("user_id") int user_id);
 
 }

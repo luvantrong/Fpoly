@@ -41,6 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
+import tronglv.bd.fpolyapp.dto.ListProgressResponseDTO;
 import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
 import tronglv.bd.fpolyapp.dto.NotifyGetByIdResponseDTO;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ListNotifyResponseDTO.Notify> listNews;
     ArrayList<ListNotifyResponseDTO.Notify> listTutions;
 
+    ArrayList<ListProgressResponseDTO.Progress> listProgress;
+
 
     Intent intentNotify;
 
@@ -118,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
         user = new LoginResponseDTO.User(_id, status,email, avatar, student_code, birthday, address, course, semester, gender, name);
 
-        loadSubjectStudy();
         iRetrofit = RetrofitHelper.createService(IRetrofit.class);
         listSchedule = new ArrayList<>();
         listTestSchedule = new ArrayList<>();
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         listNoifys = new ArrayList<>();
         listNews = new ArrayList<>();
         listTutions = new ArrayList<>();
+        listProgress = new ArrayList<>();
 
         txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
         selectedTab = index;
 
         indexNotify = getIntent().getIntExtra("indexNotify", -1);
+
+
 
         if (selectedTab == 2) {
             setSelectedTab2();
@@ -494,34 +499,28 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
         loadTutionsFragment(fr);
     }
+
+    Callback<ListProgressResponseDTO> getListProgressCallback = new Callback<ListProgressResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListProgressResponseDTO> call, Response<ListProgressResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListProgressResponseDTO responseDTO = response.body();
+                listProgress.clear();
+                listProgress.addAll(responseDTO.getData());
+                if(selectedTab == 1){
+                    loadSubjectStudy();
+                }
+            }
+        }
+        @Override
+        public void onFailure(Call<ListProgressResponseDTO> call, Throwable t) {
+            Log.d(">>> progress", "onFailure: " + t.getMessage());
+        }
+    };
     private void loadSubjectStudy() {
-        SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
-        SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
-        SubjectStudy subjectStudy2 = new SubjectStudy(3, "Android Networking", "MOB403", "Offline", "17 buổi");
-        SubjectStudy subjectStudy3 = new SubjectStudy(4, "Khởi sự doanh nghiệp", "SYB3012", "Online", "6 buổi");
-
-        ArrayList<SubjectStudy> listSubjectStudy = new ArrayList<SubjectStudy>();
-        listSubjectStudy.add(subjectStudy);
-        listSubjectStudy.add(subjectStudy1);
-        listSubjectStudy.add(subjectStudy2);
-        listSubjectStudy.add(subjectStudy3);
-
-        ProgressStudy progressStudy = new ProgressStudy(1, "Phát triển cá nhân 2", 17, 1, 17);
-        ProgressStudy progressStudy1 = new ProgressStudy(1, "Quản lý dự án với phần mềm Agile", 6, 5, 17);
-        ProgressStudy progressStudy2 = new ProgressStudy(1, "Android Networking", 7, 0, 17);
-        ProgressStudy progressStudy3 = new ProgressStudy(1, "Khởi sự doanh nghiệp", 2, 0, 6);
-
-        ArrayList<ProgressStudy> listProgressStudy = new ArrayList<>();
-        listProgressStudy.add(progressStudy);
-        listProgressStudy.add(progressStudy2);
-        listProgressStudy.add(progressStudy1);
-        listProgressStudy.add(progressStudy3);
-
-
-
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy, user))
+                .replace(R.id.flMain, StudyFragment.newInstance(listProgress, user))
                 .commit();
     }
 
@@ -656,7 +655,10 @@ public class MainActivity extends AppCompatActivity {
     public void onCLickListService(int index) {
         switch (index) {
             case 1:
-                Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(MainActivity.this, ServiceListActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
             case 2:
                 Intent intent2 = new Intent(MainActivity.this, AttendenceActivity.class);
@@ -915,7 +917,7 @@ public class MainActivity extends AppCompatActivity {
         iRetrofit.getAllNotify(0).enqueue(getListNotifyCallback);
         iRetrofit.getAllNotify(1).enqueue(getListNewCallback);
         iRetrofit.getAllNotify(2).enqueue(getListTutionCallback);
-
+        iRetrofit.getAllProgres(user_id).enqueue(getListProgressCallback);
     }
 
     @Override

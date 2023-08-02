@@ -12,9 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListProgressResponseDTO;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
@@ -24,9 +26,9 @@ import tronglv.bd.fpolyapp.viewHolders.SubjectStudyViewHolder;
 public class ProgressStudyAdapter extends RecyclerView.Adapter<ProgressStudyViewHolder> {
 
     Context context;
-    List<ProgressStudy> listProgressStudy;
+    ArrayList<ListProgressResponseDTO.Progress> listProgressStudy;
 
-    public ProgressStudyAdapter(Context context, List<ProgressStudy> listProgressStudy) {
+    public ProgressStudyAdapter(Context context, ArrayList<ListProgressResponseDTO.Progress> listProgressStudy) {
         this.context = context;
         this.listProgressStudy = listProgressStudy;
     }
@@ -40,19 +42,19 @@ public class ProgressStudyAdapter extends RecyclerView.Adapter<ProgressStudyView
 
     @Override
     public void onBindViewHolder(@NonNull ProgressStudyViewHolder holder, int position) {
-        ProgressStudy progressStudy = listProgressStudy.get(holder.getAdapterPosition());
-        String nameSubject = progressStudy.getNameSubject();
+        ListProgressResponseDTO.Progress progressStudy = listProgressStudy.get(holder.getAdapterPosition());
+        String nameSubject = progressStudy.getName();
         holder.txtNameSubjectProgress.setText(nameSubject);
-        int numberProgressBar = Math.round(progressStudy.getLearn() * 100 / progressStudy.getSumLearn());
+        int numberProgressBar = Math.round(progressStudy.getLearn() * 100 / progressStudy.getSum());
         holder.ppProgress.setProgress(numberProgressBar);
         holder.txtPercent.setText(String.valueOf(numberProgressBar) + "%");
         String learn = String.valueOf(progressStudy.getLearn());
-        holder.txtStudyPlus.setText("Đã học: " + learn + "/" + progressStudy.getSumLearn() + " buổi");
-        String absent = String.valueOf("Vắng: " + progressStudy.getAbsent() + "/" + progressStudy.getSumLearn() + " buổi");
+        holder.txtStudyPlus.setText("Đã học: " + learn + "/" + progressStudy.getSum() + " buổi");
+        String absent = String.valueOf("Vắng: " + progressStudy.getAbsent() + "/" + progressStudy.getSum() + " buổi");
         holder.txtProgressPlus.setText(absent);
 
         String status = "";
-        int numberStatus = Math.round(progressStudy.getAbsent() * 100 / progressStudy.getSumLearn());
+        int numberStatus = Math.round(progressStudy.getAbsent() * 100 / progressStudy.getSum());
 
         if (numberStatus > 20) {
             status = "Failed";

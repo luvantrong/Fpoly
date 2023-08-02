@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.ProgressStudyAdapter;
 import tronglv.bd.fpolyapp.adapters.SubjectStudyAdapter;
+import tronglv.bd.fpolyapp.dto.ListProgressResponseDTO;
 import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
@@ -29,9 +30,7 @@ public class StudyFragment extends Fragment {
     private RecyclerView rvSubjectStudy, rvProgress;
 
     TextView txtName;
-    ArrayList<SubjectStudy> listSubjectStudy;
-
-    ArrayList<ProgressStudy> listProgressStudy;
+    ArrayList<ListProgressResponseDTO.Progress> listProgress;
 
     LoginResponseDTO.User user;
 
@@ -40,11 +39,10 @@ public class StudyFragment extends Fragment {
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static StudyFragment newInstance(ArrayList<SubjectStudy> listSubjectStudy, ArrayList<ProgressStudy> listProgressStudy, LoginResponseDTO.User user) {
+    public static StudyFragment newInstance(ArrayList<ListProgressResponseDTO.Progress> listProgress, LoginResponseDTO.User user) {
         StudyFragment fragment = new StudyFragment();
         Bundle args = new Bundle();
-        args.putSerializable("subjectstudys", listSubjectStudy);
-        args.putSerializable("progressstudys", listProgressStudy);
+        args.putSerializable("progress", listProgress);
         args.putSerializable("user", user);
         fragment.setArguments(args);
         return fragment;
@@ -55,8 +53,7 @@ public class StudyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listSubjectStudy = (ArrayList<SubjectStudy>) getArguments().getSerializable("subjectstudys");
-            listProgressStudy = (ArrayList<ProgressStudy>) getArguments().getSerializable("progressstudys");
+            listProgress = (ArrayList<ListProgressResponseDTO.Progress>) getArguments().getSerializable("progress");
             user = (LoginResponseDTO.User) getArguments().getSerializable("user");
         }
     }
@@ -76,13 +73,13 @@ public class StudyFragment extends Fragment {
         txtName.setText(user.getName());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
         rvSubjectStudy.setLayoutManager(layoutManager);
-        SubjectStudyAdapter adapter = new SubjectStudyAdapter(getContext(), listSubjectStudy);
+        SubjectStudyAdapter adapter = new SubjectStudyAdapter(getContext(), listProgress);
         rvSubjectStudy.setAdapter(adapter);
 
         rvProgress = view.findViewById(R.id.rvProgress);
         RecyclerView.LayoutManager layoutManagerProgress = new LinearLayoutManager(getContext());
         rvProgress.setLayoutManager(layoutManagerProgress);
-        ProgressStudyAdapter adapterProgress = new ProgressStudyAdapter(getContext(), listProgressStudy);
+        ProgressStudyAdapter adapterProgress = new ProgressStudyAdapter(getContext(), listProgress);
         rvProgress.setAdapter(adapterProgress);
     }
 }

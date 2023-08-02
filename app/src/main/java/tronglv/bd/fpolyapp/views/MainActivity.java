@@ -446,10 +446,10 @@ public class MainActivity extends AppCompatActivity {
                         Animation.RELATIVE_TO_SELF, 0, // pivotX
                         Animation.RELATIVE_TO_SELF, 0 // pivotY
                 );
-                anim.setDuration(700);
+                anim.setDuration(500);
                 ln.startAnimation(anim);
             }
-        }, 1000);
+        }, 500);
 
         loadNotifyFragment(fr);
 
@@ -471,10 +471,10 @@ public class MainActivity extends AppCompatActivity {
                         Animation.RELATIVE_TO_SELF, 0, // pivotX
                         Animation.RELATIVE_TO_SELF, 0 // pivotY
                 );
-                anim.setDuration(700);
+                anim.setDuration(500);
                 ln.startAnimation(anim);
             }
-        }, 1000);
+        }, 500);
         loadNewsFragment(fr);
     }
 
@@ -493,10 +493,10 @@ public class MainActivity extends AppCompatActivity {
                         Animation.RELATIVE_TO_SELF, 0, // pivotX
                         Animation.RELATIVE_TO_SELF, 0 // pivotY
                 );
-                anim.setDuration(700);
+                anim.setDuration(500);
                 ln.startAnimation(anim);
             }
-        }, 1000);
+        }, 500);
         loadTutionsFragment(fr);
     }
 

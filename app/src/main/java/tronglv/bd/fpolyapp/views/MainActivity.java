@@ -694,35 +694,23 @@ public class MainActivity extends AppCompatActivity {
                 ListSchedulesResponseDTO.Schedule schedule = listScheduleById.get(0);
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
                 LayoutInflater inflater = getLayoutInflater();
-                View viewDialog = inflater.inflate(R.layout.dialog_detail_schedule, null);
+                View viewDialog = inflater.inflate(R.layout.item_detail_schedules_v2, null);
 
-                TextView txtCodeNameClass = viewDialog.findViewById(R.id.txtCodeNameClass);
-                TextView txtNameTeacher = viewDialog.findViewById(R.id.txtNameTeacher);
-                TextView txtSlot = viewDialog.findViewById(R.id.txtSlot);
-                TextView txtBasis = viewDialog.findViewById(R.id.txtBasis);
-                TextView txtLinkMeet = viewDialog.findViewById(R.id.txtLinkMeet);
+                TextView txtAddress = viewDialog.findViewById(R.id.txtAddress);
+                TextView txtClass = viewDialog.findViewById(R.id.txtClass);
+                TextView txtCodeCourse = viewDialog.findViewById(R.id.txtCodeCourse);
+                TextView txtTeacher = viewDialog.findViewById(R.id.txtTeacher);
                 TextView txtRoom = viewDialog.findViewById(R.id.txtRoom);
-                TextView txtFullNameCourse = viewDialog.findViewById(R.id.txtFullNameCourse);
+                TextView txtTime = viewDialog.findViewById(R.id.txtTime);
                 TextView txtDate = viewDialog.findViewById(R.id.txtDate);
-
-
+                TextView txtMeet = viewDialog.findViewById(R.id.txtMeet);
                 Button btnClose = viewDialog.findViewById(R.id.btnClose);
 
-                String t1 = "<b>Lớp: </b>" + schedule.getClass_name();
-                txtCodeNameClass.setText(android.text.Html.fromHtml(t1));
-
-                String t2 = "<b>Giảng viên: </b>" + schedule.getTeacher_name();
-                txtNameTeacher.setText(android.text.Html.fromHtml(t2));
-
-                String room = "<b>Phòng: </b>" + schedule.getRoom();
-                txtRoom.setText(android.text.Html.fromHtml(room));
-
-                String course = "<b>Môn: </b>" + schedule.getCourse_name();
-                txtFullNameCourse.setText(android.text.Html.fromHtml(course));
-
-                String day = "<b>Ngày: </b>" + schedule.getDate();
-                txtDate.setText(android.text.Html.fromHtml(day));
-
+               txtAddress.setText(schedule.getAddress());
+               txtClass.setText(schedule.getClass_name());
+               txtCodeCourse.setText(schedule.getCourse_name().substring(schedule.getCourse_name().indexOf("-") + 1));
+               txtTeacher.setText(schedule.getTeacher_name());
+               txtRoom.setText(schedule.getRoom());
                 String slot = "";
                 switch (String.valueOf(schedule.getTime())){
                     case "1":
@@ -747,15 +735,11 @@ public class MainActivity extends AppCompatActivity {
                         slot = "Tự học";
                         break;
                 }
+                txtTime.setText(slot);
+                txtDate.setText(schedule.getDate());
 
-                String t3 = "<b>Thời gian: </b>" + slot;
-                txtSlot.setText(android.text.Html.fromHtml(t3));
-
-                String t4 = "<b>Giảng đường: </b>" + schedule.getAddress();
-                txtBasis.setText(android.text.Html.fromHtml(t4));
-
-                String t5 = "<b>Link meet: </b>" + schedule.getMeet();
-                txtLinkMeet.setText(android.text.Html.fromHtml(t5));
+                String meet = "<b>Link meet: </b>" + schedule.getMeet();
+                txtMeet.setText(android.text.Html.fromHtml(meet));
                 builder.setView(viewDialog);
                 Drawable drawable = ContextCompat.getDrawable(MainActivity.this, R.drawable.background_dialog_schedule_show);
                 androidx.appcompat.app.AlertDialog dialog = builder.create();

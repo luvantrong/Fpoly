@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_detail_v2"
+    >
+
+    <ImageView
+        android:id="@+id/imgTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/bg_1_detail"/>
+
+    <ImageView
+        android:id="@+id/iconBee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_bee_detail"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"/>
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chi tiết"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imgTop"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/text_bottom_tab"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"/>
+
+    <LinearLayout
+        android:id="@+id/lnAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giảng đường: "
+            android:textStyle="bold"
+            android:textColor="@color/text_bottom_tab"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="Phần mềm Quang Trung"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnClass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnAddress"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lớp: "
+            android:textColor="@color/text_bottom_tab"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="MD17306"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnCodeCourse"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnAddress"
+        android:layout_marginHorizontal="10dp"
+        android:layout_alignParentRight="true"
+        android:gravity="left"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã môn: "
+            android:textStyle="bold"
+            android:textColor="@color/text_bottom_tab"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtCodeCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="MOB402" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnClass"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giảng viên: "
+            android:textColor="@color/text_bottom_tab"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="chann3"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnRoom"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnClass"
+        android:layout_marginHorizontal="10dp"
+        android:layout_alignParentRight="true"
+        android:gravity="left"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phòng: "
+            android:textStyle="bold"
+            android:textColor="@color/text_bottom_tab"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="308" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnTeacher"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời gian: "
+            android:textColor="@color/text_bottom_tab"
+            android:fontFamily="@font/roboto_bold"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="17h30 - 19h30"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnDate"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lnTeacher"
+        android:layout_marginHorizontal="10dp"
+        android:layout_alignParentRight="true"
+        android:gravity="left"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày: "
+            android:textStyle="bold"
+            android:textColor="@color/text_bottom_tab"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/text_bottom_tab"
+            android:text="27/08/2023" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtMeet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lnDate"
+        android:text="Link meet: https://meet.google.com/aqa-pvdz-fhc?pli=1authuser=0"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/text_bottom_tab"
+        android:textSize="15sp"
+        android:layout_marginTop="5dp"/>
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/txtMeet"
+        android:layout_centerHorizontal="true"
+        android:text="đóng"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/primary"
+        android:background="@drawable/background_edt_file"/>
+
+
+</RelativeLayout>

@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListProgressResponseDTO;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
@@ -20,9 +22,9 @@ import tronglv.bd.fpolyapp.viewHolders.SubjectStudyViewHolder;
 public class SubjectStudyAdapter extends RecyclerView.Adapter<SubjectStudyViewHolder>{
 
     Context context;
-    List<SubjectStudy> listSubjectStudy;
+    ArrayList<ListProgressResponseDTO.Progress> listSubjectStudy;
 
-    public SubjectStudyAdapter(Context context, List<SubjectStudy> listSubjectStudy) {
+    public SubjectStudyAdapter(Context context, ArrayList<ListProgressResponseDTO.Progress> listSubjectStudy) {
         this.context = context;
         this.listSubjectStudy = listSubjectStudy;
     }
@@ -36,19 +38,19 @@ public class SubjectStudyAdapter extends RecyclerView.Adapter<SubjectStudyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull SubjectStudyViewHolder holder, int position) {
-        SubjectStudy subjectStudy = listSubjectStudy.get(holder.getAdapterPosition());
-        String nameSubject = subjectStudy.getNameSubject();
+        ListProgressResponseDTO.Progress subjectStudy = listSubjectStudy.get(holder.getAdapterPosition());
+        String nameSubject = subjectStudy.getName();
         if (nameSubject.length() > 15) {
             String newStr = nameSubject.substring(0, 15);
             holder.txtNameSubject.setText(newStr + "...");
         } else {
             holder.txtNameSubject.setText(nameSubject);
         }
-        String codeSubject = subjectStudy.getCodeSubject();
+        String codeSubject = subjectStudy.getCode();
         holder.txtCodeSubject.setText(codeSubject);
-        String formStudy = subjectStudy.getFormStudy();
+        String formStudy = subjectStudy.getForm();
         holder.txtFormStudy.setText(formStudy);
-        String time = subjectStudy.getTime();
+        String time = subjectStudy.getSum() + " buổi";
         holder.txtTime.setText(time);
 
         holder.setItemClickListener(new ItemClickListener() {

@@ -16,19 +16,20 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.NewsAdapter;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.models.Notification;
 
 public class NewsFragment extends Fragment {
 
     private RecyclerView rvNews;
-    ArrayList<Notification> listNews;
+    ArrayList<ListNotifyResponseDTO.Notify> listNews;
 
     public NewsFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static NewsFragment newInstance(ArrayList<Notification> listNews) {
+    public static NewsFragment newInstance(ArrayList<ListNotifyResponseDTO.Notify> listNews) {
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
         args.putSerializable("news", listNews);
@@ -41,7 +42,7 @@ public class NewsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listNews = (ArrayList<Notification>) getArguments().getSerializable("news");
+            listNews = (ArrayList<ListNotifyResponseDTO.Notify>) getArguments().getSerializable("news");
         }
     }
 

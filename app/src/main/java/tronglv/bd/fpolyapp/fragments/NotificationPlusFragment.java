@@ -14,37 +14,49 @@ import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class NotificationPlusFragment extends Fragment {
 
-    private TextView txtNotify, txtNews, txtTution;
+    private TextView txtNotify, txtNews, txtTution, txtNameUser;
     private RelativeLayout rlNotify, rlNews, rlTution;
 
+    private ImageView imgAvatar;
     public FrameLayout flNotifyPlus;
 
     public Integer index = 1;
+
+    private LinearLayout  lnNotifyPlus;
+
+    LoginResponseDTO.User user;
 
     public NotificationPlusFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static NotificationPlusFragment newInstance() {
+    public static NotificationPlusFragment newInstance(LoginResponseDTO.User user) {
         NotificationPlusFragment fragment = new NotificationPlusFragment();
         Bundle args = new Bundle();
-//        args.putSerializable("notifications", listNotification);
-//        fragment.setArguments(args);
+        args.putSerializable("user", user);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -53,7 +65,7 @@ public class NotificationPlusFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            listNotification = (ArrayList<Notification>) getArguments().getSerializable("notifications");
+            user = (LoginResponseDTO.User) getArguments().getSerializable("user");
         }
     }
 
@@ -74,22 +86,31 @@ public class NotificationPlusFragment extends Fragment {
         rlNews = view.findViewById(R.id.rlNews);
         rlTution = view.findViewById(R.id.rlTution);
         flNotifyPlus = view.findViewById(R.id.flNotifyPlus);
+        lnNotifyPlus= view.findViewById(R.id.lnNotifyPlus);
+        imgAvatar = view.findViewById(R.id.imgAvatar);
+        txtNameUser = view.findViewById(R.id.txtNameUser);
+
+        Glide.with(view.getContext()).load(user.getAvatar()).into(imgAvatar);
+        txtNameUser.setText(user.getName());
+
+        ((MainActivity)view.getContext()).showMenuNotify(lnNotifyPlus, flNotifyPlus);
 
         index = ((MainActivity) view.getContext()).indexNotify();
 
         if (index == 1) {
             indexNotify1();
-            ((MainActivity) view.getContext()).loadNotifyFragment(flNotifyPlus);
+            ((MainActivity)view.getContext()).showMenuNotify(lnNotifyPlus, flNotifyPlus);
+
         }
 
         if (index == 2) {
             indexNotify2();
-            ((MainActivity) view.getContext()).loadNewsFragment(flNotifyPlus);
+            ((MainActivity)view.getContext()).showMenuNotify2(lnNotifyPlus,flNotifyPlus);
         }
 
         if (index == 3) {
             indexNotify3();
-            ((MainActivity) view.getContext()).loadTutionsFragment(flNotifyPlus);
+            ((MainActivity)view.getContext()).showMenuNotify3( lnNotifyPlus,flNotifyPlus);
         }
 
 
@@ -97,7 +118,7 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify1();
-                ((MainActivity) view.getContext()).loadNotifyFragment(flNotifyPlus);
+                ((MainActivity)view.getContext()).loadNotifyFragment(flNotifyPlus);
                 index = 1;
             }
         });
@@ -106,7 +127,7 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify2();
-                ((MainActivity) view.getContext()).loadNewsFragment(flNotifyPlus);
+                ((MainActivity)view.getContext()).loadNewsFragment(flNotifyPlus);
                 index = 2;
             }
         });
@@ -115,7 +136,8 @@ public class NotificationPlusFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 indexNotify3();
-                ((MainActivity) view.getContext()).loadTutionsFragment(flNotifyPlus);
+                ((MainActivity)view.getContext()).loadTutionsFragment( flNotifyPlus);
+
                 index = 3;
             }
         });

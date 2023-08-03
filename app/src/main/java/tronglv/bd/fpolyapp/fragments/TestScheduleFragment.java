@@ -16,20 +16,21 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.TestScheduleAdapter;
+import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.TestSchedule;
 
 public class TestScheduleFragment extends Fragment {
 
     private RecyclerView rvTestSchedule;
-    ArrayList<TestSchedule> listTestSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listTestSchedule;
 
     public TestScheduleFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static TestScheduleFragment newInstance(ArrayList<TestSchedule> listTestSchedule) {
+    public static TestScheduleFragment newInstance(ArrayList<ListSchedulesResponseDTO.Schedule> listTestSchedule) {
         TestScheduleFragment fragment = new TestScheduleFragment();
         Bundle args = new Bundle();
         args.putSerializable("testSchedules", listTestSchedule);
@@ -42,7 +43,7 @@ public class TestScheduleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listTestSchedule = (ArrayList<TestSchedule>) getArguments().getSerializable("testSchedules");
+            listTestSchedule = (ArrayList<ListSchedulesResponseDTO.Schedule>) getArguments().getSerializable("testSchedules");
         }
     }
 

@@ -54,10 +54,12 @@
          />
 
     <LinearLayout
+        android:id="@+id/lnNotifyPlus"
         android:layout_width="48dp"
         android:layout_height="565dp"
         android:orientation="vertical"
         android:weightSum="3"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:background="@drawable/background_menu_notification">
 

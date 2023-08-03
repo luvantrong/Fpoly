@@ -14,30 +14,34 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 
+import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
 import tronglv.bd.fpolyapp.views.EditProfile;
 import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ProfileFragment extends Fragment {
+    private TextView txtLogOut, txtFullName, txtEmail, txtMssv, txtRole, txtDate, textAddress, textMajoy, textStatus;
 
-    private RecyclerView rvProfile;
-    private TextView txtLogOut;
+    private ImageView imgEdit, imgAvatar;
 
-    private ImageView imgEdit;
+    private LoginResponseDTO.User user;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static ProfileFragment newInstance() {
+    public static ProfileFragment newInstance(LoginResponseDTO.User user) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-//        args.putSerializable("notifications", listNotification);
-//        fragment.setArguments(args);
+        args.putSerializable("user", user);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -46,7 +50,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            listNotification = (ArrayList<Notification>) getArguments().getSerializable("notifications");
+            user = (LoginResponseDTO.User) getArguments().getSerializable("user");
         }
     }
 
@@ -62,6 +66,37 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         txtLogOut = view.findViewById(R.id.txtLogOut);
         imgEdit = view.findViewById(R.id.imgEdit);
+        txtFullName = view.findViewById(R.id.txtFullName);
+        txtEmail = view.findViewById(R.id.txtEmail);
+        txtMssv = view.findViewById(R.id.txtMssv);
+        txtRole = view.findViewById(R.id.txtRole);
+        txtDate = view.findViewById(R.id.txtDate);
+        textAddress = view.findViewById(R.id.textAddress);
+        textMajoy = view.findViewById(R.id.textMajoy);
+        textStatus = view.findViewById(R.id.textStatus);
+        imgAvatar = view.findViewById(R.id.imgAvatar);
+
+
+        txtFullName.setText(user.getName());
+        txtEmail.setText(user.getEmail());
+        txtMssv.setText(user.getStudent_code());
+
+        if(user.getGender() == 1){
+            txtRole.setText("Nam");
+        }else{
+            txtRole.setText("Nữ");
+        }
+        txtDate.setText(user.getBirthday());
+        textAddress.setText(user.getAddress());
+        textMajoy.setText(user.getCourse());
+
+        if(user.getStatus() == 0){
+            textStatus.setText("Trạng thái: HDI");
+        }else if(user.getStatus() == 1 ){
+            textStatus.setText("Trạng thái: Bảo lưu");
+        }
+
+        Glide.with(view.getContext()).load(user.getAvatar()).into(imgAvatar);
 
         txtLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,5 +111,6 @@ public class ProfileFragment extends Fragment {
                 ((MainActivity)getContext()).handleToEditProfile();
             }
         });
+
     }
 }

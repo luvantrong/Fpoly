@@ -17,7 +17,6 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder implements V
     public NotificationViewHolder(@NonNull View itemView) {
         super(itemView);
         itemView.setOnClickListener(this);
-        itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
         txtTitle = itemView.findViewById(R.id.txtTitle);
         txtPoster = itemView.findViewById(R.id.txtPoster);

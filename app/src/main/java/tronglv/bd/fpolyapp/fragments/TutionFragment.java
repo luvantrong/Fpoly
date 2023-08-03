@@ -16,19 +16,20 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.TutionAdapter;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.models.Notification;
 
 public class TutionFragment extends Fragment {
 
     private RecyclerView rvTution;
-    ArrayList<Notification> listTution;
+    ArrayList<ListNotifyResponseDTO.Notify> listTution;
 
     public TutionFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static TutionFragment newInstance(ArrayList<Notification> listTution) {
+    public static TutionFragment newInstance(ArrayList<ListNotifyResponseDTO.Notify> listTution) {
         TutionFragment fragment = new TutionFragment();
         Bundle args = new Bundle();
         args.putSerializable("tutions", listTution);
@@ -41,7 +42,7 @@ public class TutionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listTution = (ArrayList<Notification>) getArguments().getSerializable("tutions");
+            listTution = (ArrayList<ListNotifyResponseDTO.Notify>) getArguments().getSerializable("tutions");
         }
     }
 

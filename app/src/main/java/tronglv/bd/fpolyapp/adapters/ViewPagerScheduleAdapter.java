@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
 import tronglv.bd.fpolyapp.fragments.ScheduleFragment;
 import tronglv.bd.fpolyapp.fragments.TestScheduleFragment;
 import tronglv.bd.fpolyapp.models.Schedule;
@@ -33,13 +34,13 @@ public class ViewPagerScheduleAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if(position==0){
-            ArrayList<Schedule> listSchedule = mActivity.getDataSchedule();
+            ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule = mActivity.getDataSchedule();
             ScheduleFragment scheduleFragment = ScheduleFragment.newInstance(listSchedule);
             return scheduleFragment;
         }
 
         else{
-            ArrayList<TestSchedule> listTestSchedule = mActivity.getDataTestSchedule();
+            ArrayList<ListSchedulesResponseDTO.Schedule> listTestSchedule = mActivity.getDataTestSchedule();
             TestScheduleFragment testScheduleFragment = TestScheduleFragment.newInstance(listTestSchedule);
             return testScheduleFragment;
         }

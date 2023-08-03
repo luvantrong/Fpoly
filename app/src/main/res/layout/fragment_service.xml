@@ -69,7 +69,7 @@
             android:id="@+id/txtServiceOne"
             android:layout_width="270dp"
             android:layout_height="55dp"
-            android:text="Đăng ký học lại miễn phí"
+            android:text="Dịch vụ đã đăng ký"
             android:textColor="@color/text_bottom_tab"
             android:gravity="center|left"
             android:paddingBottom="10dp"

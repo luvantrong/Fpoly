@@ -9,9 +9,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -34,7 +36,16 @@ import com.google.android.gms.tasks.Task;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
+import tronglv.bd.fpolyapp.dto.ListProgressResponseDTO;
+import tronglv.bd.fpolyapp.dto.ListSchedulesResponseDTO;
+import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
+import tronglv.bd.fpolyapp.dto.NotifyGetByIdResponseDTO;
+import tronglv.bd.fpolyapp.dto.ScheduleGetByIdResponseDTO;
 import tronglv.bd.fpolyapp.fragments.NewsFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationFragment;
 import tronglv.bd.fpolyapp.fragments.NotificationPlusFragment;
@@ -43,11 +54,11 @@ import tronglv.bd.fpolyapp.fragments.SchedulePlusFragment;
 import tronglv.bd.fpolyapp.fragments.ServiceFragment;
 import tronglv.bd.fpolyapp.fragments.StudyFragment;
 import tronglv.bd.fpolyapp.fragments.TutionFragment;
+import tronglv.bd.fpolyapp.helpers.IRetrofit;
+import tronglv.bd.fpolyapp.helpers.RetrofitHelper;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.models.ProgressStudy;
-import tronglv.bd.fpolyapp.models.Schedule;
 import tronglv.bd.fpolyapp.models.SubjectStudy;
-import tronglv.bd.fpolyapp.models.TestSchedule;
 import tronglv.bd.fpolyapp.services.BottomService;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,6 +79,24 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInClient gsc;
     GoogleSignInAccount account;
 
+    IRetrofit iRetrofit;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listTestSchedule;
+    ArrayList<ListSchedulesResponseDTO.Schedule> listScheduleById;
+    ArrayList<ListNotifyResponseDTO.Notify> listNoifys;
+    ArrayList<ListNotifyResponseDTO.Notify> listNews;
+    ArrayList<ListNotifyResponseDTO.Notify> listTutions;
+
+    ArrayList<ListProgressResponseDTO.Progress> listProgress;
+
+
+    Intent intentNotify;
+
+
+    int user_id = -1;
+
+    private LoginResponseDTO.User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +104,31 @@ public class MainActivity extends AppCompatActivity {
 
         mapping();
 
-        loadSubjectStudy();
+        intentNotify = new Intent(MainActivity.this, DetailActivity.class);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        int _id = sharedPreferences.getInt("id", -1);
+        int status = sharedPreferences.getInt("status", -1);
+        String email = sharedPreferences.getString("email", "");
+        String avatar = sharedPreferences.getString("avatar", "");
+        String student_code = sharedPreferences.getString("student_code", "");
+        String birthday = sharedPreferences.getString("birthday", "");
+        String address = sharedPreferences.getString("address", "");
+        String course = sharedPreferences.getString("course", "");
+        String semester = sharedPreferences.getString("semester", "");
+        String name = sharedPreferences.getString("name", "");
+        int gender = sharedPreferences.getInt("gender", -1);
+
+        user = new LoginResponseDTO.User(_id, status,email, avatar, student_code, birthday, address, course, semester, gender, name);
+
+        iRetrofit = RetrofitHelper.createService(IRetrofit.class);
+        listSchedule = new ArrayList<>();
+        listTestSchedule = new ArrayList<>();
+        listScheduleById = new ArrayList<>();
+        listNoifys = new ArrayList<>();
+        listNews = new ArrayList<>();
+        listTutions = new ArrayList<>();
+        listProgress = new ArrayList<>();
 
         txtCancelSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
         Integer index = getIntent().getIntExtra("index", 1);
         selectedTab = index;
 
-        indexNotify = getIntent().getIntExtra("indexNotify", 1);
+        indexNotify = getIntent().getIntExtra("indexNotify", -1);
+
+
 
         if (selectedTab == 2) {
             setSelectedTab2();
@@ -329,6 +384,10 @@ public class MainActivity extends AppCompatActivity {
             gsc.signOut().addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
                     Intent homeIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(homeIntent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -373,7 +432,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMenuNotify(LinearLayout ln, FrameLayout fr) {
-
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -442,35 +500,27 @@ public class MainActivity extends AppCompatActivity {
         loadTutionsFragment(fr);
     }
 
-
-
-
+    Callback<ListProgressResponseDTO> getListProgressCallback = new Callback<ListProgressResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListProgressResponseDTO> call, Response<ListProgressResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListProgressResponseDTO responseDTO = response.body();
+                listProgress.clear();
+                listProgress.addAll(responseDTO.getData());
+                if(selectedTab == 1){
+                    loadSubjectStudy();
+                }
+            }
+        }
+        @Override
+        public void onFailure(Call<ListProgressResponseDTO> call, Throwable t) {
+            Log.d(">>> progress", "onFailure: " + t.getMessage());
+        }
+    };
     private void loadSubjectStudy() {
-        SubjectStudy subjectStudy = new SubjectStudy(1, "Phát triển cá nhân 2", "PDP201", "Offline", "17 buổi");
-        SubjectStudy subjectStudy1 = new SubjectStudy(2, "Quản lý dự án với phần mềm Agile", "MOB104", "Online", "17 buổi");
-        SubjectStudy subjectStudy2 = new SubjectStudy(3, "Android Networking", "MOB403", "Offline", "17 buổi");
-        SubjectStudy subjectStudy3 = new SubjectStudy(4, "Khởi sự doanh nghiệp", "SYB3012", "Online", "6 buổi");
-
-        ArrayList<SubjectStudy> listSubjectStudy = new ArrayList<SubjectStudy>();
-        listSubjectStudy.add(subjectStudy);
-        listSubjectStudy.add(subjectStudy1);
-        listSubjectStudy.add(subjectStudy2);
-        listSubjectStudy.add(subjectStudy3);
-
-        ProgressStudy progressStudy = new ProgressStudy(1, "Phát triển cá nhân 2", 17, 1, 17);
-        ProgressStudy progressStudy1 = new ProgressStudy(1, "Quản lý dự án với phần mềm Agile", 6, 5, 17);
-        ProgressStudy progressStudy2 = new ProgressStudy(1, "Android Networking", 7, 0, 17);
-        ProgressStudy progressStudy3 = new ProgressStudy(1, "Khởi sự doanh nghiệp", 2, 0, 6);
-
-        ArrayList<ProgressStudy> listProgressStudy = new ArrayList<>();
-        listProgressStudy.add(progressStudy);
-        listProgressStudy.add(progressStudy2);
-        listProgressStudy.add(progressStudy1);
-        listProgressStudy.add(progressStudy3);
-
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, StudyFragment.newInstance(listSubjectStudy, listProgressStudy))
+                .replace(R.id.flMain, StudyFragment.newInstance(listProgress, user))
                 .commit();
     }
 
@@ -484,98 +534,65 @@ public class MainActivity extends AppCompatActivity {
     public void loadNotification() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, NotificationPlusFragment.newInstance())
+                .replace(R.id.flMain, NotificationPlusFragment.newInstance(user))
                 .commit();
     }
 
+    Callback<ListNotifyResponseDTO> getListNotifyCallback = new Callback<ListNotifyResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListNotifyResponseDTO> call, Response<ListNotifyResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListNotifyResponseDTO responseDTO = response.body();
+                listNoifys.clear();
+                listNoifys.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListNotifyResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    Callback<ListNotifyResponseDTO> getListNewCallback = new Callback<ListNotifyResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListNotifyResponseDTO> call, Response<ListNotifyResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListNotifyResponseDTO responseDTO = response.body();
+                listNews.clear();
+                listNews.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListNotifyResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    Callback<ListNotifyResponseDTO> getListTutionCallback = new Callback<ListNotifyResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListNotifyResponseDTO> call, Response<ListNotifyResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListNotifyResponseDTO responseDTO = response.body();
+                listTutions.clear();
+                listTutions.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListNotifyResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
     public void loadNotifyFragment(FrameLayout frameLayout) {
-        Notification notification = new Notification("THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP \n" +
-                "(ĐỢT TỐT NGHIỆP THÁNG 06/2023)", "nhapnh", "15/07/2023 11:08", "Địa điểm: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12.\n" +
-                "Thời gian: Bắt đầu ngày 24/07/2023\n" +
-                "Thứ 2 đến thứ 6: Sáng : 08h30 – 11h30 và Chiều : 13:30 – 16:30\n" +
-                "Thứ 7: Sáng : 08h30 – 11h30\n" +
-                "Danh sách sinh viên nhận bằng: DANH SÁCH SINH VIÊN TỐT NGHIỆP ĐỢT THÁNG 06 NĂM 2023\n" +
-                "Lưu ý:\n" +
-                "Khi nhận bằng : Sinh viên là người trực tiếp đến nhận, mang theo 1 CMND/CCCD bản chính và 1 bản sao có công chứng trong vòng 6 tháng\n" +
-                "Bản gốc bằng Tốt nghiệp chỉ được cấp 1 lần, sinh viên mất bản gốc chỉ được cấp lại bản sao\n" +
-                "Trường hợp nhận thay phải có ủy quyền bằng văn bản có chứng thực theo quy định của Pháp luật, CMND/CCCD photo công chứng của người ủy quyền và người được ủy quyền (trong 6 tháng)\n" +
-                "Bằng Tốt nghiệp sẽ giữ lại trong vòng 1 năm tại trường cơ sở HCM, sau thời gian trên nếu chưa nhận sẽ chuyển về Hà Nội.");
-
-        Notification notification1 = new Notification("[QUAN TRỌNG] YÊU CẦU BỔ SUNG BẰNG TỐT NGHIỆP THPT", "huynh43", "19/07/2023 14:40", "Phòng Đào Tạo thông báo yêu cầu các bạn sinh viên đang thiếu bằng tốt nghiệp THPT vui lòng bổ sung đầy đủ hồ sơ. Nộp bản sao/photo công chứng bằng THPT là yêu cầu bắt buộc để lưu trữ hồ sơ sinh viên trong suốt quá trình học tập đến khi được xét tốt nghiệp. Sau thời hạn bổ sung bên dưới, sinh viên chưa bổ sung bằng THPT sẽ bị đình chỉ học tập mức cao nhất: BUỘC THÔI HỌC\n" +
-                "\n" +
-                "Hồ sơ nộp: 1 bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng THPT. Trường hợp sinh viên học trung cấp thì có thể nộp bản sao hoặc photo công chứng (trong vòng 6 tháng) bằng tốt nghiệp trung cấp.\n" +
-                "\n" +
-                "Địa điểm nộp:\n" +
-                "\n" +
-                "- Cơ sở Nguyễn Kiệm: Phòng Đào Tạo - Tầng 1 - 778/B1 Nguyễn Kiệm, Phường 4, Quận Phú Nhuận, TP.HCM.\n" +
-                "\n" +
-                "- Cơ sở Quang Trung: Phòng Đào Tạo - Tầng trệt Tòa nhà T (QTSC9) - Công viên phần mềm Quang Trung, Phường Tân Chánh Hiệp, Quận 12, TP.HCM.\n" +
-                "\n" +
-                "Hạn nộp:31/07/2023\n" +
-                "\n" +
-                "Sinh viên có thể truy cập TẠI ĐÂY để kiểm tra thông tin cá nhân cũng như thông tin nộp bằng THPT (sinh viên chưa bổ sung bằng THPT sẽ được ghi chú \"Chưa nộp bằng THPT\")");
-
-        Notification notification2 = new Notification("THÔNG BÁO LỊCH HỌC MÔN PDP102 KHÓA 19.3 HỌC KỲ SUMMER 2023 (BLOCK 2)", "kieuntt", "5/07/2023 10:10", "Sinh viên vui lòng check lịch học của mình trên hệ thống Ap.poly.edu.vn trước khi đến lớp.\n" +
-                "\n" +
-                "(Tại đây)\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Mọi thông tin, vui lòng liên hệ phòng Tổ chức và Quản lý Đào tạo –Email:\n" +
-                "\n" +
-                "daotaofpoly.hcm@fe.edu.vn\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Chúc các bạn học tốt !");
-        ArrayList<Notification> listNotification = new ArrayList<>();
-        listNotification.add(notification);
-        listNotification.add(notification1);
-        listNotification.add(notification2);
-
+        iRetrofit.getAllNotify(0).enqueue(getListNotifyCallback);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(frameLayout.getId(), NotificationFragment.newInstance(listNotification))
+                .replace(frameLayout.getId(), NotificationFragment.newInstance(listNoifys))
                 .commit();
     }
 
     public void loadNewsFragment(FrameLayout frameLayout) {
-        Notification news = new Notification("P.CTSV THÔNG BÁO XÁC NHẬN ĐĂNG KÝ \n" +
-                "THÀNH CÔNG BHYT ĐỢT 2 - T6/2023", "thunta62", "18/07/2023 10:43", "Hiện tại BHYT đợt 2 – học kỳ Summer năm 2023 đã đăng ký thành công và có thể sử dụng trên ứng dụng VssID các bạn sinh viên có thể vào app VssID hoặc trang baohiemxahoi.gov.vn để tra cứu thông tin. \n" +
-                "\n" +
-                "  \n" +
-                "\n" +
-                "Từ năm 2020 BHYT sẽ sử dụng thẻ BHYT điện tử VssID và KHÔNG CẤP thẻ BHYT giấy.\n" +
-                "\n" +
-                "  \n" +
-                "\n" +
-                "Bảo hiểm xã hội số (VssID) là ứng dụng trên nền tảng thiết bị di động của BHXH Việt Nam thuộc quyền quản lý của cơ quan BHXH. Với phần mềm này, người tham gia BHXH có thể tra cứu quá trình tham gia bảo hiểm và tiếp cận thông tin dễ dàng, thuận tiện nhất. \n" +
-                "\n" +
-                "  \n" +
-                "\n" +
-                "- Lợi ích của việc sử dụng Ứng dụng VssID\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "+ Tra cứu mã số BHXH\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "+ Tra cứu quá trình tham gia BHXH, BHYT, BHTN\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "+ Tra cứu thời gian sử dụng, sử dụng thẻ\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Hướng dẫn sử dụng VssID tại đây\n" +
-                "Clip hướng dẫn tại đây \n" +
-                "Lưu ý: Ứng dụng VssID thuộc quyền quản lý của Cơ quan BHXH Việt Nam. Trong quá trình sử dụng nếu có bất kì lỗi hay thắc mắc nào, vui lòng liên hệ tổng đài hỗ trợ 24/7 Số hotline: 19009068 để được hỗ trợ. ");
-
-        ArrayList<Notification> listNews = new ArrayList<>();
-        listNews.add(news);
-
+        iRetrofit.getAllNotify(1).enqueue(getListNewCallback);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(frameLayout.getId(), NewsFragment.newInstance(listNews))
@@ -583,94 +600,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadTutionsFragment(FrameLayout frameLayout) {
-        Notification tution = new Notification("THÔNG BÁO PHÁT SÁCH GIÁO TRÌNH \n" +
-                "HỌC KỲ SUMMER 2023", "lientt", "08/05/2023 09:32", "Phòng Dịch Vụ Sinh Viên thông báo danh sách sinh viên THÔI HỌC TỰ NGUYỆN học kỳ SUMMER 2023 cập nhật ngày 26/05/2023.\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Sinh viên sẽ không được xếp lớp học từ tháng 05/2023.\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Sinh viên xem danh sách Tại đây\n" +
-                "\n" +
-                ".\n" +
-                "\n" +
-                "Mọi thắc mắc, Sinh viên có thể liên hệ với phòng Dịch vụ sinh viên qua các kênh như sau:\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "- Email: dvsvpoly.hcm@poly.edu.vn\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "- Link google meet: https://meet.google.com/frw-xyyf-afk \n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "- Hotline: 028.7308.8800\n" +
-                "\n" +
-                "  (Khung giờ từ 7h00 - 20h30, Từ thứ 2 đến thứ 7)\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Cảm ơn vì Bạn đã luôn đồng hành cùng FPT Polytechnic HCM,\n" +
-                "\n" +
-                " \n" +
-                "\n" +
-                "Chúc các bạn thật nhiều sức khỏe!");
-        Notification tution1 = new Notification("DANH SÁCH SINH VIÊN HOÀN THÀNH \n" +
-                "HỌC PHÍ KỲ SUMMER 2023", "lientt", "05/05/2023 10:26", "Bạn đang muốn đổi nhà mới nhân dịp học kỳ mới?\n" +
-                "\n" +
-                "Bạn đang muốn tìm kiếm nhà trọ thuận tiện với kế hoạch di chuyển của bản thân mình?\n" +
-                "\n" +
-                "Hay bất kì mong muốn về chổ ở nào của bạn cũng đã có P.CTSV lo rồi đây!!!\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Link điền thông tin cần hỗ trợ nhà trọ: https://docs.google.com/forms/d/e/1FAIpQLSd5uqxACL-RazXFD0D13BwdGyiOwTR4-4FqZQoxppOJyhT23A/viewform\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Với mong muốn giúp các bạn có thể chọn lựa cho mình được căn phòng ưng ý và phù hợp, Sinh viên chỉ cần điền thông tin vào link, bộ phận phụ trách sẽ cung cấp thông tin hỗ trợ tham khảo tìm phòng trọ đầy đủ tiện nghi, với nhiều mức giá hợp lý.\n" +
-                "\n" +
-                "Việc lựa chọn loại hình phòng trọ sẽ dựa vào nhu cầu ở ghép hay ở một mình của các bạn và khả năng tài chính nữa. Vì thế, chất lượng nhà trọ sẽ được đánh giá dựa trên các tiêu chí sau:\n" +
-                "\n" +
-                "- An ninh\n" +
-                "\n" +
-                "- Giá cả phù hợp với chất lượng\n" +
-                "\n" +
-                "- Tiện nghi đảm bảo\n" +
-                "\n" +
-                "- Vị trí thuận tiện cho việc đi lại\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "Hy vọng đây sẽ là những thông tin hữu ích cho các bạn.\n" +
-                "\n" +
-                "Chúc tất cả các bạn sinh viên tìm được một chỗ trọ ưng ý để có thể tập trung tốt cho việc học tập nhé!");
-
-        ArrayList<Notification> listTution = new ArrayList<>();
-        listTution.add(tution);
-        listTution.add(tution1);
-
+        iRetrofit.getAllNotify(2).enqueue(getListTutionCallback);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(frameLayout.getId(), TutionFragment.newInstance(listTution))
+                .replace(frameLayout.getId(), TutionFragment.newInstance(listTutions))
                 .commit();
     }
 
     public void loadService() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, ServiceFragment.newInstance())
+                .replace(R.id.flMain, ServiceFragment.newInstance(user))
                 .commit();
     }
 
     public void loadProfile() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flMain, ProfileFragment.newInstance())
+                .replace(R.id.flMain, ProfileFragment.newInstance(user))
                 .commit();
     }
 
@@ -708,7 +655,10 @@ public class MainActivity extends AppCompatActivity {
     public void onCLickListService(int index) {
         switch (index) {
             case 1:
-                Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(MainActivity.this, ServiceListActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
                 break;
             case 2:
                 Intent intent2 = new Intent(MainActivity.this, AttendenceActivity.class);
@@ -734,65 +684,126 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showDetaiSchedule(Schedule schedule) {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = getLayoutInflater();
-        View viewDialog = inflater.inflate(R.layout.dialog_detail_schedule, null);
+    Callback<ScheduleGetByIdResponseDTO> getScheduleById = new Callback<ScheduleGetByIdResponseDTO>() {
+        @Override
+        public void onResponse(Call<ScheduleGetByIdResponseDTO> call, Response<ScheduleGetByIdResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ScheduleGetByIdResponseDTO responseDTO = response.body();
+                listScheduleById.clear();
+                listScheduleById.addAll(responseDTO.getSchedules());
+                ListSchedulesResponseDTO.Schedule schedule = listScheduleById.get(0);
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = getLayoutInflater();
+                View viewDialog = inflater.inflate(R.layout.item_detail_schedules_v2, null);
 
-        TextView txtCodeNameClass = viewDialog.findViewById(R.id.txtCodeNameClass);
-        TextView txtNameTeacher = viewDialog.findViewById(R.id.txtNameTeacher);
-        TextView txtSlot = viewDialog.findViewById(R.id.txtSlot);
-        TextView txtBasis = viewDialog.findViewById(R.id.txtBasis);
-        TextView txtLinkMeet = viewDialog.findViewById(R.id.txtLinkMeet);
-        Button btnClose = viewDialog.findViewById(R.id.btnClose);
+                TextView txtAddress = viewDialog.findViewById(R.id.txtAddress);
+                TextView txtClass = viewDialog.findViewById(R.id.txtClass);
+                TextView txtCodeCourse = viewDialog.findViewById(R.id.txtCodeCourse);
+                TextView txtTeacher = viewDialog.findViewById(R.id.txtTeacher);
+                TextView txtRoom = viewDialog.findViewById(R.id.txtRoom);
+                TextView txtTime = viewDialog.findViewById(R.id.txtTime);
+                TextView txtDate = viewDialog.findViewById(R.id.txtDate);
+                TextView txtMeet = viewDialog.findViewById(R.id.txtMeet);
+                Button btnClose = viewDialog.findViewById(R.id.btnClose);
 
-        String t1 = "<b>Lớp: </b>" + schedule.getClassName();
-        txtCodeNameClass.setText(android.text.Html.fromHtml(t1));
+               txtAddress.setText(schedule.getAddress());
+               txtClass.setText(schedule.getClass_name());
+               txtCodeCourse.setText(schedule.getCourse_name().substring(schedule.getCourse_name().indexOf("-") + 1));
+               txtTeacher.setText(schedule.getTeacher_name());
+               txtRoom.setText(schedule.getRoom());
+                String slot = "";
+                switch (String.valueOf(schedule.getTime())){
+                    case "1":
+                        slot = "7h30 - 9h30";
+                        break;
+                    case "2":
+                        slot = "9h35 - 11h45";
+                        break;
+                    case "3":
+                        slot = "13h00 - 15h00";
+                        break;
+                    case "4":
+                        slot = "15h15 - 17h15";
+                        break;
+                    case "5":
+                        slot = "17h30 - 19h30";
+                        break;
+                    case "6":
+                        slot = "19h30 - 21h30";
+                        break;
+                    default:
+                        slot = "Tự học";
+                        break;
+                }
+                txtTime.setText(slot);
+                txtDate.setText(schedule.getDate());
 
-        String t2 = "<b>Giảng viên: </b>" + schedule.getTeacherName();
-        txtNameTeacher.setText(android.text.Html.fromHtml(t2));
+                String meet = "<b>Link meet: </b>" + schedule.getMeet();
+                txtMeet.setText(android.text.Html.fromHtml(meet));
+                builder.setView(viewDialog);
+                Drawable drawable = ContextCompat.getDrawable(MainActivity.this, R.drawable.background_dialog_schedule_show);
+                androidx.appcompat.app.AlertDialog dialog = builder.create();
+                dialog.getWindow().setBackgroundDrawable(drawable);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
 
-        String t3 = "<b>Thời gian: </b>" + schedule.getSlot();
-        txtSlot.setText(android.text.Html.fromHtml(t3));
-
-        String t4 = "<b>Giảng đường: </b>" + schedule.getAddress();
-        txtBasis.setText(android.text.Html.fromHtml(t4));
-
-        String t5 = "<b>Link meet: </b>" + "https://meet.google.com/top-ynme-hka?authuser=0&pli=1";
-        txtLinkMeet.setText(android.text.Html.fromHtml(t5));
-        builder.setView(viewDialog);
-        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.background_dialog_schedule_show);
-        androidx.appcompat.app.AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(drawable);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
             }
-        });
+        }
+
+        @Override
+        public void onFailure(Call<ScheduleGetByIdResponseDTO> call, Throwable t) {
+            Log.d(">>> login", "onFailure: " + t.getMessage());
+        }
+    };
+
+    public void showDetaiSchedule(int id) {
+        iRetrofit.getSchedulesById(id).enqueue(getScheduleById);
     }
 
-    public ArrayList<Schedule> getDataSchedule() {
-        Schedule schedule = new Schedule("MOB403", "Android Networking", "15/07/2023", "Phần mềm Quang Trung", "Phòng 308 (Nhà T)", "17h30 - 19h30", "MD17306", "channn3", "Ca 5");
-        ArrayList<Schedule> listSchedule = new ArrayList<>();
-        listSchedule.add(schedule);
-        listSchedule.add(schedule);
-        listSchedule.add(schedule);
-        listSchedule.add(schedule);
+    public ArrayList<ListSchedulesResponseDTO.Schedule> getDataSchedule() {
         return listSchedule;
     }
 
-    public ArrayList<TestSchedule> getDataTestSchedule() {
-        TestSchedule testSchedule = new TestSchedule("11/08/2023", "Phòng 308 (Toà T)", "Ca 5", "Android Networking", "MOB403", "17h30 - 19h30", "chann3");
-        ArrayList<TestSchedule> listTestSchedule = new ArrayList<>();
-        listTestSchedule.add(testSchedule);
-        listTestSchedule.add(testSchedule);
-        listTestSchedule.add(testSchedule);
+    Callback<ListSchedulesResponseDTO> getListScheduleCallback = new Callback<ListSchedulesResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListSchedulesResponseDTO> call, Response<ListSchedulesResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListSchedulesResponseDTO responseDTO = response.body();
+                listSchedule.clear();
+                listSchedule.addAll(responseDTO.getData());
+            }
+        }
+
+        @Override
+        public void onFailure(Call<ListSchedulesResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    public ArrayList<ListSchedulesResponseDTO.Schedule> getDataTestSchedule() {
         return listTestSchedule;
     }
+
+    Callback<ListSchedulesResponseDTO> getListTestScheduleCallback = new Callback<ListSchedulesResponseDTO>() {
+        @Override
+        public void onResponse(Call<ListSchedulesResponseDTO> call, Response<ListSchedulesResponseDTO> response) {
+            if (response.isSuccessful()) {
+                ListSchedulesResponseDTO responseDTO = response.body();
+                listTestSchedule.clear();
+                listTestSchedule.addAll(responseDTO.getData());
+            }
+        }
+        @Override
+        public void onFailure(Call<ListSchedulesResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
 
     //Tín hiệu Bottom Service
     private BroadcastReceiver bottomReceiver = new BroadcastReceiver() {
@@ -844,13 +855,31 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void handleToDetaiNotify(Notification notification, Integer index) {
-        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.putExtra("notification", (Serializable) notification);
-        intent.putExtra("indexNotify", index);
-        startActivity(intent);
-        overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+    Callback<NotifyGetByIdResponseDTO> getNotifyByIdCallback = new Callback<NotifyGetByIdResponseDTO>() {
+        @Override
+        public void onResponse(Call<NotifyGetByIdResponseDTO> call, Response<NotifyGetByIdResponseDTO> response) {
+            if (response.isSuccessful()) {
+                NotifyGetByIdResponseDTO responseDTO = response.body();
+                ArrayList<ListNotifyResponseDTO.Notify> notifies = new ArrayList<>();
+                notifies.clear();
+                notifies.addAll(responseDTO.getNotify());
+                ListNotifyResponseDTO.Notify notify = notifies.get(0);
+                intentNotify.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intentNotify.putExtra("notification", notify);
+                startActivity(intentNotify);
+                overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+            }
+        }
+
+        @Override
+        public void onFailure(Call<NotifyGetByIdResponseDTO> call, Throwable t) {
+            Log.d(">>> schedule", "onFailure: " + t.getMessage());
+        }
+    };
+
+    public void handleToDetaiNotify(int id, Integer index) {
+        intentNotify.putExtra("indexNotify", index);
+        iRetrofit.getNotifyById(id).enqueue(getNotifyByIdCallback);
     }
 
     public void handleToEditProfile() {
@@ -865,7 +894,14 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         IntentFilter intentBottom = new IntentFilter(BottomService.BOTTOM_SERVICE_EVENT);
         LocalBroadcastManager.getInstance(this).registerReceiver(bottomReceiver, intentBottom);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        user_id = sharedPreferences.getInt("id", -1);
+        iRetrofit.getAllSchedule(user_id, 0).enqueue(getListScheduleCallback);
+        iRetrofit.getAllSchedule(user_id, 1).enqueue(getListTestScheduleCallback);
+        iRetrofit.getAllNotify(0).enqueue(getListNotifyCallback);
+        iRetrofit.getAllNotify(1).enqueue(getListNewCallback);
+        iRetrofit.getAllNotify(2).enqueue(getListTutionCallback);
+        iRetrofit.getAllProgres(user_id).enqueue(getListProgressCallback);
     }
 
     @Override

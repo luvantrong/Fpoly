@@ -16,19 +16,20 @@ import java.util.ArrayList;
 
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.NotificationAdapter;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.models.Notification;
 
 public class NotificationFragment extends Fragment {
 
     private RecyclerView rvNotification;
-    ArrayList<Notification> listNotification;
+    ArrayList<ListNotifyResponseDTO.Notify> listNotification;
 
     public NotificationFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static NotificationFragment newInstance(ArrayList<Notification> listNotification) {
+    public static NotificationFragment newInstance(ArrayList<ListNotifyResponseDTO.Notify> listNotification) {
         NotificationFragment fragment = new NotificationFragment();
         Bundle args = new Bundle();
         args.putSerializable("notifications", listNotification);
@@ -41,7 +42,7 @@ public class NotificationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            listNotification = (ArrayList<Notification>) getArguments().getSerializable("notifications");
+            listNotification = (ArrayList<ListNotifyResponseDTO.Notify>) getArguments().getSerializable("notifications");
         }
     }
 

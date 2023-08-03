@@ -46,11 +46,44 @@
 
                 />
             <TextView
+                android:id="@+id/txtRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Phòng: ABC"
+                android:textColor="#F0000000"
+                android:paddingTop="4dp"
+
+                />
+
+            <TextView
                 android:id="@+id/txtSlot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:text="Thời gian: 17:30 - 19:30"
+                android:textColor="#F0000000"
+                android:gravity="center"
+                android:paddingTop="3dp"
+
+                />
+            <TextView
+                android:id="@+id/txtFullNameCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Môn: ABC"
+                android:textColor="#F0000000"
+                android:gravity="left"
+                android:paddingTop="3dp"
+
+                />
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:text="Ngày: ABC"
                 android:textColor="#F0000000"
                 android:gravity="center"
                 android:paddingTop="3dp"

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.models.Notification;
 
 public class DetailActivity extends AppCompatActivity {
@@ -35,14 +36,14 @@ public class DetailActivity extends AppCompatActivity {
 
         mapping();
 
-        Notification notification = (Notification) getIntent().getSerializableExtra("notification");
+        ListNotifyResponseDTO.Notify notification = (ListNotifyResponseDTO.Notify) getIntent().getSerializableExtra("notification");
 
-        indexNotify = getIntent().getIntExtra("indexNotify", 1);
+        indexNotify = getIntent().getIntExtra("indexNotify", -1);
 
         txtTitle.setText(notification.getTitle());
         txtContent.setText(notification.getContent());
         txtNamePersonPost.setText(notification.getPoster());
-        txtTimePost.setText(notification.getTime());
+        txtTimePost.setText(notification.getCreated_at());
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override

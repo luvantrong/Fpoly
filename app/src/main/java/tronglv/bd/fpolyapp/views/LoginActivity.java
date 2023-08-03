@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,9 +41,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import tronglv.bd.fpolyapp.R;
 import tronglv.bd.fpolyapp.adapters.BasisAdapter;
 import tronglv.bd.fpolyapp.adapters.ProgressStudyAdapter;
+import tronglv.bd.fpolyapp.dto.LoginRequestDTO;
+import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
+import tronglv.bd.fpolyapp.helpers.IRetrofit;
+import tronglv.bd.fpolyapp.helpers.RetrofitHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private String basisSelected = "";
+
+    IRetrofit iRetrofit;
 
     //Đăng nhập google
     GoogleSignInClient gsc;
@@ -95,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 alertDialog.getWindow().setLayout(710, 650);
             }
         });
+        iRetrofit = RetrofitHelper.createService(IRetrofit.class);
 
         //Đăng nhập google
 
@@ -107,10 +118,11 @@ public class LoginActivity extends AppCompatActivity {
         //Kiểm tra login Google
         account = GoogleSignIn.getLastSignedInAccount(LoginActivity.this);
         if (account != null) {
-            Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(homeIntent);
-            overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
-            finish();
+            String email = account.getEmail();
+            String name = account.getGivenName();
+            String avatar = String.valueOf(account.getPhotoUrl());
+            LoginRequestDTO loginRequestDTO = new LoginRequestDTO(email, name, avatar);
+            iRetrofit.login(loginRequestDTO).enqueue(login);
         }
 
         btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        iRetrofit = RetrofitHelper.createService(IRetrofit.class);
     }
 
     private void mapping() {
@@ -149,16 +163,11 @@ public class LoginActivity extends AppCompatActivity {
                         GoogleSignInAccount account = task.getResult(ApiException.class);
                         String email = account.getEmail();
                         String name = account.getGivenName();
-                        String avartar = String.valueOf(account.getPhotoUrl());
-                        Log.d(">>>TAG", "onActivityResult: " + email);
-                        Log.d(">>>TAG", "onActivityResult: " + name);
-                        Log.d(">>>TAG", "onActivityResult: " + avartar);
+                        String avatar = String.valueOf(account.getPhotoUrl());
                         //Chuyển qua màn hình MainActivity
                         if (account != null) {
-                            Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(homeIntent);
-                            overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
-                            finish();
+                            LoginRequestDTO loginRequestDTO = new LoginRequestDTO(email, name, avatar);
+                            iRetrofit.login(loginRequestDTO).enqueue(login);
                         }
                     } catch (Exception e) {
                         Log.d(">>>TAG", "onActivityResult error: " + e.getMessage());
@@ -166,4 +175,41 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
     );
+
+    Callback<LoginResponseDTO> login = new Callback<LoginResponseDTO>() {
+        @Override
+        public void onResponse(Call<LoginResponseDTO> call, Response<LoginResponseDTO> response) {
+            if (response.isSuccessful()) {
+                LoginResponseDTO loginResponseDTO = response.body();
+                if (loginResponseDTO.isStatus()) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    LoginResponseDTO.User user = loginResponseDTO.getUser();
+                    editor.putInt("id", user.getId());
+                    editor.putInt("status", user.getStatus());
+                    editor.putString("email", user.getEmail());
+                    editor.putString("avatar", user.getAvatar());
+                    editor.putString("student_code", user.getStudent_code());
+                    editor.putString("birthday", user.getBirthday());
+                    editor.putString("address", user.getAddress());
+                    editor.putString("course", user.getCourse());
+                    editor.putString("semester", user.getSemester());
+                    editor.putInt("gender", user.getGender());
+                    editor.putString("name", user.getName());
+                    editor.commit();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<LoginResponseDTO> call, Throwable t) {
+            Log.d(">>> login", "onFailure: " + t.getMessage());
+        }
+    };
 }

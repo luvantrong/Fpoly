@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.ListNotifyResponseDTO;
 import tronglv.bd.fpolyapp.interfaces.ItemClickListener;
 import tronglv.bd.fpolyapp.models.Notification;
 import tronglv.bd.fpolyapp.viewHolders.NotificationViewHolder;
@@ -20,9 +21,9 @@ import tronglv.bd.fpolyapp.views.MainActivity;
 public class TutionAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     Context context;
-    ArrayList<Notification> listTution;
+    ArrayList<ListNotifyResponseDTO.Notify> listTution;
 
-    public TutionAdapter(Context context, ArrayList<Notification> listTution) {
+    public TutionAdapter(Context context, ArrayList<ListNotifyResponseDTO.Notify> listTution) {
         this.context = context;
         this.listTution = listTution;
     }
@@ -36,12 +37,12 @@ public class TutionAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        Notification tution = listTution.get(holder.getAdapterPosition());
+        ListNotifyResponseDTO.Notify tution = listTution.get(holder.getAdapterPosition());
         String name = tution.getTitle();
         holder.txtTitle.setText(name);
         String poster = tution.getPoster();
         holder.txtPoster.setText("Người đăng: "+ poster);
-        String time = tution.getTime();
+        String time = tution.getCreated_at();
         holder.txtTime.setText("Thời gian: "+ time);
 
         holder.setItemClickListener(new ItemClickListener() {
@@ -50,7 +51,7 @@ public class TutionAdapter extends RecyclerView.Adapter<NotificationViewHolder>{
                 if(isLongClick){
 //                    ((MainActivity)context).handleToLongClick();
                 }else {
-                    ((MainActivity)context).handleToDetaiNotify(tution, 3);
+                    ((MainActivity)context).handleToDetaiNotify(tution.getId(), 3);
                 }
             }
         });

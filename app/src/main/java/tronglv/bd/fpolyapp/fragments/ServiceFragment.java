@@ -13,22 +13,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import tronglv.bd.fpolyapp.R;
+import tronglv.bd.fpolyapp.dto.LoginResponseDTO;
 import tronglv.bd.fpolyapp.views.MainActivity;
 
 public class ServiceFragment extends Fragment {
 
-    private TextView txtServiceOne, txtServiceTwo, txtServiceThree, txtServiceFour, txtServiceFive;
+    private TextView txtServiceOne, txtServiceTwo, txtServiceThree, txtServiceFour, txtServiceFive, txtNameUser;
+    LoginResponseDTO.User user;
+
+    private ImageView imgAvatar;
     public ServiceFragment() {
         // Required empty public constructor
     }
 
     //Truyền data vào fragment khi khởi tạo
-    public static ServiceFragment newInstance() {
+    public static ServiceFragment newInstance(LoginResponseDTO.User user) {
         ServiceFragment fragment = new ServiceFragment();
         Bundle args = new Bundle();
-//        args.putSerializable("notifications", listNotification);
-//        fragment.setArguments(args);
+        args.putSerializable("user", user);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -37,7 +43,7 @@ public class ServiceFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            listNotification = (ArrayList<Notification>) getArguments().getSerializable("notifications");
+            user = (LoginResponseDTO.User) getArguments().getSerializable("user");
         }
     }
 
@@ -56,6 +62,11 @@ public class ServiceFragment extends Fragment {
         txtServiceThree = view.findViewById(R.id.txtServiceThree);
         txtServiceFour = view.findViewById(R.id.txtServiceFour);
         txtServiceFive = view.findViewById(R.id.txtServiceFive);
+        imgAvatar = view.findViewById(R.id.imgAvatar);
+        txtNameUser = view.findViewById(R.id.txtNameUser);
+
+        txtNameUser.setText(user.getName());
+        Glide.with(view.getContext()).load(user.getAvatar()).into(imgAvatar);
 
         txtServiceOne.setOnClickListener(new View.OnClickListener() {
             @Override

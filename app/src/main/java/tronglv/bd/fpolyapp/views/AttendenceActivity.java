@@ -54,7 +54,7 @@ public class AttendenceActivity extends AppCompatActivity {
     private ImageView imgBack, imgCalendar;
 
     private String name_service = "Khôi phục điểm danh";
-    private int user_id = 1;
+    private int user_id = -1;
     private TextInputEditText edtCourse, edtClass, edtDate, edtTeacher, edtPhone, edtDescription;
     private String file = "";
 
@@ -80,6 +80,9 @@ public class AttendenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attendence);
 
         mapping();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        user_id = sharedPreferences.getInt("id", -1);
         iRetrofit = RetrofitHelper.createService(IRetrofit.class);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +232,7 @@ public class AttendenceActivity extends AppCompatActivity {
                     Intent intent = new Intent(AttendenceActivity.this, ServiceListActivity.class);
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_enter_splash, R.anim.anim_exit_splash);
+                    finish();
                 } else {
                     Toast.makeText(AttendenceActivity.this, "Đăng ký dịch vụ không thành công", Toast.LENGTH_SHORT).show();
                 }

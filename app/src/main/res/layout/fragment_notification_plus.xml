@@ -55,8 +55,8 @@
 
     <LinearLayout
         android:id="@+id/lnNotifyPlus"
-        android:layout_width="48dp"
-        android:layout_height="565dp"
+        android:layout_width="50dp"
+        android:layout_height="625dp"
         android:orientation="vertical"
         android:weightSum="3"
         android:visibility="invisible"
@@ -73,15 +73,13 @@
                     android:id="@+id/txtNotify"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Notify"
-                    android:gravity="center_vertical"
-                    android:textSize="15sp"
+                    android:text="Học tập"
+                    android:gravity="center"
                     android:rotation="90"
-                    android:textColor="@color/text_bottom_tab"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/roboto_medium"
-                    android:layout_centerVertical="true"
                     />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -94,14 +92,12 @@
                 android:id="@+id/txtNews"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="News"
-                android:gravity="center_vertical"
+                android:text="Hoạt động"
+                android:gravity="center"
                 android:rotation="90"
                 android:textSize="15sp"
                 android:textColor="@color/text_bottom_tab"
                 android:fontFamily="@font/roboto_medium"
-                android:layout_centerVertical="true"
-
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -114,16 +110,13 @@
                 android:id="@+id/txtTution"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Tution"
-                android:gravity="center_vertical"
+                android:text="Học phí"
+                android:gravity="center"
                 android:rotation="90"
                 android:textSize="15sp"
                 android:textColor="@color/text_bottom_tab"
                 android:fontFamily="@font/roboto_medium"
-                android:layout_centerVertical="true"
                 />
         </RelativeLayout>
-
     </LinearLayout>
-
 </RelativeLayout>

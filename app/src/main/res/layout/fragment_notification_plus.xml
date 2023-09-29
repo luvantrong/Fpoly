@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.NotificationPlusFragment"
-    android:background="#F08E47">
+    android:background="#FE7A15">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:src="@drawable/background_notify_plus"
-        android:layout_marginTop="40dp"
         android:layout_marginRight="-96dp"/>
 
 

@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alertDialog.show();
-                alertDialog.getWindow().setLayout(710, 650);
+                alertDialog.getWindow().setLayout(910, 650);
             }
         });
         iRetrofit = RetrofitHelper.createService(IRetrofit.class);

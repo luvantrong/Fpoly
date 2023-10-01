@@ -20,8 +20,8 @@
             <ImageView
                 android:id="@+id/imgItemSchedule"
                 android:layout_width="64dp"
-                android:layout_height="75dp"
-                android:background = "@drawable/image_item_schedule"/>
+                android:layout_height="80dp"
+                android:background = "@drawable/abc"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="200dp"

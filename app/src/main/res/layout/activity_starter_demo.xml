@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="325dp"
             android:orientation="vertical"
-            android:src="@drawable/logo_fpoly_app"
+            android:src="@drawable/logo_fpoly_new"
             />
     </LinearLayout>
     <LinearLayout

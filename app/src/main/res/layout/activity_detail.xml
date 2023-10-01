@@ -42,7 +42,7 @@
     <ScrollView
         android:id="@+id/sContent"
         android:layout_width="match_parent"
-        android:layout_height="460dp"
+        android:layout_height="575dp"
         android:layout_above="@+id/rlBottom">
 
         <TextView
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/time_clock"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="140dp"
+            android:layout_marginRight="150dp"
             android:layout_centerVertical="true"/>
 
         <TextView
